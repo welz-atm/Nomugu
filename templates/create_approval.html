@@ -1,0 +1,55 @@
+{% extends 'merchant_base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa-table"></i> Approval</h3>
+
+            </div>
+        </div>
+        <!-- page start-->
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel">
+                    <header class="panel-heading">
+                        Create Approval
+                    </header>
+
+                    <form method="POST" action="{% url 'create_approval' %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </form>
+
+                </section>
+            </div>
+        </div>
+        <!-- page end-->
+    </section>
+</section>
+<!--main content end-->
+<div class="text-right">
+    <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
+        -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    </div>
+</div>
+
+
+{% endblock %}

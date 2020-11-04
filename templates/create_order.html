@@ -1,0 +1,43 @@
+{% extends 'admin_base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa-table"></i> Create Order</h3>
+                </ol>
+            </div>
+        </div>
+        <!-- page start-->
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                    </header>
+
+                </section>
+
+                <form method="POST" action="{% url 'create_order' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br>
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="close">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- page end-->
+    </section>
+</section>
+<!--main content end-->
+
+
+{% endblock %}
