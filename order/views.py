@@ -63,9 +63,6 @@ def my_orders(request):
     return render(request, 'my_orders.html', context)
 
 
-def
-
-
 @merchant_required()
 def delivered_orders(request):
     orders = OrderItem.objects.filter(product__merchant=request.user, delivered=True).order_by('-order_date')
