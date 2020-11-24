@@ -1,5 +1,6 @@
-from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
-from .models import Product
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.core.exceptions import PermissionDenied
+from .models import Product, Category
 from django.contrib import messages
 from .forms import ProductForm
 from django.contrib.auth.decorators import login_required
@@ -30,7 +31,7 @@ def dashboard(request):
     context = {
         'products': products
       }
-    return render(request, 'dashboard_merchant.html', context)
+    return render(request, 'dashboard.html', context)
 
 
 @login_required
@@ -42,11 +43,12 @@ def my_product(request):
         }
         return render(request, 'my_product.html', context)
     else:
-        return HttpResponse('You do not have access to this page')
+        raise PermissionDenied
 
 
 @login_required
 def add_product(request):
+    categories = Category.objects.all()
     if request.user.is_merchant is True:
         if request.method == 'POST':
             form = ProductForm(request.POST, request.FILES)
@@ -60,12 +62,14 @@ def add_product(request):
         else:
             form = ProductForm(request.POST, request.FILES)
 
-        context={
+        context = {
+            'categories': categories,
             'form': form,
             }
 
         return render(request, 'add_product.html', context)
     elif request.user.is_admin is True:
+        categories = Category.objects.all()
         if request.method == 'POST':
             form = ProductForm(request.POST, request.FILES)
             if form.is_valid():
@@ -78,19 +82,21 @@ def add_product(request):
         else:
             form = ProductForm(request.POST, request.FILES)
 
-        context={
+        context = {
+            'categories': categories,
             'form': form,
             }
 
         return render(request, 'add_product.html', context)
     else:
-        return HttpResponse('You do not have access to this page')
+        raise PermissionDenied
 
 
 @login_required
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    if request.user.is_merchant is True:
+    categories = Category.objects.all()
+    if request.user.is_merchant is True and product.merchant == request.user:
         if request.method == 'POST':
             form = ProductForm(request.POST, instance=product)
             if form.is_valid():
@@ -102,10 +108,13 @@ def edit_product(request, pk):
 
         else:
             form = ProductForm(instance=product)
-        context = {'form': form}
+        context = {
+            'form': form,
+            'categories': categories
+        }
         return render(request, 'edit_productform.html', context)
     else:
-        return HttpResponse('You do not have access to this page')
+        raise PermissionDenied
 
 
 @login_required
@@ -115,7 +124,7 @@ def delete_product(request,pk):
         product.delete()
         return redirect('my_product')
     else:
-        return HttpResponse('You do not have access to this page')
+        raise PermissionDenied
 
 
 def detail_view(request, pk):
@@ -335,7 +344,7 @@ def ios_list(request):
 
 
 def clothing_view(request):
-    qs = Product.objects.filter(name='Clothes').order_by('id').select_related('merchant',)
+    qs = Product.objects.filter(name='Clothing').order_by('id').select_related('merchant',)
     brand = request.GET.get('brand')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
@@ -511,7 +520,7 @@ def fabrics_view(request):
 
 
 def tv_view(request):
-    qs = Product.objects.filter(name='TV').order_by('id').select_related('merchant',)
+    qs = Product.objects.filter(name='Television').order_by('id').select_related('merchant',)
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     brand = request.GET.get('brand')
@@ -539,7 +548,7 @@ def tv_view(request):
 
 
 def ac_view(request):
-    qs = Product.objects.filter(name='AC').order_by('id').select_related('merchant',)
+    qs = Product.objects.filter(name='Air Conditioner').order_by('id').select_related('merchant',)
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     brand = request.GET.get('brand')
@@ -663,7 +672,7 @@ def freezer_view(request):
 
 
 def cookers_view(request):
-    qs = Product.objects.filter(name='Cookers').order_by('id').select_related('merchant',)
+    qs = Product.objects.filter(name='Cooker').order_by('id').select_related('merchant',)
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     brand = request.GET.get('brand')
@@ -795,7 +804,7 @@ def kettle_view(request):
 
 
 def washers_view(request):
-    qs = Product.objects.filter(name='Washing Machine').order_by('id').select_related('merchant',)
+    qs = Product.objects.filter(name='Washers').order_by('id').select_related('merchant',)
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     brand = request.GET.get('brand')

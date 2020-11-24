@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <h3 class="page-header "><i class="fa fa-users"></i>Add Product</h3>
+        <!-- page start-->
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal " method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Registration Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="registration_name" placeholder="registration_name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Registration Number</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="registration_number" placeholder="Registration Number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Engine Number</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="engine_number" placeholder="Engine Number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">brand</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="brand" placeholder="Brand">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">License Number</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="license_number" placeholder="License Number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Vehicle Type</label>
+                        <div class="col-sm-10">
+                            <select name="vehicle_type" class="form-control">
+                                <option selected>Select Vehicle Type...</option>
+                                <option>Bike</option>
+                                <option>MiniBus</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Year of Purchase</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="year_of_purchase" placeholder="Year of Purchase">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Region</label>
+                        <div class="col-sm-10">
+                            <select name="region" class="form-control">
+                                <option selected>Select Region...</option>
+                                <option>All Regions</option>
+                                <option>Abuja Only</option>
+                                <option>Enugu Only</option>
+                                <option>Lagos Only</option>
+                                <option>North-Central</option>
+                                <option>North-East</option>
+                                <option>North-West</option>
+                                <option>Port Harcourt Only</option>
+                                <option>South-East</option>
+                                <option>South-South</option>
+                                <option>Lagos Only</option>
+                                <option>Lagos Only</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Image</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" name="image" placeholder="Image">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Description</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="description" rows="10" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+
+                        <button class="btn btn-success" type="submit">Submit</button>
+                        <a class="btn btn-success" href="{% url 'my_product' %}">Back to My Product</a>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!-- page end-->
+    </section>
+</section>
+<!--main content end-->
+
+{% endblock %}

@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
 from product.api.serializers import ProductSerializer
-from product.models import Product
+from product.models import Product, Category
 
 
 @api_view(['POST',])
@@ -87,7 +87,7 @@ class ViewProduct(RetrieveAPIView):
 
 
 class AllLaptops(ListAPIView):
-    queryset = Product.objects.filter(name='Laptop').select_related('merchant')
+    queryset = Product.objects.filter(name='Laptop').select_related('merchant', 'category')
     authentication_classes = []
     permission_classes = []
     serializer_class = ProductSerializer

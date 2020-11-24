@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
-from .forms import AccountForm
+from django.core.exceptions import PermissionDenied
+from .forms import AccountForm, ShopperAccountForm
 from .models import Account, Payment
+from product.models import Product
 from order.models import Order, OrderItem
 from paystackapi.transaction import Transaction
+from paystackapi.verification import Verification
+from paystackapi.subaccount import SubAccount
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
@@ -13,8 +18,17 @@ def create_account(request):
             if form.is_valid():
                 account = form.save(commit=False)
                 account.user = request.user
-                account.save()
-                return redirect('dashboard')
+                response = Verification.verify_account(account.account_number)
+                verified_name = response['data']['account_name']
+                verified_bank_id = response['data']['bank_id']
+                if account.account_name == verified_name and account.bank_name == verified_bank_id:
+                    SubAccount.create(business_name=account.account_name, settlement_bank=account.bank_name,
+                                      account_number=account.account_number, percentage_charge='0.97')
+                    account.account_id = response['data']['id']
+                    account.save()
+                    return redirect('dashboard')
+                else:
+                    messages.success(request, 'Please confirm account details.')
         else:
             form = AccountForm()
         context = {
@@ -27,8 +41,40 @@ def create_account(request):
             if form.is_valid():
                 account = form.save(commit=False)
                 account.user = request.user
-                account.save()
-                return redirect('dashboard')
+                response = Verification.verify_account(account.account_number)
+                verified_name = response['data']['account_name']
+                verified_bank_id = response['data']['bank_id']
+                if account.account_name == verified_name and account.bank_name == verified_bank_id:
+                    response = SubAccount.create(business_name=account.account_name, settlement_bank=account.bank_name,
+                                                 account_number=account.account_number, percentage_charge='0.97')
+                    account.account_id = response['data']['id']
+                    account.save()
+                    return redirect('dashboard')
+        else:
+            form = AccountForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'create_account.html', context)
+    elif request.user.is_shopper:
+        if request.method == 'POST':
+            try:
+                Account.object.get(user=request.user)
+            except Account.DoesNotExist:
+                form = ShopperAccountForm(request.POST)
+                if form.is_valid():
+                    account = form.save(commit=False)
+                    account.user = request.user
+                    response = Verification.verify_account(account.account_number)
+                    verified_name = response['data']['account_name']
+                    verified_bank_id = response['data']['bank_id']
+                    if account.account_name == verified_name and account.bank_name == verified_bank_id:
+                        account.save()
+                        return redirect('confirm_eligibility')
+                    else:
+                        messages.success(request, 'Please confirm account details.')
+                        return redirect('create_account')
+            return redirect('confirm_eligibility')
         else:
             form = AccountForm()
         context = {
@@ -42,20 +88,27 @@ def create_account(request):
 
 @login_required()
 def edit_account(request, pk):
-    account = get_object_or_404(Account, pk=pk)
-    if request.method == 'POST':
-        form = AccountForm(request.POST, instance=account)
-        if form.is_valid():
-            account = form.save(commit=False)
-            account.user = request.user
-            account.save()
-            return redirect('account_details')
+    account = Account.objects.get(pk=pk)
+    if account.user == request.user:
+        if request.method == 'POST':
+            form = AccountForm(request.POST, instance=account)
+            if form.is_valid():
+                account = form.save(commit=False)
+                account.user = request.user
+                SubAccount.update(account.account_id, business_name=account.account_name, settlement_bank=account.bank_name,
+                                  account_number=account.account_number, percentage_charge='0.97')
+                account.save()
+                messages.success(request, 'Account updated successfully.')
+                return redirect('account_details')
+        else:
+            form = AccountForm(instance=account)
+        context = {
+            'form': form,
+            'account': account
+        }
+        return render(request, 'edit_account.html', context)
     else:
-        form = AccountForm(instance=account)
-    context = {
-        'form': form
-    }
-    return render(request, 'edit_account.html', context)
+        raise PermmissionDenied
 
 
 def account_details(request):
@@ -97,17 +150,37 @@ def payment_page(request):
     return render(request, 'payment_verification.html', context)
 
 
+@login_required()
+def success_page(request):
+    return render(request, 'success.html', {})
+
+
 def my_payment(request):
-    order = Order.objects.get(user=request.user, is_ordered=False)
-    payment = Payment.objects.get(order=order)
-    response = Transaction.verify(reference=payment.reference)
-    payment.user = request.user
-    payment.amount = response['data']['amount']
-    payment.status = response['data']['status']
-    payment.channel = response['data']['channel']
-    payment.card_type = response['data']['authorization']['card_type']
-    payment.bank_name = response['data']['authorization']['bank']
-    payment.save()
+    try:
+        order = Order.objects.get(user=request.user, ordered=False)
+        payment = Payment.objects.get(order=order.pk)
+        response = Transaction.verify(reference=payment.reference)
+        payment.user = request.user
+        payment.amount = response['data']['amount']
+        payment.payment_date = response['data']['transaction_date']
+        payment.status = response['data']['status']
+        payment.channel = response['data']['channel']
+        payment.card_type = response['data']['authorization']['card_type']
+        payment.bank_name = response['data']['authorization']['bank']
+        payment.save()
+        if payment.status == 'Success':
+            order_item = order.products.all()
+            order_item.update(ordered=True)
+            for item in order_item:
+                item.save()
+        order.ordered = True
+        order.save()
+    except Order.DoesNotExist:
+        payments = Payment.objects.filter(user=request.user).order_by('-payment_date').select_related('user', 'order')
+        context = {
+            'payments': payments
+        }
+        return render(request, 'payment_verification.html', context)
     payments = Payment.objects.filter(user=request.user).order_by('-payment_date').select_related('user', 'order')
     context = {
         'payments': payments

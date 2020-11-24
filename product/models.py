@@ -14,7 +14,7 @@ class Category(models.Model):
         return self.name
 
 
-unit_options = [('kilogram', 'Kilogram'), ('Gram', 'Gram')]
+unit_options = [('Kilogram', 'Kilogram'), ('Gram', 'Gram'), ('Tonnes', 'Tonnes')]
 NAMES = (('Air Conditioner', 'Air Conditioner'), ('Android', 'Android'), ('Audio', 'Audio'), ('Blender', 'Blender'),
          ('Bed/Mattress', 'Bed/Mattress'), ('Clothing', 'Clothing'), ('Cooker', 'Cooker'), ('Desktop', 'Desktop'),
          ('Dispenser', 'Dispenser'), ('Fabrics', 'Fabrics'), ('Fans', 'Fans'), ('Footwear', 'Footwear'),
@@ -35,7 +35,7 @@ class Product(models.Model):
     quantity = models.IntegerField(null=True, blank=True)
     weight = models.IntegerField(null=True, blank=True)
     unit = models.CharField(null=True, blank=True, max_length=12, choices=unit_options)
-    category = models.CharField(null=True, blank=True, max_length=25, choices=categories)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     merchant = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):

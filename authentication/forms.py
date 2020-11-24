@@ -1,4 +1,4 @@
-from .admin import UserCreationForm , UserChangeForm
+from .admin import UserCreationForm, UserChangeForm
 from django import forms
 from .models import CustomUser,Shipper
 from django_countries.fields import CountryField
@@ -7,89 +7,27 @@ from phonenumber_field.formfields import PhoneNumberField
 
 
 class MerchantRegisterForm(UserCreationForm):
-    email = forms.EmailField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
-    address = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':
-                                                                      'Address'}))
-    state = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'State'}))
-    country = CountryField(blank_label='(select country)').formfield(widget=CountrySelectWidget(attrs={'class':
-                                                                                                'form-control'}))
-    name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':
-                                                                   'Company Name'}))
-    telephone = PhoneNumberField()
-    first_name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                         'placeholder': 'Contact Person First Name'}))
-    last_name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                        'placeholder': 'Contact Person Last Name'}))
-    bio = forms.CharField(label='',
-                          widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Company Bio'}))
 
     class Meta:
         model = CustomUser
-        fields = ('name', 'first_name', 'last_name', 'email', 'address', 'state', 'country', 'telephone','bio',)
-
-    def __init__(self, *args, **kwargs):
-        super(MerchantRegisterForm, self).__init__(*args, **kwargs)
-
-        self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].label = ''
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
-        self.fields['password1'].label = ''
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
-        self.fields['password2'].label = ''
+        fields = ('company_name', 'company_reg', 'first_name', 'last_name', 'email', 'address', 'state', 'telephone', 'bio',)
 
 
 class MerchantEditForm(UserChangeForm):
-    email = forms.EmailField(label='', widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Email'}))
-    address = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Address'}))
-    state = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'State'}))
-    telephone = PhoneNumberField()
-    name = forms.CharField(label='',widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Company Name'}))
-    first_name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                         'placeholder': 'Contact Person First Name'}))
-    last_name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':
-                                                                        'Contact Person Last Name'}))
-    country = CountryField(blank_label='(select country)').formfield(widget=CountrySelectWidget(attrs={'class':
-                                                                                                'form-control' }))
-    bio = forms.CharField(label='',
-                          widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Company Bio'}))
-    password = forms.CharField(label='',widget=forms.TextInput(attrs={'type': 'hidden'}))
 
     class Meta:
         model = CustomUser
-        fields = ('name','first_name','last_name','email','address','state','country','telephone','bio')
+        fields = ('company_name', 'first_name', 'last_name', 'email', 'address', 'state', 'telephone', 'bio', 'password')
 
 
 class ShopperRegisterForm(UserCreationForm):
-    email = forms.EmailField(label='',widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Email'}))
-    telephone = PhoneNumberField()
-    first_name = forms.CharField(label='',widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                        'placeholder':'First Name'}))
-    last_name = forms.CharField(label='',widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                       'placeholder':'Last Name'}))
 
     class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'email', 'telephone')
 
-    def __init__(self, *args, **kwargs):
-        super(ShopperRegisterForm, self).__init__(*args, **kwargs)
-
-        self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].label = ''
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
-        self.fields['password1'].label = ''
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
-        self.fields['password2'].label = ''
-
 
 class ShopperEditForm(UserChangeForm):
-    email = forms.EmailField(label='',widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Email'}))
-    telephone = PhoneNumberField()
-    password = forms.CharField(label='',widget=forms.TextInput(attrs={'type': 'hidden'}))
 
     class Meta:
         model = CustomUser
@@ -97,64 +35,17 @@ class ShopperEditForm(UserChangeForm):
 
 
 class ShipperRegisterForm(UserCreationForm):
-    email = forms.EmailField(label='', widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                     'placeholder': 'Company Email'}))
-    address = forms.CharField(label='',
-                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company Address'}))
-    state = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'State'}))
-    company_reg = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                   'placeholder': 'Company Registration Number'}))
-    country = CountryField(blank_label='(select country)').formfield(
-        widget=CountrySelectWidget(attrs={'class': 'form-control'}))
-    name = forms.CharField(label='',
-                           widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company Name'}))
-    telephone = PhoneNumberField()
-    first_name = forms.CharField(label='',
-                                 widget=forms.TextInput(attrs={'class': 'form-control',
-                                                               'placeholder': 'Contact First Name'}))
-    last_name = forms.CharField(label='',
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':
-                                                              'Contact Last Name'}))
 
     class Meta:
         model = CustomUser
-        fields = ('name', 'first_name', 'last_name', 'email', 'company_reg', 'address', 'state', 'country', 'telephone',)
-
-    def __init__(self, *args, **kwargs):
-        super(ShipperRegisterForm, self).__init__(*args, **kwargs)
-
-        self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].label = ''
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
-        self.fields['password1'].label = ''
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
-        self.fields['password2'].label = ''
+        fields = ('first_name', 'last_name', 'email', 'address', 'state', 'telephone', 'bio', )
 
 
 class ShipperEditForm(UserChangeForm):
-    email = forms.EmailField(label='',
-                             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company Email'}))
-    address = forms.CharField(label='',
-                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company Address'}))
-    state = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'State'}))
-    country = CountryField(blank_label='(select country)').formfield(
-        widget=CountrySelectWidget(attrs={'class': 'form-control'}))
-    name = forms.CharField(label='',
-                           widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company Name'}))
-    telephone = PhoneNumberField()
-    first_name = forms.CharField(label='',
-                                 widget=forms.TextInput(
-                                     attrs={'class': 'form-control', 'placeholder': 'Contact First Name'}))
-    last_name = forms.CharField(label='',
-                                widget=forms.TextInput(
-                                    attrs={'class': 'form-control', 'placeholder': 'Contact Last Name'}))
-    password = forms.CharField(label='',widget=forms.TextInput(attrs={'type': 'hidden'}))
 
     class Meta:
         model = CustomUser
-        fields = ('name', 'first_name', 'last_name', 'email', 'company_reg', 'address', 'state', 'country', 'telephone',)
+        fields = ('company_name', 'first_name', 'last_name', 'email', 'address', 'state', 'telephone',)
 
 
 location_options = [('Lagos', 'Lagos'), ('Abuja', 'Abuja'), ('Port Harcourt', 'Port Harcourt'), ('South-South',
@@ -165,8 +56,6 @@ transport_type = [('Bike', 'Bike'), ('MiniBus', 'MiniBus')]
 
 
 class ShipperForm(forms.ModelForm):
-    price = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder':
-                                                                         'Price'}))
     extra_info = forms.CharField(label='', widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder':
                                                                  'Additional Information'}))
     unit = forms.ChoiceField(label='', widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Unit'}),
@@ -192,4 +81,4 @@ class ShipperForm(forms.ModelForm):
     class Meta:
         model = Shipper
         fields = ('vehicle_type', 'registration_name', 'registration_number', 'license_number', 'engine_number', 'brand',
-                  'year_of_purchase', 'region', 'price', 'unit', 'extra_weight', 'extra_info')
+                  'year_of_purchase', 'region', )

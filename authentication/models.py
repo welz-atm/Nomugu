@@ -37,7 +37,7 @@ class CustomUser(AbstractBaseUser):
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
     first_name = models.CharField(max_length=120)
     last_name = models.CharField(max_length=120)
-    name = models.CharField(max_length=120)
+    company_name = models.CharField(null=True, blank=True, max_length=120)
     last_login = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
@@ -49,7 +49,6 @@ class CustomUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     address = models.CharField(max_length=254, null=True, blank=True)
     state = models.CharField(max_length=15, null=True, blank=True)
-    country = CountryField(multiple=False)
     telephone = PhoneNumberField(null=True, unique=True)
     bio = models.CharField(max_length=256, null=True, blank=True)
     company_reg = models.CharField(max_length=15, null=True, blank=True)
@@ -88,8 +87,6 @@ location_options = [('Lagos Only', 'Lagos Only'), ('Abuja Only', 'Abuja Only'), 
                     'South-West'), ('North-East', 'North-East'), ('North-Central', 'North-Central'), ('North-West',
                     'North-West'), ('All Regions', 'All Regions')]
 
-unit_options = [('kilogram', 'Kilogram'), ('Gram', 'Gram')]
-
 transport_type = [('Bike', 'Bike'), ('MiniBus', 'MiniBus')]
 
 
@@ -101,11 +98,9 @@ class Shipper(models.Model):
     brand = models.CharField(max_length=25)
     vehicle_type = models.CharField(max_length=25, choices=transport_type)
     license_number = models.IntegerField()
-    price = models.DecimalField(default=0, max_digits=12, decimal_places=2)
     extra_info = models.TextField()
     region = models.CharField(max_length=25, choices=location_options)
-    extra_weight = models.IntegerField(null=True, blank=True)
-    unit = models.CharField(max_length=12,null=True, blank=True, choices=unit_options)
+    is_created = models.BooleanField(default=False)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):

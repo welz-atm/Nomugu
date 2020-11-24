@@ -1,4 +1,4 @@
-{% extends 'shopper_base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 
@@ -12,12 +12,8 @@
 
         <div class="row">
             <section class="col-lg-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        <div class="text-primary text-center"><h3>Welcome to NoMuGu</h3></div>
-                    </header>
+                        <div class="text-success text-center"><h3>Welcome to NoMuGu</h3></div>
 
-            </section>
                 <div class="row justify-content-center py-5">
 
                         <div class="col-md-3 align-center">
@@ -28,8 +24,8 @@
                                     <img src="{% static 'images/laptop.jpg' %}" class="img-thumbnail"></div>
                                 <figcaption class="info-wrap border-top">
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample"><h4>Computer/Laptops</h4></a>
+                                        <a class="btn btn-success btn-lg" data-toggle="collapse"
+                                           href="#collapseExample"><span class="fa fa-chevron-circle-down"></span>Computer/Laptops</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample">
@@ -63,8 +59,8 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample1"><h4>Phones/Tablets</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample1"><span class="fa fa-chevron-circle-down"></span>Phones/Tablets</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample1">
@@ -92,8 +88,8 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample2"><h4>Fashion</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample2"><span class="fa fa-chevron-circle-down"></span>Fashion</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample2">
@@ -125,16 +121,16 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample3"><h4>Electronics</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample3"><span class="fa fa-chevron-circle-down"></span>Electronics</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample3">
                                         <div class="card card-body">
                                             <div class="text-center">
-                                                <a href="#">TV</a>
+                                                <a href="#">Television</a>
                                                 <br>
-                                                <a href="{% url 'ac' %}">AC</a>
+                                                <a href="{% url 'ac' %}">Air Conditioner</a>
                                                 <br>
                                                 <a href="{% url 'audio' %}">Home Theatre</a>
                                             </div>
@@ -160,8 +156,8 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample4"><h4>Kitchen Appliances</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample4"><span class="fa fa-chevron-circle-down"></span>Kitchen Appliances</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample4">
@@ -199,8 +195,8 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample5"><h4>Home Appliance</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample5"><span class="fa fa-chevron-circle-down"></span>Home Appliance</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample5">
@@ -232,8 +228,8 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample6"><h4>Flight</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample6"><span class="fa fa-chevron-circle-down"></span>Fruits</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample6">
@@ -261,8 +257,8 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample7"><h4>Hotels</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample7"><span class="fa fa-chevron-circle-down"></span>Hotels</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample7">
@@ -293,8 +289,8 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample8"><h4>Beauty</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample8"><span class="fa fa-chevron-circle-down"></span>Beauty</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample8">
@@ -326,8 +322,8 @@
                                 <figcaption class="info-wrap border-top">
 
                                     <div class="text-center">
-                                        <a class="btn btn-sm btn-info" data-toggle="collapse"
-                                           href="#collapseExample9"><h4>Food</h4></a>
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample9"><span class="fa fa-chevron-circle-down"></span>Food</a>
                                     </div>
 
                                     <div class="collapse" id="collapseExample9">

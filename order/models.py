@@ -1,12 +1,10 @@
 from django.db import models
 from authentication.models import CustomUser
 from product.models import Product
+from booking.calc_distance import calc_distance
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
-
-
-QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 26)]
 
 
 class OrderItem(models.Model):
@@ -25,6 +23,15 @@ class OrderItem(models.Model):
     def get_cost(self):
         return self.quantity * self.product.price
 
+    def get_weight(self):
+        return self.product.weight * self.quantity
+
+    def get_address(self):
+        return self.product.merchant.address
+
+    def stock_left(self):
+        return self.product.quantity - self.quantity
+
 
 class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
@@ -32,17 +39,31 @@ class Order(models.Model):
     ordered = models.BooleanField(default=False)
     products = models.ManyToManyField(OrderItem)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    email = models.EmailField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=120, null=True, blank=True)
+    last_name = models.CharField(max_length=120, null=True, blank=True)
     address = models.CharField(max_length=254, null=True, blank=True)
     city = models.CharField(max_length=25, null=True, blank=True)
     state = models.CharField(max_length=15, null=True, blank=True)
     country = CountryField(multiple=False)
     telephone = PhoneNumberField(null=True, unique=True)
+    detail_created = models.BooleanField(default=False)
 
     def final_price(self):
         total = 0
         for order in self.products.all():
             total += order.get_cost()
         return total
+
+    def pickup_price(self):
+        price_per_km = 45
+        for order in self.products.all():
+            distance = calc_distance(str(order.get_address()), str(self.address))
+            price = distance * price_per_km
+        return price
+
+    def total_price(self):
+        return self.final_price() + self.pickup_price()
 
 
 class Invoices(models.Model):

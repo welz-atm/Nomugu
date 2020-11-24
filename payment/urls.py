@@ -8,4 +8,5 @@ urlpatterns = [
     path('make_payment/<int:pk>/', views.make_payment, name='make_payment'),
     path('payment_page/', views.payment_page, name='payment_page'),
     path('my_payment/', views.my_payment, name='my_payment'),
+    path('success/', views.success_page, name='success'),
 ]

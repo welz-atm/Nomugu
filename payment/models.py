@@ -31,11 +31,16 @@ Banks = (
 
 
 class Account(models.Model):
-    account_name = models.CharField(max_length=50, null=True, blank=True)
+    account_name = models.CharField(max_length=50)
     bank_name = models.CharField(max_length=50, null=True, blank=True, choices=Banks)
     account_number = models.IntegerField()
-    bvn = models.IntegerField()
+    account_id = models.IntegerField(null=True, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    is_created = models.BooleanField(default=False)
+    salary = models.IntegerField(null=True, blank=True)
+    employer = models.CharField(max_length=255, null=True, blank=True)
+    employer_address = models.CharField(max_length=300, null=True, blank=True)
+    job_role = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return self.account_name
@@ -45,7 +50,7 @@ class Payment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    payment_date = models.DateTimeField(auto_now=True)
+    payment_date = models.DateTimeField(null=True, blank=True)
     reference = models.CharField(max_length=50)
     status = models.CharField(max_length=50, null=True, blank=True)
     channel = models.CharField(max_length=50, null=True, blank=True)

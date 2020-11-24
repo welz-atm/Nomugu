@@ -1,44 +1,144 @@
-{% extends 'merchant_base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 {% block content %}
+{% load crispy_forms_tags %}
 
 
+<!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="page-header"><i class="fa fa-table"></i> Edit Product Details</h3>
-
-            </div>
-        </div>
+        <h3 class="page-header "><i class="fa fa-users"></i>Edit Product</h3>
         <!-- page start-->
 
 
         <div class="row">
-            <section class="col-lg-12">
-                <section class="panel">
-                    <header class="panel-heading">
-
-                    </header>
-
-                </section>
-
-                <div class="col-md-6 offset-md-3 py-2">
-                    <form method="POST">
-                        {% csrf_token %}
-                        {% if form.errors %}
-                        <p>Your form has errors.Please check fields</p>
-                        {% endif %}
-
-                        {{ form.as_p}}
-
-                        <div class="text-right">
-                            <button type="submit" class='btn btn-primary btn-md'>
-                                Save
-                            </button>
+            <div class="col-lg-12">
+                <form class="form-horizontal " method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Name</label>
+                        <div class="col-sm-10">
+                            <select name="name" class="form-control">
+                                <option selected>{{product.name}}</option>
+                                <option value="Air Conditioner">Air Conditioner</option>
+                                <option value="Android">Android</option>
+                                <option value="Audio">Audio</option>
+                                <option value="Blender">Blender</option>
+                                <option value="Bed/Mattress">Bed/Mattress</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Cooker">Cooker</option>
+                                <option value="Desktop">Desktop</option>
+                                <option value="Dispenser">Dispenser</option>
+                                <option value="Fabrics">Fabrics</option>
+                                <option value="Fans">Fans</option>
+                                <option value="Footwear">Footwear</option>
+                                <option value="Fragrance">Fragrance</option>
+                                <option value="Freezer">Freezer</option>
+                                <option value="Fruit">Fruit</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="IOS">IOS</option>
+                                <option value="Kettle">Kettle</option>
+                                <option value="Laptop">Laptop</option>
+                                <option value="Microwave">Microwave</option>
+                                <option value="Networking">Networking</option>
+                                <option value="Refrigerator">Refrigerator</option>
+                                <option value="Server">Server</option>
+                                <option value="Television">Television</option>
+                                <option value="Washers">Washers</option>
+                                <option value="Watch">Watch</option>
+                            </select>
                         </div>
+                    </div>
 
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Title</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="title" placeholder="{{product.name}}" value="{{product.name}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Brand</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="brand" placeholder="{{product.brand}}" value="{{product.brand}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Category</label>
+                        <div class="col-sm-10">
+                            <select name="category" class="form-control">
+                                <option selected>{{product.category}}</option>
+                                {% for category in categories %}
+                                <option value="{{ category.pk }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Color</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="color" placeholder="{{product.color}}" value="{{product.color}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Price</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="price" placeholder="{{product.price}}" value="{{product.price}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Quantity</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="quantity" placeholder="{{product.quantity}}" value="{{product.quantity}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Unit</label>
+                        <div class="col-sm-10">
+                            <select name="unit" class="form-control">
+                                <option selected>{{product.unit}}</option>
+                                <option>Gram</option>
+                                <option>Kilogram</option>
+                                <option>Tonnes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Weight</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="weight" placeholder="{{product.weight}}" value="{{product.weight}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Image</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" name="image" placeholder="product.image" value="{{product.image}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label text-success">Description</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="description" rows="10">{{product.description}}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+
+                        <button class="btn btn-success" type="submit">Submit</button>
+                        <a class="btn btn-success" href="{% url 'my_product' %}">Back to My Product</a>
+
+                    </div>
+
+                </form>
+            </div>
         </div>
         <!-- page end-->
     </section>

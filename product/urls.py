@@ -35,5 +35,5 @@ urlpatterns = [
     path('bed/', views.bed_view, name='bed'),
     path('washer/', views.washers_view, name='washer'),
     path('fan/', views.fans_view, name='fan'),
-    path('dashboard', views.dashboard, name='dashboard'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]

@@ -25,21 +25,20 @@ Banks = (
     ('Union Bank of Nigeria', 'Union Bank of Nigeria'),
     ('United Bank for Africa', 'United Bank for Africa'),
     ('Unity Bank Plc', 'Unity Bank Plc'),
-    ('Wema Bank','Wema Bank'),
-    ('Zenith Bank','Zenith Bank')
+    ('Wema Bank', 'Wema Bank'),
+    ('Zenith Bank', 'Zenith Bank')
 )
 
 
 class AccountForm(forms.ModelForm):
-    bank_name = forms.ChoiceField(label='', choices=Banks, widget=forms.Select(attrs={'class': 'form-control',
-                                                                                      'placeholder': 'Bank Name'}))
-    account_name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                           'placeholder': 'Account Name'}))
-    account_number = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'class': 'form-control',
-                                                                                  'placeholder': 'Account Number'}))
-    bvn = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder':
-                                                                       'BVN Number'}))
 
     class Meta:
         model = Account
-        fields = ('bank_name', 'account_name', 'account_number', 'bvn', )
+        fields = ('bank_name', 'account_name', 'account_number', )
+
+
+class ShopperAccountForm(forms.ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ('employer', 'employer_address', 'job_role', 'salary', 'bank_name', 'account_name', 'account_number', )
