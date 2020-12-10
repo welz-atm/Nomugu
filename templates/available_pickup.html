@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load bootstrap_pagination %}
 
 
 <!--main content start-->
@@ -21,26 +22,24 @@
                             <th><i class="icon_profile"></i> Image</th>
                             <th><i class="icon_calendar"></i> Name</th>
                             <th><i class="icon_calendar"></i> Quantity</th>
-                            <th><i class="icon_calendar"></i> Weight</th>
-                            <th><i class="icon_pin_alt"></i> Category</th>
-                            <th><i class="icon_pin_alt"></i> Price</th>
-                            <th><i class="icon_calendar"></i> Status</th>
+                            <th><i class="icon_calendar"></i> Weight(KG)</th>
+                            <th><i class="icon_calendar"></i> Pick-up Status</th>
                             <th><i class="icon_pin_alt"></i> Action</th>
                         </tr>
                         {% for product in pick_ups %}
                         <tr>
-                            <td>{{ product.date_created }}</td>
-                            <td><img src='{{product.image.url}}' alt='{{ product.title }}' class="img-thumbnail" height="100" width="100"></td>
-                            <td>{{ product.name }}</td>
+                            <td>{{ product.order_date }}</td>
+                            <td><img src='{{product.product.image.url}}' alt='{{ product.product.title }}' class="img-thumbnail" height="100" width="100"></td>
+                            <td>{{ product.product.name }}</td>
                             <td>{{ product.quantity }}</td>
+                            <td>
+                                <a href="#" data-original-title="{{ product.get_pickup_status }}" data-content="{{ product.get_pickup_status }}" data-placement="top" data-trigger="hover" class="btn btn-info popovers">{{ product.get_pickup_status }}</a>
+                            </td>
                             <td>{{ product.get_weight }}</td>
-                            <td>{{ product.category }}KG</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ product.status }}</td>
 
                             <td>
                                 <div class="btn-group">
-                                    <a class="btn btn-primary" href="{% url 'view_order' pk=product.pk %}" data-toggle="tooltip" data-placement="top" title="View Order"><i class="icon_check_alt2"></i></a>
+                                    <a class="btn " href="{% url 'view_order' pk=product.pk %}" data-toggle="tooltip" data-placement="top" title="View Order"><i class="fa fa-eye"></i></a>
 
                                 </div>
                             </td>
@@ -50,6 +49,9 @@
                         </tbody>
 
                     </table>
+                <div class="text text-center">
+                    {% bootstrap_paginate pick_ups range=10 show_prev_next="false" show_first_last="true" %}
+                </div>
             </div>
         </div>
         <!-- page end-->

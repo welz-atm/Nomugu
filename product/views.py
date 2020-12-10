@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from .models import Product, Category
 from django.contrib import messages
 from .forms import ProductForm
@@ -17,6 +18,9 @@ def search_view(request):
     if search_product is not None:
         qs = qs.filter((Q(title__contains=search_product) | Q(name__exact=search_product) | Q(category=search_product)))
         if qs.exists():
+            paginator = Paginator(qs, 10)
+            page_number = request.GET.get('page')
+            qs = paginator.get_page(page_number)
             context = {
                    'qs': qs
                   }
@@ -38,6 +42,9 @@ def dashboard(request):
 def my_product(request):
     if request.user.is_merchant is True:
         products = Product.objects.filter(merchant=request.user)
+        paginator = Paginator(products, 10)
+        page_number = request.GET.get('page')
+        products = paginator.get_page(page_number)
         context = {
             'products': products
         }
@@ -110,6 +117,7 @@ def edit_product(request, pk):
             form = ProductForm(instance=product)
         context = {
             'form': form,
+            'product': product,
             'categories': categories
         }
         return render(request, 'edit_productform.html', context)
@@ -167,6 +175,9 @@ def laptops_list(request):
         qs = qs.filter(title__contains=series)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -203,6 +214,9 @@ def servers_list(request):
         qs = qs.filter(title__contains=series)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -239,6 +253,9 @@ def desktops_list(request):
         qs = qs.filter(title__contains=series)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -271,6 +288,9 @@ def network_list(request):
         qs = qs.filter(title__contains=series)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -299,6 +319,9 @@ def android_list(request):
         qs = qs.filter(title__contains=ram)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -308,7 +331,7 @@ def android_list(request):
 
 
 def ios_list(request):
-    qs= Product.objects.filter(name='IOS').order_by('id').select_related('merchant',)
+    qs = Product.objects.filter(name='IOS').order_by('id').select_related('merchant',)
     brand = request.GET.get('brand')
     proc = request.GET.get('proc')
     ram = request.GET.get('ram')
@@ -335,6 +358,9 @@ def ios_list(request):
         qs = qs.filter(title__contains=series)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -371,6 +397,9 @@ def clothing_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -407,6 +436,9 @@ def footwear_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -443,6 +475,9 @@ def fragrance_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -475,6 +510,9 @@ def watch_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -511,6 +549,9 @@ def fabrics_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -539,6 +580,9 @@ def tv_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -571,6 +615,9 @@ def ac_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -599,6 +646,9 @@ def audio_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -631,6 +681,9 @@ def refrigerator_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -663,6 +716,9 @@ def freezer_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -691,6 +747,9 @@ def cookers_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -719,6 +778,9 @@ def microwave_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -743,6 +805,9 @@ def dispenser_view(request):
         qs = qs.filter(brand__exact=brand)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -767,6 +832,9 @@ def blender_view(request):
         qs = qs.filter(brand__exact=brand)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -795,6 +863,9 @@ def kettle_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -827,6 +898,9 @@ def washers_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -855,6 +929,9 @@ def furniture_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -887,6 +964,9 @@ def fans_view(request):
         qs = qs.filter(title__contains=type)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }
@@ -919,6 +999,9 @@ def bed_view(request):
         qs = qs.filter(title__contains=size)
 
     if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
         context = {
                    'filter': qs
                   }

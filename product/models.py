@@ -41,6 +41,12 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def stock_left(self, pk):
+        product = Product.objects.get(pk=pk)
+        order = OrderItem.objects.get(product=product, ordered=True)
+        total = product.quantity - order.quantity
+        return total
+
 
 
 

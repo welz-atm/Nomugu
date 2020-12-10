@@ -13,6 +13,7 @@ urlpatterns = [
     path('available_pickup/', views.available_pickup, name='available_pickup'),
     path('select_order_pickup/<int:pk>/', views.select_order_pickup, name='order_pickup'),
     path('my_orders/', views.my_orders, name='my_orders'),
+    path('my_order/', views.shopper_order, name='shopper_order'),
     path('generate_invoice/<int:pk>/', views.generate_invoice, name='generate_invoice'),
     path('my_invoice/<int:pk>/', views.invoice_list, name='invoices'),
 ]

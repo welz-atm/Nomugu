@@ -4,6 +4,7 @@ from .forms import OrderItemForm, OrderCreateForm
 from authentication.decorators import merchant_required, shipper_required
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from product.models import Product
 import datetime
@@ -12,7 +13,7 @@ import datetime
 @login_required()
 def add_cart(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    order_item, created = OrderItem.objects.get_or_create(product=product, user=request.user)
+    order_item = OrderItem.objects.create(product=product, user=request.user)
     orders = Order.objects.filter(user=request.user, ordered=False)
     if orders.exists():
         order = orders[0]
@@ -43,6 +44,9 @@ def my_cart(request):
             created_form = form.save(commit=False)
             created_form.detail_created = True
             created_form.user = request.user
+            order_items = order.products.update(address=created_form.address, city=created_form.city, state=created_form.state)
+            for item in order_items:
+                item.save()
             created_form.save()
             redirect('my_cart')
     else:
@@ -89,33 +93,69 @@ def cart_count(request):
     return render(request, 'cart.html', context)
 
 
+@login_required()
 def my_orders(request):
     orders = OrderItem.objects.filter(product__merchant=request.user, ordered=True).order_by('-order_date')
+    paginator = Paginator(orders, 10)
+    page_number = request.GET.get('page')
+    orders = paginator.get_page(page_number)
     context = {
-               'orders': orders
-              }
-
+        'orders': orders
+    }
     return render(request, 'my_orders.html', context)
 
 
-def delivered_orders(request):
-    if request.user.is_shipper:
-        orders = OrderItem.objects.filter(shipper=request.user, delivered=True).order_by('-order_date')
-        context = {
-            'orders': orders
-        }
-        return render(request, 'delivered_orders.html', context)
+@login_required()
+def shopper_order(request):
+    if request.user.is_shopper:
+        orders = OrderItem.objects.filter(user=request.user, ordered=True).order_by('-order_date').select_related(
+            'user')
+        if orders.exists():
+            paginator = Paginator(orders, 10)
+            page_number = request.GET.get('page')
+            orders = paginator.get_page(page_number)
+            context = {
+                'orders': orders
+            }
+            return render(request, 'shopper_order.html', context)
+        else:
+            return render(request, '404.html')
     else:
         raise PermissionDenied
 
 
+@login_required()
+def delivered_orders(request):
+    if request.user.is_shipper:
+        orders = OrderItem.objects.filter(shipper=request.user, delivered=True).order_by('-order_date')
+        if orders.exists():
+            paginator = Paginator(orders, 10)
+            page_number = request.GET.get('page')
+            orders = paginator.get_page(page_number)
+            context = {
+                'orders': orders
+            }
+            return render(request, 'delivered_orders.html', context)
+        else:
+            return render(request, '404.html')
+    else:
+        raise PermissionDenied
+
+
+@login_required()
 def picked_up_orders(request):
     if request.user.is_shipper:
         orders = OrderItem.objects.filter(shipper=request.user, picked=True).order_by('-order_date')
-        context = {
-            'orders': orders
-        }
-        return render(request, 'picked_up_orders.html', context)
+        if orders.exists():
+            paginator = Paginator(orders, 10)
+            page_number = request.GET.get('page')
+            orders = paginator.get_page(page_number)
+            context = {
+                'orders': orders
+            }
+            return render(request, 'picked_up_orders.html', context)
+        else:
+            return render(request, '404.html')
     else:
         raise PermissionDenied
 
@@ -124,18 +164,27 @@ def picked_up_orders(request):
 def available_pickup(request):
     if request.user.is_shipper:
         pick_ups = OrderItem.objects.filter(ordered=True, picked=False).select_related('user', 'product')
+        paginator = Paginator(pick_ups, 10)
+        page_number = request.GET.get('page')
+        pick_ups = paginator.get_page(page_number)
         context = {
             'pick_ups': pick_ups
         }
         return render(request, 'available_pickup.html', context)
     elif request.user.is_admin:
         pick_ups = OrderItem.objects.filter(ordered=True, picked=False).select_related('user', 'product')
+        paginator = Paginator(pick_ups, 10)
+        page_number = request.GET.get('page')
+        pick_ups = paginator.get_page(page_number)
         context = {
             'pick_ups': pick_ups
         }
         return render(request, 'available_pickup.html', context)
     elif request.user.is_merchant:
         pick_ups = OrderItem.objects.filter(ordered=True, picked=False).select_related('user', 'product')
+        paginator = Paginator(pick_ups, 10)
+        page_number = request.GET.get('page')
+        pick_ups = paginator.get_page(page_number)
         context = {
             'pick_ups': pick_ups
         }
@@ -153,9 +202,9 @@ def select_order_pickup(request, pk):
             order_item.shipper = request.user
             order_item.save()
             context = {
-              'order_item': order_item
+                'order_item': order_item
             }
-            return render(request, 'pickup_order.html', context)
+            return render(request, 'view_order.html', context)
         else:
             messages.success(request, 'This order has been selected.')
             return redirect('available_pickup')
@@ -163,14 +212,17 @@ def select_order_pickup(request, pk):
         raise PermissionDenied
 
 
+@login_required()
 def view_order(request, pk):
     order_item = OrderItem.objects.get(pk=pk)
     if request.user.is_shipper:
-        order = Order.objects.get(user=order_item.user.pk)
-        orders = order.products.filter(product=order_item.product.pk)
         context = {
-           'order_item': order_item,
-           'orders': orders
+            'order_item': order_item,
+        }
+        return render(request, 'view_order.html', context)
+    elif request.user.is_shopper:
+        context = {
+            'order_item': order_item,
         }
         return render(request, 'view_order.html', context)
     else:
@@ -196,17 +248,20 @@ def generate_invoice(request, pk):
     order = get_object_or_404(Order, pk=pk)
     invoice = Invoices.objects.create(owner=order.first_name, order=order)
     context = {
-               'invoice': invoice
-              }
+        'invoice': invoice
+    }
     return render(request, 'invoice.html', context)
 
 
 @login_required()
 def invoice_list(request, pk):
     order = get_object_or_404(OrderItem, pk=pk)
-    invoice = Invoices.objects.filter(order=order.product.merchant).select_related('Order', 'OrderItem')
+    invoices = Invoices.objects.filter(order=order.product.merchant).select_related('Order', 'OrderItem')
+    paginator = Paginator(invoices, 10)
+    page_number = request.GET.get('page')
+    invoices = paginator.get_page(page_number)
     context = {
-               'invoice': invoice
-              }
+        'invoices': invoices
+    }
 
     return render(request, 'all_invoices.html', context)

@@ -18,28 +18,23 @@
 
                         <tbody>
                         <tr>
-                            <th><i class="icon_profile"></i> Product Image</th>
                             <th><i class="icon_profile"></i> Order Date</th>
                             <th><i class="icon_profile"></i> Product</th>
                             <th><i class="icon_profile"></i> Quantity</th>
-                            <th><i class="icon_profile"></i> Required Date</th>
-                            <th><i class="icon_profile"></i> Order Status</th>
                             <th><i class="icon_profile"></i> Customer</th>
+                            <th><i class="icon_profile"></i> Order Status</th>
                         </tr>
                         {% for order in orders %}
                         <tr>
-                            <td><img src='{{order.product.image.url}}' alt='{{ order.product.title }}' class="img-thumbnail" height="220" width="220"></td>
                             <td>{{ order.order_date }}</td>
                             <td>{{ order.product }}</td>
                             <td>{{ order.quantity }}</td>
-                            <td>{{ order.required_date }}</td>
-                            <td>{{ order.order_status }}</td>
-                            <td>{{ order.user.get_full_name }}</td>
+                            <td>{{ order.get_shipper }}</td>
+                            <td>{{ order.get_status }}</td>
 
                             <td>
                                 <div class="btn-group">
-                                    <a class="btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Approve Order"><i class="icon_plus_alt2"></i></a>
-                                    <a class="btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Generate Invoice"><i class="icon_plus_alt2"></i></a>
+                                    <a class="btn btn-success" href="{% url 'view_order' pk=order.pk %}" data-toggle="tooltip" data-placement="top" title="View Order"><i class="icon_plus_alt2"></i></a>
 
                                 </div>
                             </td>
@@ -52,7 +47,6 @@
                 <div class="text text-center">
                     {% bootstrap_paginate orders range=10 show_prev_next="false" show_first_last="true" %}
                 </div>
-
             </div>
         </div>
         <!-- page end-->

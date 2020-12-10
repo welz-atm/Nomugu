@@ -6,21 +6,30 @@
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-        <h3 class="page-header"><i class="fa fa-table"></i> Order</h3>
+        <h3 class="page-header"><i class="fa fa-table"></i>View Order</h3>
         <!-- page start-->
 
 
         <div class="row">
             <div class="col-lg-12">
 
-                    <p> <span>First Name </span>: {{order_item.first_name}}</p>
-                        <p><span>Last Name </span>: {{order_item.last_name}}</p>
-                        <p><span>Email </span>: {{order_item.email}}</p>
-                        <p><span>Telephone </span>: {{order_item.telephone}}</p>
-                        <p><span>Address</span>: {{order_item.address_name}}</p>
+                    <div class="text text-center ">
+                        <p> <span>First Name </span>: {{order_item.user.first_name}}</p>
+                        <p><span>Last Name </span>: {{order_item.user.last_name}}</p>
+                        <p><span>Email </span>: {{order_item.user.email}}</p>
+                        <p><span>Telephone </span>: {{order_item.user.telephone}}</p>
+                        <p><span>Address</span>: {{order_item.address}}</p>
                         <p><span>City</span>: {{order_item.city}}</p>
                         <p><span>State </span>: {{order_item.state}}</p>
-                        <p><span>Amount </span>: {{order_item.state}}</p>
+                        <br>
+                        {% if order_item.picked %}
+                        <a class='btn btn-success' href="#">Picked</a>
+                        {% else %}
+                        <a class='btn btn-success' href="{% url 'order_pickup' pk=order_item.pk %}">Accept</a>
+                        {% endif %}
+
+                        <a class='btn btn-danger' href="{% url 'available_pickup' %}">Back</a>
+                    </div>
 
             </div>
         </div>

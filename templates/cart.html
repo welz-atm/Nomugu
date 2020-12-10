@@ -8,135 +8,6 @@
         <h3 class="page-header"><i class="fa fa-users"></i> My Cart</h3>
         <!-- page start-->
 
-        {% if order.detail_created %}
-        <div class="text-left">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal2">
-                <h4>View Shipping Address</h4>
-            </button>
-        </div>
-
-        <!-- Modal -->
-        <div id="myModal2" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Shipping Address</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p><span>First </span>: {{order.first_name}}</p>
-                        <p><span>Last </span>: {{order.last_name}}</p>
-                        <p><span>Email </span>: {{order.email}}</p>
-                        <p><span>Telephone </span>: {{order.telephone}}</p>
-                        <p><span>Address </span>: {{order.address}}</p>
-                        <p><span>City </span>: {{order.city}}</p>
-                        <p><span>State </span>: {{order.state}}</p>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        {% else %}
-        <div class="text-left">
-            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">
-                <h4>Shipping Address/Info</h4>
-            </button>
-        </div>
-
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Shipping Address</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal " method="post">
-                            {% csrf_token %}
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-success">First Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="first_name"
-                                           placeholder="First Name">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-success">Last Name</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="last_name"
-                                           placeholder="Last Name">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-success">Telephone</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="telephone" placeholder="Telephone">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-success">Email</label>
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" name="email" placeholder="Email">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-success">Delivery Address</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="address"
-                                           placeholder="Delivery Address">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-success">City</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="city" placeholder="City">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-success">State</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="state" placeholder="State">
-                                </div>
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                </button>
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        {% endif %}
-
 
         <div class="row">
             <div class="col-lg-12">
@@ -180,7 +51,7 @@
                         <td class="emptyrow"></td>
                         <td class="emptyrow"></td>
                         <td class="emptyrow text-center"><strong>Delivery Fee</strong></td>
-                        <td class="emptyrow text-right">{{ order.pickup_price }}</td>
+                        <td class="emptyrow text-right"> order.pickup_price</td>
                         <td class="emptyrow"></td>
                     </tr>
                     <tr>
@@ -195,6 +66,133 @@
                     </tbody>
                 </table>
                 <div class="text-right">
+                    {% if order.detail_created %}
+                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal2">
+                        View Shipping Address
+                    </a>
+
+                    <!-- Modal -->
+                    <div id="myModal2" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Shipping Address</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p><span>First </span>: {{order.first_name}}</p>
+                                    <p><span>Last </span>: {{order.last_name}}</p>
+                                    <p><span>Email </span>: {{order.email}}</p>
+                                    <p><span>Telephone </span>: {{order.telephone}}</p>
+                                    <p><span>Address </span>: {{order.address}}</p>
+                                    <p><span>City </span>: {{order.city}}</p>
+                                    <p><span>State </span>: {{order.state}}</p>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% else %}
+                    <a class="btn btn-success " data-toggle="modal" data-target="#myModal">
+                        Shipping Address/Info
+                    </a>
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Shipping Address</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal " method="post">
+                                        {% csrf_token %}
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label text-success">First Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="first_name"
+                                                       placeholder="First Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label text-success">Last Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="last_name"
+                                                       placeholder="Last Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label text-success">Telephone</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="telephone"
+                                                       placeholder="Telephone">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label text-success">Email</label>
+                                            <div class="col-sm-10">
+                                                <input type="email" class="form-control" name="email"
+                                                       placeholder="Email">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label text-success">Delivery Address</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="address"
+                                                       placeholder="Delivery Address">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label text-success">City</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="city" placeholder="City">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label text-success">State</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="state"
+                                                       placeholder="State">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% endif %}
                     <a class='btn btn-primary' href="{% url 'home' %}">Continue Shopping</a>
                     {% if order.detail_created %}
                     <a class='btn btn-success' href="{% url 'make_payment' pk=order.pk %}">Proceed to Checkout</a>

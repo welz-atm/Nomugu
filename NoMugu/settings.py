@@ -12,23 +12,29 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from django.urls import reverse_lazy
+from dotenv import load_dotenv
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+env_path = Path(".") / ".env"
+load_dotenv(dotenv_path=env_path)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!n(=$0&vn-opl_jdam=n^+_ad!!925s5!ot1zq+&*g&6t@^u-c'
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
-PAYSTACK_SECRET_KEY = 'sk_test_dd3f758ca7a44ab5ce1ba15d023947238d9c2026'
+PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
+
 
 
 # Application definition
@@ -48,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'phonenumber_field',
+    'bootstrap_pagination',
 ]
 
 
@@ -60,6 +67,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 MIDDLEWARE = [
+#    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -137,10 +145,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static/'),
+  os.path.join(BASE_DIR, 'static'),
 )
+
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

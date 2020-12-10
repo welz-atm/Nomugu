@@ -9,6 +9,8 @@ from paystackapi.verification import Verification
 from paystackapi.subaccount import SubAccount
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from paystackapi.paystack import Paystack
 
 
 def create_account(request):
@@ -18,11 +20,12 @@ def create_account(request):
             if form.is_valid():
                 account = form.save(commit=False)
                 account.user = request.user
-                response = Verification.verify_account(account.account_number)
+                paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
+                response = paystack.verification.verify_account(account.account_number)
                 verified_name = response['data']['account_name']
                 verified_bank_id = response['data']['bank_id']
                 if account.account_name == verified_name and account.bank_name == verified_bank_id:
-                    SubAccount.create(business_name=account.account_name, settlement_bank=account.bank_name,
+                    paystack.subaccount.create(business_name=account.account_name, settlement_bank=account.bank_name,
                                       account_number=account.account_number, percentage_charge='0.97')
                     account.account_id = response['data']['id']
                     account.save()
@@ -41,12 +44,14 @@ def create_account(request):
             if form.is_valid():
                 account = form.save(commit=False)
                 account.user = request.user
-                response = Verification.verify_account(account.account_number)
+                paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
+                response = paystack.verification.verify_account(account.account_number)
                 verified_name = response['data']['account_name']
                 verified_bank_id = response['data']['bank_id']
                 if account.account_name == verified_name and account.bank_name == verified_bank_id:
-                    response = SubAccount.create(business_name=account.account_name, settlement_bank=account.bank_name,
-                                                 account_number=account.account_number, percentage_charge='0.97')
+                    response = paystack.subaccount.create(business_name=account.account_name,
+                                                          settlement_bank=account.bank_name,
+                                                          account_number=account.account_number, percentage_charge='0.97')
                     account.account_id = response['data']['id']
                     account.save()
                     return redirect('dashboard')
@@ -65,7 +70,8 @@ def create_account(request):
                 if form.is_valid():
                     account = form.save(commit=False)
                     account.user = request.user
-                    response = Verification.verify_account(account.account_number)
+                    paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
+                    response = paystack.verification.verify_account(account.account_number)
                     verified_name = response['data']['account_name']
                     verified_bank_id = response['data']['bank_id']
                     if account.account_name == verified_name and account.bank_name == verified_bank_id:
@@ -95,8 +101,9 @@ def edit_account(request, pk):
             if form.is_valid():
                 account = form.save(commit=False)
                 account.user = request.user
-                SubAccount.update(account.account_id, business_name=account.account_name, settlement_bank=account.bank_name,
-                                  account_number=account.account_number, percentage_charge='0.97')
+                paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
+                paystack.subaccount.update(account.account_id, business_name=account.account_name, settlement_bank=account.bank_name,
+                                           account_number=account.account_number, percentage_charge='0.97')
                 account.save()
                 messages.success(request, 'Account updated successfully.')
                 return redirect('account_details')
@@ -131,12 +138,14 @@ def account_details(request):
 
 def make_payment(request, pk):
     order = get_object_or_404(Order, pk=pk)
-    amount = order.final_price()
-    response = Transaction.initialize(amount=amount, email=request.user.email,
-                                      callback_url='http://localhost:8000/payment/my_payment/')
+    amount = order.final_price() * 100
+    paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
+    response = paystack.transaction.initialize(amount=amount, email=request.user.email,
+                                               callback_url='http://localhost:8000/payment/my_payment/')
     url = response['data']['authorization_url']
     reference = response['data']['reference']
-    payment = Payment.objects.create(user=request.user, reference=reference, amount=amount, order=order)
+    amount_formatted = amount/100
+    payment = Payment.objects.create(user=request.user, reference=reference, amount=amount_formatted, order=order)
     payment.save()
     return redirect(url)
 
@@ -158,31 +167,32 @@ def success_page(request):
 def my_payment(request):
     try:
         order = Order.objects.get(user=request.user, ordered=False)
-        payment = Payment.objects.get(order=order.pk)
-        response = Transaction.verify(reference=payment.reference)
-        payment.user = request.user
-        payment.amount = response['data']['amount']
-        payment.payment_date = response['data']['transaction_date']
-        payment.status = response['data']['status']
-        payment.channel = response['data']['channel']
-        payment.card_type = response['data']['authorization']['card_type']
-        payment.bank_name = response['data']['authorization']['bank']
-        payment.save()
-        if payment.status == 'Success':
-            order_item = order.products.all()
-            order_item.update(ordered=True)
-            for item in order_item:
-                item.save()
-        order.ordered = True
-        order.save()
     except Order.DoesNotExist:
         payments = Payment.objects.filter(user=request.user).order_by('-payment_date').select_related('user', 'order')
         context = {
             'payments': payments
         }
         return render(request, 'payment_verification.html', context)
-    payments = Payment.objects.filter(user=request.user).order_by('-payment_date').select_related('user', 'order')
+
+    payments = Payment.objects.filter(order=order).order_by('payment_date')
+    payment = payments[0]
+    paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
+    response = paystack.transaction.verify(reference=payment.reference)
+    payment.user = request.user
+    payment.amount = response['data']['amount']
+    payment.payment_date = response['data']['transaction_date']
+    payment.status = response['data']['status']
+    payment.channel = response['data']['channel']
+    payment.card_type = response['data']['authorization']['card_type']
+    payment.bank_name = response['data']['authorization']['bank']
+    payment.save()
+    order_items = order.products.all()
+    order_items.update(ordered=True)
+    for item in order_items:
+        item.save()
+    order.ordered = True
+    order.save()
     context = {
-        'payments': payments
+      'payment': payment
     }
-    return render(request, 'payment_verification.html', context)
+    return render(request, 'payment_verifications.html', context)

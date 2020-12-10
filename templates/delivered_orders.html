@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load bootstrap_pagination %}
 
 
 <!--main content start-->
@@ -22,20 +23,18 @@
                             <th><i class="icon_calendar"></i> Name</th>
                             <th><i class="icon_calendar"></i> Quantity</th>
                             <th><i class="icon_calendar"></i> Weight</th>
-                            <th><i class="icon_pin_alt"></i> Category</th>
-                            <th><i class="icon_pin_alt"></i> Price</th>
                             <th><i class="icon_calendar"></i> Status</th>
                         </tr>
                         {% for product in orders %}
                         <tr>
-                            <td>{{ product.date_created }}</td>
-                            <td><img src='{{product.image.url}}' alt='{{ product.title }}' class="img-thumbnail" height="100" width="100"></td>
-                            <td>{{ product.name }}</td>
+                            <td>{{ product.order_date }}</td>
+                            <td><img src='{{product.product.image.url}}' alt='{{ product.title }}' class="img-thumbnail" height="100" width="100"></td>
+                            <td>{{ product.product.name }}</td>
                             <td>{{ product.quantity }}</td>
                             <td>{{ product.get_weight }}</td>
-                            <td>{{ product.category }}KG</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ product.status }}</td>
+                            <td>
+                                <a href="#" data-original-title="{{ product.get_status }}" data-content="{{ product.get_status }}" data-placement="top" data-trigger="hover" class="btn btn-info popovers">{{ product.get_status }}</a>
+                            </td>
                         </tr>
                          {% endfor %}
 
@@ -45,6 +44,9 @@
                 </section>
             </div>
         </div>
+    <div class="text text-center">
+                    {% bootstrap_paginate orders range=10 show_prev_next="false" show_first_last="true" %}
+                </div>
         <!-- page end-->
     </section>
 </section>

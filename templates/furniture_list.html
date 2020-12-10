@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load bootstrap_pagination %}
 
 
 <!--main content start-->
@@ -126,6 +127,9 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="text text-center">
+                    {% bootstrap_paginate filter range=10 show_prev_next="false" show_first_last="true" %}
+                </div>
         <!-- page end-->
     </section>
 </section>

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load bootstrap_pagination %}
 
 
 <!--main content start-->
@@ -22,36 +23,20 @@
                             <th><i class="icon_calendar"></i> Name</th>
                             <th><i class="icon_calendar"></i> Quantity</th>
                             <th><i class="icon_calendar"></i> Weight</th>
-                            <th><i class="icon_pin_alt"></i> Category</th>
-                            <th><i class="icon_pin_alt"></i> Price</th>
                             <th><i class="icon_calendar"></i> Status</th>
-                            <th><i class="icon_calendar"></i> Action</th>
                         </tr>
                         {% for product in orders %}
                         <tr>
-                            <td>{{ product.date_created }}</td>
-                            <td><img src='{{product.image.url}}' alt='{{ product.title }}' class="img-thumbnail" height="100" width="100"></td>
-                            <td>{{ product.name }}</td>
+                            <td>{{ product.order_date }}</td>
+                            <td><img src='{{product.product.image.url}}' alt='{{ product.title }}' class="img-thumbnail" height="100" width="100"></td>
+                            <td>{{ product.product.name }}</td>
                             <td>{{ product.quantity }}</td>
                             <td>{{ product.get_weight }}KG</td>
-                            <td>{{ product.category }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>
-                                {% if product.picked %}
-                                    <span class="label label-primary">Picked</span>
-                                {% elif product.delivered %}
-                                    <span class="label label-success">Delivered</span>
-                                {% else %}
-                                    <span class="label label-warning">En-route</span>
-                                {% endif %}
-                            </td>
 
                             <td>
-                                {% if product.delivered %}
-                                    <a class="btn btn-primary" href="#"><i class="icon_check_alt2"></i></a>
-                                {% else %}
-                                    <a href="{% url 'product_delivered' pk=product.pk %}" data-original-title="Mark as Delivered" data-content="Mark as Delivered" data-placement="top" data-trigger="hover" class="btn btn-info popovers">Mark as Delivered</a>
-                                {% endif %}
+
+                                    <a href="{% url 'product_delivered' pk=product.pk %}" data-original-title="{{ product.get_status }}" data-content="{{ product.get_status }}" data-placement="top" data-trigger="hover" class="btn btn-info popovers">{{ product.get_status }}</a>
+
                             </td>
                         </tr>
                          {% endfor %}
@@ -61,6 +46,9 @@
                     </table>
             </div>
         </div>
+        <div class="text text-center">
+                    {% bootstrap_paginate orders range=10 show_prev_next="false" show_first_last="true" %}
+                </div>
         <!-- page end-->
     </section>
 </section>
