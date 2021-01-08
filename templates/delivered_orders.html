@@ -7,7 +7,7 @@
 <!--main content start-->
 <section id="main-content">
     <section class="wrapper">
-        <h3 class="page-header"><i class="fa fa-table"></i> My Products</h3>
+        <h3 class="page-header"><i class="fa fa-table"></i> Delivered Products</h3>
         <!-- page start-->
 
 
@@ -28,7 +28,7 @@
                         {% for product in orders %}
                         <tr>
                             <td>{{ product.order_date }}</td>
-                            <td><img src='{{product.product.image.url}}' alt='{{ product.title }}' class="img-thumbnail" height="100" width="100"></td>
+                            <td><img src='{{product.product.image_one.url}}' alt='{{ product.title }}' class="img-thumbnail" height="100" width="100"></td>
                             <td>{{ product.product.name }}</td>
                             <td>{{ product.quantity }}</td>
                             <td>{{ product.get_weight }}</td>

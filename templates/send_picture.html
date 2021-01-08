@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load bootstrap_pagination %}
+
+<style>
+#my_camera{
+ width: 500px;
+ height: 340px;
+ border: 1px solid black;
+ margin: auto;
+}
+
+#results{
+ width: 320px;
+ height: 240px;
+ margin: auto;
+}
+
+
+</style>
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <h3 class="page-header"><i class="fa fa-table"></i> Picked Orders</h3>
+        <!-- page start-->
+
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div id="my_camera"></div>
+
+                <!-- -->
+                <br>
+                <div class="text text-center">
+                    <input type=button value="Start Camera" onClick="configure()">
+                    <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                    <input type=button value="Save Snapshot" onClick="saveSnap()">
+                </div>
+
+                <div id="results"></div>
+
+
+            </div>
+        </div>
+        <!-- page end-->
+    </section>
+</section>
+<!--main content end-->
+
+<!-- Script -->
+
+
+<!-- Code to handle taking the snapshot and displaying it locally -->
+<script language="JavaScript">
+
+ // Configure a few settings and attach camera
+ function configure(){
+  Webcam.set({
+   width: 500,
+   height: 340,
+   image_format: 'jpeg',
+   jpeg_quality: 100
+  });
+  Webcam.attach( '#my_camera' );
+ }
+ // A button for taking snaps
+
+ function take_snapshot() {
+
+  // take snapshot and get image data
+  Webcam.snap( function(data_uri) {
+  // display results in page
+  document.getElementById('results').innerHTML =
+   '<img id="imageprev" src="'+data_uri+'"/>';
+  } );
+
+  Webcam.reset();
+ }
+
+function saveSnap(){
+ // Get base64 value from <img id='imageprev'> source
+ var base64image = document.getElementById("imageprev").src;
+
+ Webcam.upload( base64image, 'upload.php', function(code, text) {
+  console.log('Save successfully');
+  //console.log(text);
+ });
+
+}
+
+
+</script>
+
+
+{% endblock %}

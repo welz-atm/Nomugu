@@ -4,7 +4,7 @@ from .models import Product, Category
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'name', 'quantity', 'description', 'price', 'category', 'merchant')
+    list_display = ('title', 'name', 'quantity', 'description', 'price', 'category', 'merchant', 'view_product')
     list_filter = ('merchant', 'price', 'category')
 
 

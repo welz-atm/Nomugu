@@ -8,12 +8,12 @@ class InvoiceAdmin(admin.ModelAdmin):
 
 
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('product', 'quantity', 'user', 'order_date', 'ordered', )
+    list_display = ('product', 'quantity', 'user', 'order_date', 'ordered', 'address', 'state', )
     list_filter = ('product', 'quantity', 'user',)
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('order_date', 'city', 'user', 'ordered', )
+    list_display = ('order_date', 'address', 'state', 'user', 'ordered', )
 
 
 admin.site.register(Invoices, InvoiceAdmin)

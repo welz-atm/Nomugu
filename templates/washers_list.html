@@ -27,54 +27,56 @@
                         <div class="modal-body">
 
 
-                             <form method="get">
-                            <div class="form-group">
-                                <label for="brand">Brand:</label>
-                                <select name="brand" class="form-control " id="brand">
-                                    <option >Choose...</option>
-                                    <option value="LG">LG</option>
-                                    <option value="Haier Thermocool">Haier Thermocool</option>
-                                    <option value="Scanfrost">Scanfrost</option>
-                                    <option value="Nexus">Nexus</option>
-                                </select>
-                            </div>
+                            <form method="get">
+                                <div class="form-group">
+                                    <label for="brand">Brand:</label>
+                                    <select name="brand" class="form-control " id="brand">
+                                        <option>Choose...</option>
+                                        <option value="LG">LG</option>
+                                        <option value="Haier Thermocool">Haier Thermocool</option>
+                                        <option value="Scanfrost">Scanfrost</option>
+                                        <option value="Nexus">Nexus</option>
+                                    </select>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="type">Type:</label>
-                                <select name="type" class="form-control" id="type">
-                                    <option selected>Choose...</option>
-                                    <option value="Washing Machine">Cloth Washing Machine</option>
-                                    <option value="Washing Machine">Dishes Washing Machine</option>
-                                </select>
-                            </div>
+                                <div class="form-group">
+                                    <label for="type">Type:</label>
+                                    <select name="type" class="form-control" id="type">
+                                        <option selected>Choose...</option>
+                                        <option value="Washing Machine">Cloth Washing Machine</option>
+                                        <option value="Washing Machine">Dishes Washing Machine</option>
+                                    </select>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="color">Select:</label>
-                                <select name="color" class="form-control" id="color">
-                                    <option selected>Choose...</option>
-                                    <option value="Black">Black</option>
-                                    <option value="Blue">Blue</option>
-                                    <option value="Grey">Grey</option>
-                                    <option value="Silver">Silver</option>
-                                    <option value="Red">Red</option>
-                                    <option value="White">White</option>
-                                </select>
-                            </div>
+                                <div class="form-group">
+                                    <label for="color">Select:</label>
+                                    <select name="color" class="form-control" id="color">
+                                        <option selected>Choose...</option>
+                                        <option value="Black">Black</option>
+                                        <option value="Blue">Blue</option>
+                                        <option value="Grey">Grey</option>
+                                        <option value="Silver">Silver</option>
+                                        <option value="Red">Red</option>
+                                        <option value="White">White</option>
+                                    </select>
+                                </div>
 
-                             <div class="form-group">
-                                <label for="min_price">Min Price:</label>
-                                <input type="number" min=0 class="form-control" id="min_price" placeholder="Min Price" name="min_price">
-                            </div>
+                                <div class="form-group">
+                                    <label for="min_price">Min Price:</label>
+                                    <input type="number" min=0 class="form-control" id="min_price"
+                                           placeholder="Min Price" name="min_price">
+                                </div>
 
-                             <div class="form-group">
-                                <label for="max_price">Max Price:</label>
-                                <input type="number" min=0 class="form-control" id="max_price" placeholder="Max Price" name="max_price">
-                            </div>
+                                <div class="form-group">
+                                    <label for="max_price">Max Price:</label>
+                                    <input type="number" min=0 class="form-control" id="max_price"
+                                           placeholder="Max Price" name="max_price">
+                                </div>
 
-                    <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Apply</button>
-                            </div>
-                    </form>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary">Apply</button>
+                                </div>
+                            </form>
 
 
                         </div>
@@ -96,7 +98,8 @@
                         <div class="row row-sm">
                             <aside class="col-sm-3 ">
                                 <div class="img-wrap">
-                                    <img src='{{product.image.url}}' alt='{{ product.title }}' class="img-thumbnail "
+                                    <img src='{{product.image_one.url}}' alt='{{ product.title }}'
+                                         class="img-thumbnail "
                                          height="220" width="220">
                                 </div>
                             </aside> <!-- col.// -->
@@ -124,8 +127,10 @@
                                     <p>
 
 
-                                    <button type="button" class="btn btn-success btn-md btn-block">View Details</button>
-                                    <button type="button" class="btn btn-success btn-md btn-block">Add to Cart</button>
+                                        <a type="button" class="btn btn-success btn-md btn-block"
+                                           href="{% url 'detail' pk=product.pk %}">View Details</a>
+                                        <a type="button" href="{% url 'add_cart' pk=product.pk %}"
+                                           class="btn btn-success btn-md btn-block">Add to Cart</a>
 
                                 </div> <!-- action-wrap.// -->
                             </aside> <!-- col.// -->
@@ -138,8 +143,8 @@
             </div>
         </div>
         <div class="text text-center">
-                    {% bootstrap_paginate filter range=10 show_prev_next="false" show_first_last="true" %}
-                </div>
+            {% bootstrap_paginate filter range=10 show_prev_next="false" show_first_last="true" %}
+        </div>
         <!-- page end-->
     </section>
 </section>

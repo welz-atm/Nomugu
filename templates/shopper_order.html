@@ -23,6 +23,7 @@
                             <th><i class="icon_profile"></i> Quantity</th>
                             <th><i class="icon_profile"></i> Customer</th>
                             <th><i class="icon_profile"></i> Order Status</th>
+                            <th><i class="icon_profile"></i> Action</th>
                         </tr>
                         {% for order in orders %}
                         <tr>
@@ -30,13 +31,13 @@
                             <td>{{ order.product }}</td>
                             <td>{{ order.quantity }}</td>
                             <td>{{ order.get_shipper }}</td>
-                            <td>{{ order.get_status }}</td>
+                            <td><a href="#" class="btn btn-info">{{ order.get_status }}</a></td>
 
                             <td>
-                                <div class="btn-group">
-                                    <a class="btn btn-success" href="{% url 'view_order' pk=order.pk %}" data-toggle="tooltip" data-placement="top" title="View Order"><i class="icon_plus_alt2"></i></a>
-
-                                </div>
+                                    <a class="btn btn-success" href="{% url 'view_order' pk=order.pk %}">View Order</a>
+                                    {% if order.has_images %}
+                                        <a class="btn btn-warning" href="{% url 'confirm_picture' pk=order.pk %}">Confirm PickUp</a>
+                                    {% endif %}
                             </td>
                         </tr>
                          {% endfor %}

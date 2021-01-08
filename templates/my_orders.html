@@ -28,7 +28,7 @@
                         </tr>
                         {% for order in orders %}
                         <tr>
-                            <td><img src='{{order.product.image.url}}' alt='{{ order.product.title }}' class="img-thumbnail" height="220" width="220"></td>
+                            <td><img src='{{order.product.image_one.url}}' alt='{{ order.product.title }}' class="img-thumbnail" height="220" width="220"></td>
                             <td>{{ order.order_date }}</td>
                             <td>{{ order.product }}</td>
                             <td>{{ order.quantity }}</td>

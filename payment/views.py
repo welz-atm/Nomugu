@@ -144,7 +144,7 @@ def make_payment(request, pk):
                                                callback_url='http://localhost:8000/payment/my_payment/')
     url = response['data']['authorization_url']
     reference = response['data']['reference']
-    amount_formatted = amount/100
+    amount_formatted = amount
     payment = Payment.objects.create(user=request.user, reference=reference, amount=amount_formatted, order=order)
     payment.save()
     return redirect(url)
@@ -164,6 +164,7 @@ def success_page(request):
     return render(request, 'success.html', {})
 
 
+@login_required()
 def my_payment(request):
     try:
         order = Order.objects.get(user=request.user, ordered=False)
@@ -183,8 +184,6 @@ def my_payment(request):
     payment.payment_date = response['data']['transaction_date']
     payment.status = response['data']['status']
     payment.channel = response['data']['channel']
-    payment.card_type = response['data']['authorization']['card_type']
-    payment.bank_name = response['data']['authorization']['bank']
     payment.save()
     order_items = order.products.all()
     order_items.update(ordered=True)
@@ -193,6 +192,7 @@ def my_payment(request):
     order.ordered = True
     order.save()
     context = {
-      'payment': payment
+      'payment': payment,
+      'payments': payments
     }
     return render(request, 'payment_verifications.html', context)

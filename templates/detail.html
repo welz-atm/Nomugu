@@ -24,19 +24,25 @@
                             <div class="thumbnail">
                                 <div id="carousel-fixed-height" class="carousel slide" data-ride="carousel">
                                     <ol class="carousel-indicators">
-                                        <li data-target="#carousel-fixed-height" data-slide-to="0" class=""></li>
+                                        <li data-target="#carousel-fixed-height" data-slide-to="0" class="active"></li>
                                         <li data-target="#carousel-fixed-height" data-slide-to="1" class=""></li>
-                                        <li data-target="#carousel-fixed-height" data-slide-to="2" class="active"></li>
+                                        <li data-target="#carousel-fixed-height" data-slide-to="2" class=""></li>
                                     </ol>
                                     <div class="carousel-inner" role="listbox">
-                                        <div class="item">
-                                            <img src="{{ detail.image.url }}" alt="...">
-                                        </div>
-                                        <div class="item">
-                                            <img src="{{ detail.image.url }}" alt="...">
-                                        </div>
                                         <div class="item active">
-                                            <img src="{{ detail.image.url }}" alt="...">
+                                            <div class="text text-center">
+                                                <img src="{{ detail.image_one.url }}" alt="..." height="350" width="400">
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="text text-center">
+                                                <img src="{{ detail.image_two.url }}" alt="..." height="350" width="400">
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="text text-center">
+                                                <img src="{{ detail.image_three.url }}" alt="..." height="350" width="400">
+                                            </div>
                                         </div>
                                     </div>
                                     <a class="left carousel-control" href="#carousel-fixed-height" role="button"

@@ -34,6 +34,7 @@ DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = []
 
 PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
+opencage_key = os.getenv('opencage_key')
 
 
 
@@ -55,6 +56,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'phonenumber_field',
     'bootstrap_pagination',
+    'analytical',
+    'django_social_share',
 ]
 
 

@@ -16,4 +16,10 @@ urlpatterns = [
     path('my_order/', views.shopper_order, name='shopper_order'),
     path('generate_invoice/<int:pk>/', views.generate_invoice, name='generate_invoice'),
     path('my_invoice/<int:pk>/', views.invoice_list, name='invoices'),
+    path('attach_picture/<int:pk>/', views.attach_picture, name='attach_picture'),
+    path('view_picture/<int:pk>/', views.view_picture, name='view_picture'),
+    path('confirm_picture/<int:pk>/', views.confirm_picture, name='confirm_picture'),
+    path('disapprove_picture/<int:pk>/', views.disapprove_picture, name='disapprove_picture'),
+    path('view_picture/<int:pk>/', views.view_picture, name='view_picture'),
+    path('for_delivery/<int:pk>/', views.pick_for_delivery, name='pick_for_delivery'),
 ]

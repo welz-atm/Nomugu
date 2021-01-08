@@ -30,23 +30,24 @@ class Product(models.Model):
     brand = models.CharField(max_length=120)
     description = models.TextField(max_length=1000)
     color = models.CharField(max_length=15)
-    image = models.ImageField(upload_to='media')
+    image_one = models.ImageField(upload_to='media')
+    image_two = models.ImageField(upload_to='media', null=True, blank=True)
+    image_three = models.ImageField(upload_to='media', null=True, blank=True)
     price = models.IntegerField()
     quantity = models.IntegerField(null=True, blank=True)
     weight = models.IntegerField(null=True, blank=True)
     unit = models.CharField(null=True, blank=True, max_length=12, choices=unit_options)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     merchant = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    view_product = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
 
-    def stock_left(self, pk):
-        product = Product.objects.get(pk=pk)
+    def stock_left(self):
         order = OrderItem.objects.get(product=product, ordered=True)
-        total = product.quantity - order.quantity
+        total = self.quantity - order.quantity
         return total
-
 
 
 

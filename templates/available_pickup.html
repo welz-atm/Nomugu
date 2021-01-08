@@ -29,18 +29,17 @@
                         {% for product in pick_ups %}
                         <tr>
                             <td>{{ product.order_date }}</td>
-                            <td><img src='{{product.product.image.url}}' alt='{{ product.product.title }}' class="img-thumbnail" height="100" width="100"></td>
+                            <td><img src='{{product.product.image_one.url}}' alt='{{ product.product.title }}' class="img-thumbnail" height="100" width="100"></td>
                             <td>{{ product.product.name }}</td>
                             <td>{{ product.quantity }}</td>
-                            <td>
-                                <a href="#" data-original-title="{{ product.get_pickup_status }}" data-content="{{ product.get_pickup_status }}" data-placement="top" data-trigger="hover" class="btn btn-info popovers">{{ product.get_pickup_status }}</a>
-                            </td>
                             <td>{{ product.get_weight }}</td>
+                            <td>
+                                <a href="#" class="btn btn-warning">{{ product.get_pickup_status }}</a>
+                            </td>
 
                             <td>
                                 <div class="btn-group">
-                                    <a class="btn " href="{% url 'view_order' pk=product.pk %}" data-toggle="tooltip" data-placement="top" title="View Order"><i class="fa fa-eye"></i></a>
-
+                                    <a href="{% url 'view_order' pk=product.pk %}" class="btn btn-success">View Order</a>
                                 </div>
                             </td>
                         </tr>

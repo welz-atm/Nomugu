@@ -13,12 +13,18 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(null=True, blank=True, default=1)
     ordered = models.BooleanField(default=False)
     delivered = models.BooleanField(default=False)
-    picked = models.BooleanField(default=False)
+    picked = models.BooleanField(default=False)  # order selected by shipper
+    confirm_pickup = models.BooleanField(default=False)  # authorize shipper to pick up
+#   picked_date = models.DateTimeField(auto_now_add=True)
     address = models.CharField(max_length=254, null=True, blank=True)
     city = models.CharField(max_length=25, null=True, blank=True)
     state = models.CharField(max_length=15, null=True, blank=True)
     user = models.ForeignKey(CustomUser, related_name='shopper', on_delete=models.CASCADE)
-    shipper = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='dispatch_rider', null=True, blank=True)
+    shipper = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='orderItems', null=True,
+                                blank=True)
+    image = models.ForeignKey('Photo', on_delete=models.CASCADE, related_name='photos', null=True, blank=True)
+    has_images = models.BooleanField(default=False)
+    picked_for_delivery = models.BooleanField(default=False)  # order picked by shipper for delivery
 
     def __int__(self):
         return self.pk
@@ -38,19 +44,25 @@ class OrderItem(models.Model):
     def get_shipper(self):
         if self.shipper is None:
             return 'Not Picked yet'
-        return self.shipper
+        return self.shipper.first_name
 
     def get_status(self):
-        if self.delivered is True:
-            return 'Delivered'
-        else:
+        if self.picked_for_delivery is True:
             return 'En-route'
+        else:
+            return 'Awaiting Confirmation'
 
     def get_pickup_status(self):
         if self.picked is True:
             return 'Picked'
         else:
             return 'Awaiting Pickup'
+
+    def shipping_cost(self):
+        per_km = 45
+        distance = calc_distance(self.product.merchant.address, self.address)
+        cost = distance * per_km
+        return cost
 
 
 class Order(models.Model):
@@ -80,13 +92,10 @@ class Order(models.Model):
         return total
 
     def pickup_price(self):
-        price_per_km = 45
+        total = 0
         for order in self.products.all():
-            x = order.get_address()
-            y = self.address
-            dist = calc_distance(x, y)
-            total = dist * price_per_km
-            return total
+            total += order.shipping_cost()
+        return total
 
     def total_price(self):
         return self.final_price() + self.pickup_price()
@@ -108,3 +117,11 @@ class Invoices(models.Model):
 
     def __int__(self):
         return self.number
+
+
+class Photo(models.Model):
+    main_image = models.ImageField(upload_to='photos')
+    rear_image = models.ImageField(upload_to='photos', null=True, blank=True)
+    front_image = models.ImageField(upload_to='photos', null=True, blank=True)
+    side_image = models.ImageField(upload_to='photos', null=True, blank=True)
+    bottom_image = models.ImageField(upload_to='photos', null=True, blank=True)

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from .models import Product, Category
+from order.models import OrderItem
 from django.contrib import messages
 from .forms import ProductForm
 from django.contrib.auth.decorators import login_required
@@ -31,9 +32,15 @@ def search_view(request):
 
 @login_required
 def dashboard(request):
-    products = Product.objects.filter(merchant=request.user).count()
+    all_products = Product.objects.filter(merchant=request.user).select_related('merchant', )
+    products = all_products.count()
+    orders = OrderItem.objects.filter(ordered=True).count()
+    delivered = OrderItem.objects.filter(delivered=True).count()
     context = {
-        'products': products
+        'products': products,
+        'delivered': delivered,
+        'orders': orders,
+        'all_products': all_products
       }
     return render(request, 'dashboard.html', context)
 
@@ -76,7 +83,6 @@ def add_product(request):
 
         return render(request, 'add_product.html', context)
     elif request.user.is_admin is True:
-        categories = Category.objects.all()
         if request.method == 'POST':
             form = ProductForm(request.POST, request.FILES)
             if form.is_valid():
@@ -137,8 +143,10 @@ def delete_product(request,pk):
 
 def detail_view(request, pk):
     detail = get_object_or_404(Product, pk=pk)
+    detail.view_product += 1
+    detail.save()
     context = {
-        'detail': detail
+        'detail': detail,
     }
     return render(request, 'detail.html', context)
 

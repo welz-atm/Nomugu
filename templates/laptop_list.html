@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 {% load bootstrap_pagination %}
+{% load social_share %}
 
 
 <!--main content start-->
@@ -126,7 +127,7 @@
                         <div class="row row-sm">
                             <aside class="col-sm-3 ">
                                 <div class="thumbnail">
-                                    <img src='{{product.image.url}}' alt='{{ product.title }}' height="220" width="220">
+                                    <img src='{{product.image_one.url}}' alt='{{ product.title }}' height="220" width="220">
                                 </div>
                             </aside> <!-- col.// -->
                             <div class="col-sm-6">
@@ -152,7 +153,7 @@
                                     <p class="text-danger">{{ product.merchant.company_name }}</p>
                                     <p>
 
-
+                                        {% post_to_facebook 'http://localhost:8000/product/details/pk=product.pk' 'Share on Facebook' %}
                                         <a type="button" class="btn btn-success btn-md btn-block"
                                            href="{% url 'detail' pk=product.pk %}">View Details</a>
                                         <a type="button" href="{% url 'add_cart' pk=product.pk %}"

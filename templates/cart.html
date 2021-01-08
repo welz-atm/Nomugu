@@ -17,7 +17,7 @@
                     <tr>
                         <td><strong>Item Image</strong></td>
                         <td><strong>Item Name</strong></td>
-                        <td class="text-center"><strong>Item Price</strong></td>
+                        <td class="text-center"><strong>Unit Price</strong></td>
                         <td class="text-center"><strong>Item Quantity</strong></td>
                         <td class="text-right"><strong>Total</strong></td>
                     </tr>
@@ -25,7 +25,7 @@
                     <tbody>
                     {% for ord in order.products.all %}
                     <tr>
-                        <td><img src='{{ord.product.image.url}}' alt='{{ product.title }}' class="img-thumbnail"
+                        <td><img src='{{ord.product.image_one.url}}' alt='{{ product.title }}' class="img-thumbnail"
                                  height="100" width="100"></td>
                         <td>{{ord.product.title}}</td>
                         <td class="text-center">{{ord.product.price}}</td>
@@ -50,15 +50,7 @@
                         <td class="emptyrow"></td>
                         <td class="emptyrow"></td>
                         <td class="emptyrow"></td>
-                        <td class="emptyrow text-center"><strong>Delivery Fee</strong></td>
-                        <td class="emptyrow text-right"> order.pickup_price</td>
-                        <td class="emptyrow"></td>
-                    </tr>
-                    <tr>
-                        <td class="emptyrow"></td>
-                        <td class="emptyrow"></td>
-                        <td class="emptyrow"></td>
-                        <td class="emptyrow text-center"><strong>Total</strong></td>
+                        <td class="emptyrow text-center"><strong>Total(Excludes Shipping)</strong></td>
                         <td class="emptyrow text-right">{{ order.final_price }}</td>
                         <td class="emptyrow"></td>
                     </tr>
@@ -82,13 +74,18 @@
                                     <h4 class="modal-title">Shipping Address</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p><span>First </span>: {{order.first_name}}</p>
+                                    <div class="text text-center">
+                                        <p><span>First </span>: {{order.first_name}}</p>
                                     <p><span>Last </span>: {{order.last_name}}</p>
                                     <p><span>Email </span>: {{order.email}}</p>
                                     <p><span>Telephone </span>: {{order.telephone}}</p>
                                     <p><span>Address </span>: {{order.address}}</p>
                                     <p><span>City </span>: {{order.city}}</p>
                                     <p><span>State </span>: {{order.state}}</p>
+                                    <p><span>Pick Up Price </span>: {{ order.pickup_price }}</p>
+                                    <p><span>Pick Up Price </span>: {{ order.total_price }}</p>
+                                    </div>
+
 
                                 </div>
 

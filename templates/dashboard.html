@@ -17,30 +17,20 @@
         </div>
 
         <div class="row">
+          {% if user.is_shipper %}
           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="info-box blue-bg">
               <i class="fa fa-cloud-download"></i>
-              <div class="count">357</div>
-              <div class="title">Total Products</div>
+              <div class="count">{{ delivered }}</div>
+              <div class="title">Total Delivered</div>
             </div>
             <!--/.info-box-->
           </div>
-          <!--/.col-->
-
-          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <div class="info-box brown-bg">
-              <i class="fa fa-shopping-cart"></i>
-              <div class="count">159</div>
-              <div class="title">Total Purchased</div>
-            </div>
-            <!--/.info-box-->
-          </div>
-          <!--/.col-->
 
           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="info-box dark-bg">
               <i class="fa fa-thumbs-o-up"></i>
-              <div class="count">29</div>
+              <div class="count">{{ orders }}</div>
               <div class="title">Order</div>
             </div>
             <!--/.info-box-->
@@ -55,6 +45,60 @@
             </div>
             <!--/.info-box-->
           </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box brown-bg">
+              <i class="fa fa-cubes"></i>
+              <div class="count">₦67000</div>
+              <div class="title">Total Amount</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+
+          {% else %}
+
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box blue-bg">
+              <i class="fa fa-cloud-download"></i>
+              <div class="count">{{ products }}</div>
+              <div class="title">Total Products</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box brown-bg">
+              <i class="fa fa-shopping-cart"></i>
+              <div class="count">{{ delivered }}</div>
+              <div class="title">Total Sales</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box dark-bg">
+              <i class="fa fa-thumbs-o-up"></i>
+              <div class="count">{{ orders }}</div>
+              <div class="title">Order</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box green-bg">
+              <i class="fa fa-cubes"></i>
+              <div class="count">16540</div>
+              <div class="title">Number of Views</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          {% endif %}
+
+          <!--/.col-->
+
+
           <!--/.col-->
 
         </div>

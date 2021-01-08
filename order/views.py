@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .models import OrderItem, Order, Invoices
-from .forms import OrderItemForm, OrderCreateForm
+from .forms import OrderItemForm, OrderCreateForm, PhotoForm
 from authentication.decorators import merchant_required, shipper_required
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
@@ -44,7 +44,9 @@ def my_cart(request):
             created_form = form.save(commit=False)
             created_form.detail_created = True
             created_form.user = request.user
-            order_items = order.products.update(address=created_form.address, city=created_form.city, state=created_form.state)
+            order.products.update(address=created_form.address, city=created_form.city, state=created_form.state)
+            order.save()
+            order_items = order.products.all()
             for item in order_items:
                 item.save()
             created_form.save()
@@ -127,7 +129,7 @@ def shopper_order(request):
 @login_required()
 def delivered_orders(request):
     if request.user.is_shipper:
-        orders = OrderItem.objects.filter(shipper=request.user, delivered=True).order_by('-order_date')
+        orders = OrderItem.objects.filter(shipper=request.user, delivered=True).order_by('-order_date').select_related('user', 'product')
         if orders.exists():
             paginator = Paginator(orders, 10)
             page_number = request.GET.get('page')
@@ -145,7 +147,7 @@ def delivered_orders(request):
 @login_required()
 def picked_up_orders(request):
     if request.user.is_shipper:
-        orders = OrderItem.objects.filter(shipper=request.user, picked=True).order_by('-order_date')
+        orders = OrderItem.objects.filter(shipper=request.user, picked=True).order_by('-order_date').select_related('user', 'product')
         if orders.exists():
             paginator = Paginator(orders, 10)
             page_number = request.GET.get('page')
@@ -163,7 +165,7 @@ def picked_up_orders(request):
 @login_required()
 def available_pickup(request):
     if request.user.is_shipper:
-        pick_ups = OrderItem.objects.filter(ordered=True, picked=False).select_related('user', 'product')
+        pick_ups = OrderItem.objects.filter(ordered=True, picked=False).order_by('-order_date').select_related('user', 'product')
         paginator = Paginator(pick_ups, 10)
         page_number = request.GET.get('page')
         pick_ups = paginator.get_page(page_number)
@@ -172,7 +174,7 @@ def available_pickup(request):
         }
         return render(request, 'available_pickup.html', context)
     elif request.user.is_admin:
-        pick_ups = OrderItem.objects.filter(ordered=True, picked=False).select_related('user', 'product')
+        pick_ups = OrderItem.objects.filter(ordered=True, picked=False).order_by('order_date').select_related('user', 'product')
         paginator = Paginator(pick_ups, 10)
         page_number = request.GET.get('page')
         pick_ups = paginator.get_page(page_number)
@@ -201,10 +203,7 @@ def select_order_pickup(request, pk):
             order_item.picked = True
             order_item.shipper = request.user
             order_item.save()
-            context = {
-                'order_item': order_item
-            }
-            return render(request, 'view_order.html', context)
+            return redirect('picked_up_order')
         else:
             messages.success(request, 'This order has been selected.')
             return redirect('available_pickup')
@@ -225,6 +224,71 @@ def view_order(request, pk):
             'order_item': order_item,
         }
         return render(request, 'view_order.html', context)
+    else:
+        raise PermissionDenied
+
+
+def attach_picture(request, pk):
+    order = OrderItem.objects.get(pk=pk)
+    if request.user.is_shipper is True and request.user == order.shipper:
+        form = PhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            picture = form.save()
+            order.has_images = True
+            order.image = picture
+            order.save()
+            return redirect('picked_up_order')
+    else:
+        form = PhotoForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'attach_picture.html', context)
+
+
+def view_picture(request, pk):
+    order = OrderItem.objects.get(pk=pk)
+    context = {
+        'order': order
+    }
+    return render(request, 'view_picture.html', context)
+
+
+def confirm_picture(request, pk):
+    order = OrderItem.objects.get(pk=pk)
+    if request.user.is_shopper and order.user == request.user:
+        if order.has_images is True:
+            order.confirm_pickup = True
+            order.save()
+            return redirect('shopper_order')
+        else:
+            messages.success(request, 'Needs you to confirm your order is same as desired')
+            return redirect('shopper_order')
+    else:
+        raise PermissionDenied
+
+
+def disapprove_picture(request, pk):
+    order = OrderItem.objects.get(pk=pk)
+    if request.user.is_shopper and order.user == request.user:
+        if order.has_images is True:
+            order.confirm_pickup = False
+            order.save()
+            return redirect('shopper_order')
+    else:
+        raise PermissionDenied
+
+
+def pick_for_delivery(request, pk):
+    order = OrderItem.objects.get(pk=pk)
+    if request.user == order.shipper:
+        if order.has_images is True and order.confirm_pickup is True:
+            order.pick_for_delivery = True
+            order.save()
+            return redirect('picked_up_order')
+        else:
+            messages.success(request, 'Order has not been authorized by shopper')
+            return redirect('picked_up_order')
     else:
         raise PermissionDenied
 

@@ -110,7 +110,7 @@
                         <div class="row row-sm">
                             <aside class="col-sm-3 ">
                                 <div class="img-wrap">
-                                    <img src='{{product.image.url}}' alt='{{ product.title }}' class="img-thumbnail "
+                                    <img src='{{product.image_one.url}}' alt='{{ product.title }}' class="img-thumbnail "
                                          height="220" width="220">
                                 </div>
                             </aside> <!-- col.// -->
@@ -138,10 +138,10 @@
                                     <p>
 
 
-                                        <button type="button" class="btn btn-success btn-md btn-block">View Details
-                                        </button>
-                                        <button type="button" class="btn btn-success btn-md btn-block">Add to Cart
-                                        </button>
+                                        <a type="button" class="btn btn-success btn-md btn-block"
+                                           href="{% url 'detail' pk=product.pk %}">View Details</a>
+                                        <a type="button" href="{% url 'add_cart' pk=product.pk %}"
+                                           class="btn btn-success btn-md btn-block">Add to Cart</a>
 
                                 </div> <!-- action-wrap.// -->
                             </aside> <!-- col.// -->
