@@ -97,19 +97,20 @@ def cart_count(request):
 
 @login_required()
 def my_orders(request):
-    orders = OrderItem.objects.filter(product__merchant=request.user, ordered=True).order_by('-order_date')
-    paginator = Paginator(orders, 10)
-    page_number = request.GET.get('page')
-    orders = paginator.get_page(page_number)
-    context = {
-        'orders': orders
-    }
-    return render(request, 'my_orders.html', context)
-
-
-@login_required()
-def shopper_order(request):
-    if request.user.is_shopper:
+    if request.user.is_merchant:
+        orders = OrderItem.objects.filter(product__merchant=request.user, ordered=True).order_by('-order_date').\
+            select_related('user')
+        if orders.exists():
+            paginator = Paginator(orders, 10)
+            page_number = request.GET.get('page')
+            orders = paginator.get_page(page_number)
+            context = {
+                'orders': orders
+            }
+            return render(request, 'my_orders.html', context)
+        else:
+            return render(request, '404.html', {})
+    elif request.user.is_shopper:
         orders = OrderItem.objects.filter(user=request.user, ordered=True).order_by('-order_date').select_related(
             'user')
         if orders.exists():
@@ -119,11 +120,11 @@ def shopper_order(request):
             context = {
                 'orders': orders
             }
-            return render(request, 'shopper_order.html', context)
+            return render(request, 'my_orders.html', context)
         else:
             return render(request, '404.html')
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 @login_required()
@@ -141,7 +142,7 @@ def delivered_orders(request):
         else:
             return render(request, '404.html')
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 @login_required()
@@ -159,40 +160,25 @@ def picked_up_orders(request):
         else:
             return render(request, '404.html')
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 @login_required()
 def available_pickup(request):
-    if request.user.is_shipper:
+    if request.user.is_shipper or request.user.is_admin or request.user.is_merchant:
         pick_ups = OrderItem.objects.filter(ordered=True, picked=False).order_by('-order_date').select_related('user', 'product')
-        paginator = Paginator(pick_ups, 10)
-        page_number = request.GET.get('page')
-        pick_ups = paginator.get_page(page_number)
-        context = {
-            'pick_ups': pick_ups
-        }
-        return render(request, 'available_pickup.html', context)
-    elif request.user.is_admin:
-        pick_ups = OrderItem.objects.filter(ordered=True, picked=False).order_by('order_date').select_related('user', 'product')
-        paginator = Paginator(pick_ups, 10)
-        page_number = request.GET.get('page')
-        pick_ups = paginator.get_page(page_number)
-        context = {
-            'pick_ups': pick_ups
-        }
-        return render(request, 'available_pickup.html', context)
-    elif request.user.is_merchant:
-        pick_ups = OrderItem.objects.filter(ordered=True, picked=False).select_related('user', 'product')
-        paginator = Paginator(pick_ups, 10)
-        page_number = request.GET.get('page')
-        pick_ups = paginator.get_page(page_number)
-        context = {
-            'pick_ups': pick_ups
-        }
-        return render(request, 'available_pickup.html', context)
+        if pick_ups.exists():
+            paginator = Paginator(pick_ups, 10)
+            page_number = request.GET.get('page')
+            pick_ups = paginator.get_page(page_number)
+            context = {
+                'pick_ups': pick_ups
+            }
+            return render(request, 'available_pickup.html', context)
+        else:
+            return render(request, '404.html')
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 @shipper_required()
@@ -208,7 +194,7 @@ def select_order_pickup(request, pk):
             messages.success(request, 'This order has been selected.')
             return redirect('available_pickup')
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 @login_required()
@@ -225,7 +211,7 @@ def view_order(request, pk):
         }
         return render(request, 'view_order.html', context)
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 def attach_picture(request, pk):
@@ -260,12 +246,12 @@ def confirm_picture(request, pk):
         if order.has_images is True:
             order.confirm_pickup = True
             order.save()
-            return redirect('shopper_order')
+            return redirect('my_orders')
         else:
             messages.success(request, 'Needs you to confirm your order is same as desired')
-            return redirect('shopper_order')
+            return redirect('my_orders')
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 def disapprove_picture(request, pk):
@@ -276,21 +262,21 @@ def disapprove_picture(request, pk):
             order.save()
             return redirect('shopper_order')
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 def pick_for_delivery(request, pk):
     order = OrderItem.objects.get(pk=pk)
     if request.user == order.shipper:
         if order.has_images is True and order.confirm_pickup is True:
-            order.pick_for_delivery = True
+            order.picked_for_delivery = True
             order.save()
             return redirect('picked_up_order')
         else:
             messages.success(request, 'Order has not been authorized by shopper')
             return redirect('picked_up_order')
     else:
-        raise PermissionDenied
+        return render(request, 'unauthorized.html', {})
 
 
 @shipper_required()
@@ -304,7 +290,7 @@ def product_delivered(request, pk):
         }
         return render(request, 'pickup_order.html', context)
     else:
-        return HttpResponse('You are not allowed')
+        return render(request, 'unauthorized.html', {})
 
 
 @login_required()
@@ -320,7 +306,7 @@ def generate_invoice(request, pk):
 @login_required()
 def invoice_list(request, pk):
     order = get_object_or_404(OrderItem, pk=pk)
-    invoices = Invoices.objects.filter(order=order.product.merchant).select_related('Order', 'OrderItem')
+    invoices = Invoices.objects.filter(order=order.product.merchant).select_related('owner', 'order')
     paginator = Paginator(invoices, 10)
     page_number = request.GET.get('page')
     invoices = paginator.get_page(page_number)
@@ -328,4 +314,22 @@ def invoice_list(request, pk):
         'invoices': invoices
     }
 
-    return render(request, 'all_invoices.html', context)
+    return render(request, 'my_invoice_list.html', context)
+
+
+@login_required()
+def invoice_detail(request, pk):
+    invoice = get_object_or_404(Invoices, pk=pk)
+    if request.user == invoice.owner.user:
+        context = {
+            'invoice': invoice
+        }
+        return render(request, 'invoice_detail.html', context)
+    elif request.user == invoice.order.product.merchant:
+        context = {
+            'invoice': invoice
+        }
+        return render(request, 'invoice_detail.html', context)
+    else:
+        return render(request, 'unauthorized.html', {})
+

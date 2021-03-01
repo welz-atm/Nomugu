@@ -8,7 +8,8 @@ class InvoiceAdmin(admin.ModelAdmin):
 
 
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('product', 'quantity', 'user', 'order_date', 'ordered', 'address', 'state', )
+    list_display = ('product', 'quantity', 'user', 'order_date', 'ordered', 'address', 'state', 'confirm_pickup',
+                    'picked_for_delivery')
     list_filter = ('product', 'quantity', 'user',)
 
 

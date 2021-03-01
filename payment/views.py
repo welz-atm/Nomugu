@@ -8,12 +8,18 @@ from paystackapi.transaction import Transaction
 from paystackapi.verification import Verification
 from paystackapi.subaccount import SubAccount
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from paystackapi.paystack import Paystack
+from paystackapi.misc import Misc
 
 
 def create_account(request):
+    list_banks = []
+    banks = Misc.list_banks()
+    for bank in banks['data']:
+        list_banks.append(bank)
     if request.user.is_shipper:
         if request.method == 'POST':
             form = AccountForm(request.POST)
@@ -35,7 +41,8 @@ def create_account(request):
         else:
             form = AccountForm()
         context = {
-            'form': form
+            'form': form,
+            'list_banks': list_banks
         }
         return render(request, 'create_account.html', context)
     elif request.user.is_merchant:
@@ -58,7 +65,8 @@ def create_account(request):
         else:
             form = AccountForm()
         context = {
-            'form': form
+            'form': form,
+            'list_banks': list_banks
         }
         return render(request, 'create_account.html', context)
     elif request.user.is_shopper:
@@ -84,7 +92,8 @@ def create_account(request):
         else:
             form = AccountForm()
         context = {
-            'form': form
+            'form': form,
+            'list_banks': list_banks
         }
         return render(request, 'create_account.html', context)
 
@@ -152,7 +161,7 @@ def make_payment(request, pk):
 
 def payment_page(request):
     orders = OrderItem.objects.filter(product__merchant=request.user, ordered=True).select_related('user').\
-                                     order_by('-date_created')
+                                     order_by('-order_date')
     context = {
         'orders': orders
     }
@@ -170,6 +179,10 @@ def my_payment(request):
         order = Order.objects.get(user=request.user, ordered=False)
     except Order.DoesNotExist:
         payments = Payment.objects.filter(user=request.user).order_by('-payment_date').select_related('user', 'order')
+        if payments.exists():
+            paginator = Paginator(payments, 10)
+            page_number = request.GET.get('page')
+            payments = paginator.get_page(page_number)
         context = {
             'payments': payments
         }
@@ -188,6 +201,9 @@ def my_payment(request):
     order_items = order.products.all()
     order_items.update(ordered=True)
     for item in order_items:
+        product = Product.objects.get(pk=item.product.pk)
+        product.quantity = product.quantity - item.quantity
+        product.save()
         item.save()
     order.ordered = True
     order.save()

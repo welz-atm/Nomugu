@@ -1,153 +1,57 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% load static %}
 {% block content %}
 {% load bootstrap_pagination %}
 
 
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper">
-        <h3 class="page-header"><i class="fa fa-users"></i> Freezer</h3>
-        <div class="text-right">
 
-
-            <a href="#myModal" data-toggle="modal" class="btn btn-success">
-                <span class="fa fa-filter"></span>Filter
-            </a>
-
-            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal"
-                 class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×
-                            </button>
-                            <h4 class="modal-title">Form Title</h4>
+<div class="main-content">
+            <div class="container-fluid">
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="pt-2 mb-4">Freezers</h4>
+        
+                        <!-- Product Grid -->
+                        <div class="product-grid pt-2">
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+									{% for product in filter %}
+                                    <div class="product-grid-item mb-30">
+                                        <div class="product-img mb-3">
+                                             <a href="{% url 'detail' product.id %}">
+                                                <img src="{{product.image_one.url}}" class="w-100" alt="{{ product.title }}">
+                                             </a>
+                                        </div>
+                                        <div class="product-content">
+                                            <h6 class="mb-10">₦{{ product.price }}</h6>
+                                             <a href="{% url 'detail' product.id %}">
+                                                <p class="white">{{ product.title }}</p>
+                                             </a>
+                                        </div>
+                                    </div>
+									{% endfor %}
+                                    <!-- End Product Grid Item -->
+                                </div>
+                                
+								
+                                
+                             
+                                <div class="col-xl-12">
+                                    <!-- Pagination -->
+                                    <div class="pagination d-flex flex-column align-items-center mb-10">
+                                       {% bootstrap_paginate filter range=10 show_prev_next="false" show_first_last="true" %}
+                                    </div>
+                                    <!-- End Pagination -->
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-body">
-
-
-                            <form method="get">
-                                <div class="form-group ">
-                                    <label for="brand">Brand:</label>
-                                    <select name="brand" class="form-control " id="brand">
-                                        <option>Choose...</option>
-                                        <option value="LG">LG</option>
-                                        <option value="Haier Thermocool">Haier Thermocool</option>
-                                        <option value="Scanfrost">Scanfrost</option>
-                                        <option value="Nexus">Nexus</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="type">Type:</label>
-                                    <select name="type" class="form-control" id="type">
-                                        <option selected>Choose...</option>
-                                        <option value="Chest Freezer">Chest Freezer</option>
-                                        <option value="Standing Freezer">Standing Freezer</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="color">Select:</label>
-                                    <select name="color" class="form-control" id="color">
-                                        <option selected>Choose...</option>
-                                        <option value="Black">Black</option>
-                                        <option value="Blue">Blue</option>
-                                        <option value="Silver">Silver</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="min_price">Min Price:</label>
-                                    <input type="number" min=0 class="form-control" id="min_price"
-                                           placeholder="Min Price"
-                                           name="min_price">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="max_price">Max Price:</label>
-                                    <input type="number" min=0 class="form-control" id="max_price"
-                                           placeholder="Max Price"
-                                           name="max_price">
-                                </div>
-
-
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Apply</button>
-                                </div>
-                            </form>
-
-
-                        </div>
+                        <!-- End Product Grid -->
                     </div>
                 </div>
+                <!-- End Card -->
             </div>
-
-
-        </div>
-        <!-- page start-->
-
-
-        <div class="row">
-            <div class="col-lg-12">
-                {% for product in filter %}
-
-                <div class="card my-3" style="border:1px solid #65E62E">
-                    <article class="itemlist">
-                        <div class="row row-sm">
-                            <aside class="col-sm-3 ">
-                                <div class="img-wrap">
-                                    <img src='{{product.image_one.url}}' alt='{{ product.title }}'
-                                         class="img-thumbnail "
-                                         height="220" width="220">
-                                </div>
-                            </aside> <!-- col.// -->
-                            <div class="col-sm-6">
-                                <div class="text-wrap">
-                                    <a href="{% url 'detail' product.id %}">
-                                        <h3 class="title"> {{ product.title }} </h3>
-                                    </a>
-
-                                    <p> {{ product.description }}</p>
-                                    <p class="rating-wrap my-0 text-muted">
-                                        <span class="label-rating">132 reviews</span>
-                                        <span class="label-rating">154 orders </span>
-                                    </p> <!-- rating-wrap.// -->
-                                </div> <!-- text-wrap.// -->
-                            </div> <!-- col.// -->
-                            <aside class="col-sm-3">
-                                <div class="border-left pl-3">
-                                    <div class="price-wrap">
-                                        <div class="text-success"><span class="h3 price"> ₦{{ product.price }} </span>
-                                        </div>
-                                        <del class="price-old"> $98</del>
-                                    </div> <!-- info-price-detail // -->
-                                    <p class="text-danger">{{ product.merchant.email }}</p>
-                                    <p>
-
-
-                                        <a type="button" class="btn btn-success btn-md btn-block"
-                                           href="{% url 'detail' pk=product.pk %}">View Details</a>
-                                        <a type="button" href="{% url 'add_cart' pk=product.pk %}"
-                                           class="btn btn-success btn-md btn-block">Add to Cart</a>
-
-                                </div> <!-- action-wrap.// -->
-                            </aside> <!-- col.// -->
-                        </div> <!-- row.// -->
-                    </article> <!-- itemlist.// -->
-
-                </div>
-                <br>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="text text-center">
-            {% bootstrap_paginate filter range=10 show_prev_next="false" show_first_last="true" %}
-        </div>
-        <!-- page end-->
-    </section>
-</section>
-<!--main content end-->
-
+         </div>
+		 
 {% endblock %}

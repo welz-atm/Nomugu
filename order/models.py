@@ -47,8 +47,8 @@ class OrderItem(models.Model):
         return self.shipper.first_name
 
     def get_status(self):
-        if self.picked_for_delivery is True:
-            return 'En-route'
+        if self.confirm_pickup is True:
+            return 'Confirmed'
         else:
             return 'Awaiting Confirmation'
 
@@ -57,6 +57,10 @@ class OrderItem(models.Model):
             return 'Picked'
         else:
             return 'Awaiting Pickup'
+
+    def delivery_status(self):
+        if self.delivered is True:
+            return 'Delivered'
 
     def shipping_cost(self):
         per_km = 45
@@ -114,6 +118,8 @@ class Invoices(models.Model):
                                                                   MaxValueValidator(99999999)
                                                                   ])
     invoiced_date = models.DateTimeField(auto_now_add=True)
+    last_saved_date = models.DateTimeField(auto_now_add=True)
+    is_created = models.BooleanField(default=False)
 
     def __int__(self):
         return self.number

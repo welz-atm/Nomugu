@@ -1,54 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="2ad83317-ae5e-4858-891c-f7dff9b49e86" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="2ad83317-ae5e-4858-891c-f7dff9b49e86" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/authentication/migrations/0002_shipper_is_created.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/media/hpPavilion15_RMel0XE.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order/migrations/0002_auto_20201118_1813.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/migrations/0002_account_is_created.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/migrations/0003_auto_20201123_1855.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/available_pickup.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/change_password.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/create_shipper_details.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/delivered_orders.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/no_cart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/payment_verifications.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/picked_up_orders.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/update_cart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/view_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoMugu/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/NoMugu/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/authentication/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/authentication/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking/calc_distance.py" beforeDir="false" afterPath="$PROJECT_DIR$/booking/calc_distance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/booking/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/media/HaierRefrigeratorHRF95EX.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/media/hpPavilion15_7hk4vF2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/media/media/hpPavilion15_C6Yosoi.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/migrations/0002_auto_20201029_1811.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/payment/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/payment/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/payment/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/migrations/0002_auto_20201009_0615.py" beforeDir="false" afterPath="$PROJECT_DIR$/payment/migrations/0004_auto_20201123_1858.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/payment/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/payment/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/product/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/product/api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/product/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/product/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/migrations/0002_auto_20201008_1722.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/migrations/0003_auto_20201008_1748.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/migrations/0004_auto_20201009_0615.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/migrations/0005_auto_20201009_1041.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/migrations/0006_auto_20201029_1808.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/product/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/product/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/product/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ac_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ac_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/account_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/account_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accounts_base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/all_approvals.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/all_categories.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/all_orders.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/android_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/android_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/approve_order.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/audio_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/audio_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/bed_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/bed_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/blender_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/blender_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/change_merchant_password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/change_shopper_password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/checkout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/clothing_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/clothing_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cookers_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cookers_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/create_account.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/create_account.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/create_approval.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/success.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/create_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/create_order.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard_manufacturer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard_merchant.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/desktop_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/desktop_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dispenser_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dispenser_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/distributor_base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_account.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit_account.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_cart.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_merchant_profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_order.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_productform.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit_productform.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_shopper_profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/employees.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fabrics_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fabrics_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fans_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fans_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/footwear_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/footwear_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fragrance_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fragrance_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/freezer_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/freezer_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/furniture_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/furniture_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/invoice.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/invoice.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ios_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ios_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/kettles_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/kettles_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/laptop_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/laptop_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login_merchant.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/manufacturer_base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/merchant_base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/merchant_profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/microwave_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/microwave_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/my_account_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/my_account_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/my_cart.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/my_orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/my_orders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/my_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/my_product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/my_profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/networking_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/networking_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/notification.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/payment_verification.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/payment_verification.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/refrigerator_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/refrigerator_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register_manufacturer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register_merchant.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register_merchant.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register_shipper.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register_shipper.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register_user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sales_base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sample.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/server_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shopper_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/shopper_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/view_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/tv_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tv_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users_profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/washers_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/washers_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/watches_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/watches_list.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/order/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/order/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="918">
-              <caret line="62" selection-start-line="62" selection-end-line="62" />
-              <folding>
-                <element signature="e#0#78#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/order/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/register_user.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -60,106 +168,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/authentication/admin.py" />
-        <option value="$PROJECT_DIR$/product/admin.py" />
-        <option value="$PROJECT_DIR$/templates/base.html" />
-        <option value="$PROJECT_DIR$/templates/home.html" />
-        <option value="$PROJECT_DIR$/templates/shopper_base.html" />
-        <option value="$PROJECT_DIR$/templates/merchant_base.html" />
-        <option value="$PROJECT_DIR$/product/urls.py" />
-        <option value="$PROJECT_DIR$/templates/register_merchant.html" />
-        <option value="$PROJECT_DIR$/payment/forms.py" />
-        <option value="$PROJECT_DIR$/authentication/urls.py" />
-        <option value="$PROJECT_DIR$/booking/views.py" />
-        <option value="$PROJECT_DIR$/booking/urls.py" />
-        <option value="$PROJECT_DIR$/booking/forms.py" />
-        <option value="$PROJECT_DIR$/booking/calc_distance.py" />
-        <option value="$PROJECT_DIR$/authentication/views.py" />
-        <option value="$PROJECT_DIR$/templates/my_product.html" />
-        <option value="$PROJECT_DIR$/templates/edit_account.html" />
-        <option value="$PROJECT_DIR$/templates/account_details.html" />
-        <option value="$PROJECT_DIR$/templates/my_cart.html" />
-        <option value="$PROJECT_DIR$/NoMugu/urls.py" />
-        <option value="$PROJECT_DIR$/product/api/urls.py" />
-        <option value="$PROJECT_DIR$/authentication/models.py" />
-        <option value="$PROJECT_DIR$/authentication/forms.py" />
-        <option value="$PROJECT_DIR$/NoMugu/settings.py" />
-        <option value="$PROJECT_DIR$/authentication/api/urls.py" />
-        <option value="$PROJECT_DIR$/authentication/api/serializers.py" />
-        <option value="$PROJECT_DIR$/authentication/api/views.py" />
-        <option value="$PROJECT_DIR$/product/views.py" />
-        <option value="$PROJECT_DIR$/templates/bed_list.html" />
-        <option value="$PROJECT_DIR$/product/forms.py" />
-        <option value="$PROJECT_DIR$/product/models.py" />
-        <option value="$PROJECT_DIR$/product/api/serializers.py" />
-        <option value="$PROJECT_DIR$/product/api/views.py" />
-        <option value="$PROJECT_DIR$/payment/signals.py" />
-        <option value="$PROJECT_DIR$/booking/models.py" />
-        <option value="$PROJECT_DIR$/payment/api/serializers.py" />
-        <option value="$PROJECT_DIR$/payment/api/views.py" />
-        <option value="$PROJECT_DIR$/order/api/views.py" />
-        <option value="$PROJECT_DIR$/order/api/serializers.py" />
-        <option value="$PROJECT_DIR$/templates/all_orders.html" />
-        <option value="$PROJECT_DIR$/payment/admin.py" />
-        <option value="$PROJECT_DIR$/templates/cart.html" />
-        <option value="$PROJECT_DIR$/templates/payment_verification.html" />
-        <option value="$PROJECT_DIR$/payment/urls.py" />
-        <option value="$PROJECT_DIR$/payment/views.py" />
-        <option value="$PROJECT_DIR$/payment/models.py" />
-        <option value="$PROJECT_DIR$/booking/api/serializer.py" />
-        <option value="$PROJECT_DIR$/templates/laptop_list.html" />
-        <option value="$PROJECT_DIR$/order/models.py" />
-        <option value="$PROJECT_DIR$/order/forms.py" />
-        <option value="$PROJECT_DIR$/order/views.py" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="174" />
-    <option name="y" value="-13" />
-    <option name="width" value="1081" />
-    <option name="height" value="784" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="nomugu" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nomugu" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nomugu" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nomugu" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+  <component name="ProjectId" id="1k6Cv4S4ZLftc4aYX4fh7KvRXx8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/product" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\SDSDAdmin\NoMugus\authentication" />
-      <recent name="C:\Users\SDSDAdmin\NoMugu\src\product" />
-      <recent name="C:\Users\SDSDAdmin\NoMugu\src\notification" />
-      <recent name="C:\Users\SDSDAdmin\NoMugu\src\Template" />
-      <recent name="C:\Users\SDSDAdmin\NoMugu\src\src\product\static" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\SDSDAdmin\NoMugus\product" />
       <recent name="C:\Users\SDSDAdmin\NoMugus\payment" />
@@ -167,18 +187,13 @@
       <recent name="C:\Users\SDSDAdmin\NoMugus\authentication" />
       <recent name="C:\Users\SDSDAdmin\NoMugus\Templates" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SDSD101\Documents\GitHub\nomuguDjangoandBootstrap\media" />
+      <recent name="C:\Users\SDSDAdmin\NoMugus\authentication" />
+      <recent name="C:\Users\SDSDAdmin\NoMugu\src\product" />
+      <recent name="C:\Users\SDSDAdmin\NoMugu\src\notification" />
+      <recent name="C:\Users\SDSDAdmin\NoMugu\src\Template" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Unittests for authentication.tests.TestCustomUser.test_user_creation" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
@@ -201,6 +216,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -225,443 +241,30 @@
       <configuration name="Unittests for authentication.tests.TestCustomUser.test_user_creation" configurationId="tests" />
     </history-entry>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="174" y="-13" width="1081" height="784" extended-state="0" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18216683" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32718894" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32872504" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39938557" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32411674" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32872504" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14508928" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32718894" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32872504" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39938557" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32411674" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32872504" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout-to-restore>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/authentication/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/apps.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NoMugu/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="30" column="41" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
-          <folding>
-            <element signature="e#630#662#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2127">
-          <caret line="60" column="36" lean-forward="true" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/api/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NoMugu/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-          <folding>
-            <element signature="e#307#316#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3845">
-          <caret line="7" column="63" selection-start-line="7" selection-start-column="63" selection-end-line="7" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/api/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="100" selection-start-line="100" selection-end-line="100" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/fans_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-720" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/audio_list.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/bed_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="10" column="80" selection-start-line="10" selection-start-column="80" selection-end-line="10" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/product/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="20" column="51" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/product/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5097">
-          <caret line="337" column="17" selection-start-line="337" selection-start-column="17" selection-end-line="337" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#75#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/product/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="52" column="74" selection-start-line="52" selection-start-column="74" selection-end-line="52" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/product/api/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/signals.py" />
-    <entry file="file://$PROJECT_DIR$/payment/signals.py" />
-    <entry file="file://$PROJECT_DIR$/order/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="55" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/api/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="11" lean-forward="true" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/api/urls.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/product/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="23" column="63" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/blender_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/all_orders.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="19" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/payment/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/payment/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="71" column="78" selection-start-line="71" selection-start-column="78" selection-end-line="71" selection-end-column="78" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/payment/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/payment_verification.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="35" column="50" selection-start-line="35" selection-start-column="50" selection-end-line="35" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/payment/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/api/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/api/view.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/api/urls.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/payment/api/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/payment/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="102" column="62" selection-start-line="102" selection-start-column="62" selection-end-line="102" selection-end-column="62" />
-          <folding>
-            <element signature="e#0#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/laptop_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#section#0;n#section#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-862">
-          <caret line="50" column="43" lean-forward="true" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
-          <folding>
-            <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#article#0;n#main#0;n#div#0;n#div#0;n#section#0;n#div#0;n#div#1;n#section#0;n#section#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cart.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-224">
-          <caret line="71" column="48" selection-start-line="71" selection-start-column="48" selection-end-line="71" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/my_cart.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-538">
-          <caret line="1" column="72" lean-forward="true" selection-start-line="1" selection-start-column="72" selection-end-line="3" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="4" lean-forward="true" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/api/serializer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/booking/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="105" column="14" selection-start-line="105" selection-start-column="14" selection-end-line="105" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-          <folding>
-            <element signature="e#0#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="56" selection-start-line="3" selection-start-column="56" selection-end-line="3" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/register_user.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="444" y="186" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606214501079">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="444" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.768@0.0.1366.768" timestamp="1606214501079" />
+    <state x="184" y="29" key="SettingsEditor" timestamp="1612638620320">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="184" y="29" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1612638620320" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1610877753703">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1366.768@0.0.1366.768" timestamp="1610877753703" />
   </component>
 </project>

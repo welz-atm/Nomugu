@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from .models import Product, Category
+from .image_resize import resize
 from order.models import OrderItem
 from django.contrib import messages
 from .forms import ProductForm
@@ -47,13 +48,15 @@ def dashboard(request):
 
 @login_required
 def my_product(request):
+    categories = Category.objects.all()
     if request.user.is_merchant is True:
         products = Product.objects.filter(merchant=request.user)
         paginator = Paginator(products, 10)
         page_number = request.GET.get('page')
         products = paginator.get_page(page_number)
         context = {
-            'products': products
+            'products': products,
+            'categories': categories
         }
         return render(request, 'my_product.html', context)
     else:
@@ -63,26 +66,7 @@ def my_product(request):
 @login_required
 def add_product(request):
     categories = Category.objects.all()
-    if request.user.is_merchant is True:
-        if request.method == 'POST':
-            form = ProductForm(request.POST, request.FILES)
-            if form.is_valid():
-                product = form.save(commit=False)
-                product.merchant = request.user
-                product.save()
-                messages.success(request, 'Product added successfully')
-                return redirect('my_product')
-
-        else:
-            form = ProductForm(request.POST, request.FILES)
-
-        context = {
-            'categories': categories,
-            'form': form,
-            }
-
-        return render(request, 'add_product.html', context)
-    elif request.user.is_admin is True:
+    if request.user.is_merchant is True or request.user.is_admin:
         if request.method == 'POST':
             form = ProductForm(request.POST, request.FILES)
             if form.is_valid():
@@ -134,7 +118,7 @@ def edit_product(request, pk):
 @login_required
 def delete_product(request,pk):
     product = get_object_or_404(Product, pk=pk)
-    if request.user.is_merchant is True:
+    if request.user.is_merchant is True and product.merchant is request.user:
         product.delete()
         return redirect('my_product')
     else:
@@ -145,10 +129,26 @@ def detail_view(request, pk):
     detail = get_object_or_404(Product, pk=pk)
     detail.view_product += 1
     detail.save()
+    related_products = Product.objects.filter(category=detail.category).select_related('merchant')[:4]
     context = {
         'detail': detail,
+        'related_product': related_products
     }
     return render(request, 'detail.html', context)
+
+
+def beauty_category(request):
+    cat_beauty = Product.objects.filter(category=beauty).select_related('user')
+    if cat_beauty.exists():
+        paginator = Paginator(cat_beauty, 10)
+        page_number = request.GET.get('page')
+        cat_beauty = paginator.get_page(page_number)
+        context = {
+            'cat_beauty': cat_beauty
+        }
+        return render(request, 'categories.html', context)
+    else:
+        return render(request, '404.html')
 
 
 def is_valid_queryparam(param):

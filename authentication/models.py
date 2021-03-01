@@ -100,7 +100,6 @@ class Shipper(models.Model):
     license_number = models.IntegerField()
     extra_info = models.TextField()
     region = models.CharField(max_length=25, choices=location_options)
-    is_created = models.BooleanField(default=False)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):

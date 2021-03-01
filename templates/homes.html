@@ -1,0 +1,359 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+
+        <!-- page start-->
+
+
+        <div class="row">
+            <section class="col-lg-12">
+                        <div class="text-success text-center"><h3>Welcome to NoMuGu</h3></div>
+
+                <div class="row justify-content-center py-5">
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap">
+                                    <img src="{% static 'images/laptop.jpg' %}" class="img-thumbnail"></div>
+                                <figcaption class="info-wrap border-top">
+                                    <div class="text-center">
+                                        <a class="btn btn-success btn-lg" data-toggle="collapse"
+                                           href="#collapseExample"><span class="fa fa-chevron-circle-down"></span>Computer/Laptops</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="{% url 'server' %}">Server</a>
+                                                <br>
+                                                <a href="{% url 'laptop' %}">Laptop</a>
+                                                <br>
+                                                <a href="{% url 'laptop' %}">Router</a>
+                                                <br>
+                                                <a href="{% url 'laptop' %}">Switches</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/phone.jpg' %}" class="img-thumbnail">
+                                </div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample1"><span class="fa fa-chevron-circle-down"></span>Phones/Tablets</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample1">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="{% url 'android' %}">Android Phones</a>
+                                                <br>
+                                                <a href="{% url 'ios' %}">IOS Phones</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/fashion.jpg' %}"
+                                                           class="img-thumbnail"></div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample2"><span class="fa fa-chevron-circle-down"></span>Fashion</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample2">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="{% url 'android' %}">Lace/Jacquard/Linen/Wool</a>
+                                                <br>
+                                                <a href="{% url 'footwear' %}">Footwear</a>
+                                                <br>
+                                                <a href="{% url 'fragrance' %}">Fragrances</a>
+                                                <br>
+                                                <a href="{% url 'watches' %}">Wristwatches</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/electronics.png' %}"
+                                                           class="img-thumbnail"></div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample3"><span class="fa fa-chevron-circle-down"></span>Electronics</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample3">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="#">Television</a>
+                                                <br>
+                                                <a href="{% url 'ac' %}">Air Conditioner</a>
+                                                <br>
+                                                <a href="{% url 'audio' %}">Home Theatre</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+
+                    </div><!-- row.// -->
+
+                    <div class="row justify-content-center py-5">
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/kitchenapp.jpg' %}"
+                                                           class="img-thumbnail"></div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample4"><span class="fa fa-chevron-circle-down"></span>Kitchen Appliances</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample4">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="{% url 'refrigerator' %}">Refrigerator</a>
+                                                <br>
+                                                <a href="{% url 'freezer' %}">Freezer</a>
+                                                <br>
+                                                <a href="{% url 'cooker' %}">Cooker</a>
+                                                <br>
+                                                <a href="{% url 'microwave' %}">Microwave</a>
+                                                <br>
+                                                <a href="{% url 'dispenser' %}">Water Dispenser</a>
+                                                <br>
+                                                <a href="{% url 'blender' %}">Blender</a>
+                                                <br>
+                                                <a href="{% url 'kettle' %}">Kettle</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/homeapp.jpg' %}"
+                                                           class="img-thumbnail"></div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample5"><span class="fa fa-chevron-circle-down"></span>Home Appliance</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample5">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="{% url 'washer' %}">Washing Machine</a>
+                                                <br>
+                                                <a href="{% url 'furniture' %}">Furniture</a>
+                                                <br>
+                                                <a href="{% url 'fan' %}">Fans</a>
+                                                <br>
+                                                <a href="{% url 'bed' %}">Bed/Bed Furnishings</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/flight.jpg' %}" class="img-thumbnail">
+                                </div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample6"><span class="fa fa-chevron-circle-down"></span>Fruits</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample6">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="#">Local</a>
+                                                <br>
+                                                <a href="#">International</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/hotel.jpg' %}" class="img-thumbnail">
+                                </div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample7"><span class="fa fa-chevron-circle-down"></span>Hotels</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample7">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="#">Nigeria</a>
+                                                <br>
+                                                <a href="#">International</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+                    </div>
+
+                    <div class="row justify-content-center py-5">
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/rhometest.jpg' %}"
+                                                           class="img-thumbnail"></div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample8"><span class="fa fa-chevron-circle-down"></span>Beauty</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample8">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="#">Body Cream</a>
+                                                <br>
+                                                <a href="#">Wigs</a>
+                                                <br>
+                                                <a href="#">Lingerie</a>
+                                                <br>
+                                                <a href="#">Spa</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+                        <div class="col-md-3 align-center">
+
+
+                            <figure class="card card-product-grid">
+                                <div class="img-wrap"><img src="{% static 'images/tomatoes.jpg' %}"
+                                                           class="img-thumbnail"></div>
+                                <figcaption class="info-wrap border-top">
+
+                                    <div class="text-center">
+                                        <a class="btn btn-lg btn-success" data-toggle="collapse"
+                                           href="#collapseExample9"><span class="fa fa-chevron-circle-down"></span>Food</a>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExample9">
+                                        <div class="card card-body">
+                                            <div class="text-center">
+                                                <a href="#">Pepper</a>
+                                                <br>
+                                                <a href="#">Yam</a>
+                                                <br>
+                                                <a href="#">Oil</a>
+                                                <br>
+                                                <a href="#">Fruits</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </figcaption>
+                            </figure> <!-- card // -->
+
+
+                        </div> <!-- col.// -->
+
+                    </div>
+
+
+        </div>
+        </div>
+        <!-- page end-->
+    </section>
+</section>
+<!--main content end-->
+
+{% endblock %}

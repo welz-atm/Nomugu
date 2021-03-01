@@ -56,29 +56,8 @@ transport_type = [('Bike', 'Bike'), ('MiniBus', 'MiniBus')]
 
 
 class ShipperForm(forms.ModelForm):
-    extra_info = forms.CharField(label='', widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder':
-                                                                 'Additional Information'}))
-    unit = forms.ChoiceField(label='', widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Unit'}),
-                             choices=unit_options)
-    region = forms.ChoiceField(label='', widget=forms.Select(attrs={'class': 'form-control', 'placeholder':
-                                                                    'Region'}), choices=location_options)
-    extra_weight = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'class': 'form-control',
-                                                                                'placeholder': 'Telephone'}))
-    engine_number = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder':
-                                                                                 'Engine Number'}))
-    registration_number = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'class': 'form-control',
-                                                                                       'placeholder': 'Price'}))
-    registration_name = forms.CharField(label='', widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder':
-                                                                               'Pick Up'}),)
-    year_of_purchase = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'class': 'form-control',
-                                                                                    'placeholder': 'Price'}))
-    brand = forms.CharField(label='', widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Pick Up'}))
-    vehicle_type = forms.ChoiceField(label='', widget=forms.Select(attrs={'class': 'form-control', 'placeholder':
-                                                                          'Pick Up'}), choices=transport_type)
-    license_number = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder'
-                                                                                  : 'Price'}))
 
     class Meta:
         model = Shipper
         fields = ('vehicle_type', 'registration_name', 'registration_number', 'license_number', 'engine_number', 'brand',
-                  'year_of_purchase', 'region', )
+                  'year_of_purchase', 'region', 'extra_info', )

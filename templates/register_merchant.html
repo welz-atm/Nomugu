@@ -1,104 +1,162 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
 {% load static %}
-{% block content %}
+<html lang="zxx">
+
+<head>
+    <!-- Page Title -->
+    <title>NoMugu..Buy,Sell and Track</title>
+
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}">
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/icofont/icofont.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/perfect-scrollbar/perfect-scrollbar.min.css' %}">
+    <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+
+    <!-- ======= MAIN STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <!-- ======= END MAIN STYLES ======= -->
+
+</head>
+
+<body>
+
+    <div class="mn-vh-100 d-flex align-items-center">
+        <div class="container">
+            <!-- Card -->
+            <div class="card justify-content-center auth-card">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                        <h4 class="mb-5 font-20">Welcome To NoMugu</h4>
+
+                        <form method="post" action="{% url 'register_merchant' %}">
+							{% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="f_name" class="mb-2 font-14 bold">First Name</label>
+                                        <input type="text" id="f_name" class="theme-input-style" placeholder="First Name" name='first_name'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="l_name" class="mb-2 font-14 bold">Last Name</label>
+                                        <input type="text" id="l_name" class="theme-input-style" placeholder="Last Name" name='last_name'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+								
+								<div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="password" class="mb-2 font-14 bold">Password</label>
+                                        <input type="password" id="password" class="theme-input-style" placeholder="Password" name='password1'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+								
+								 <div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="r_password" class="mb-2 font-14 bold">Retype Password</label>
+                                        <input type="password" id="r_password" class="theme-input-style" placeholder="Password" name='password2'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="email" class="mb-2 font-14 bold">Email Address</label>
+                                        <input type="email" id="email" class="theme-input-style" placeholder="Email Address" name='email'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="l_name" class="mb-2 font-14 bold">Company Name</label>
+                                        <input type="text" id="l_name" class="theme-input-style" placeholder="Company Name" name='company_name'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
 
 
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper">
-        <h3 class="page-header "><i class="fa fa-users"></i>Merchant Registration</h3>
-        <!-- page start-->
+
+                                <div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="u_name" class="mb-2 font-14 bold">Company Address</label>
+                                        <input type="text" id="u_name" class="theme-input-style" placeholder="Pick-Up Address" name='address'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+
+								<div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="u_name" class="mb-2 font-14 bold">State</label>
+                                        <input type="text" id="u_name" class="theme-input-style" placeholder="State" name='state'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+
+								<div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="u_name" class="mb-2 font-14 bold">Telephone</label>
+                                        <input type="number" id="u_name" class="theme-input-style" placeholder="Telephone Nos" name='telephone'>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+
+								<div class="col-lg-6">
+                                    <!-- Form Group -->
+                                    <div class="form-group mb-20">
+                                        <label for="u_name" class="mb-2 font-14 bold">Bio</label>
+                                        <textarea name="bio" id="textarea1" class="theme-input-style style--seven" placeholder="Type Here" ></textarea>
+                                    </div>
+                                    <!-- End Form Group -->
+                                </div>
+                            </div>
+								
 
 
-        <div class="row">
-            <div class="col-lg-12">
-                <form class="form-horizontal " method="post" action="{% url 'register_merchant' %}">
-                    {% csrf_token %}
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">First Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="first_name" placeholder="First Name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Last Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="last_name" placeholder="Last Name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Company Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="company_name" placeholder="Company Name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Address</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="address" placeholder="Pickup Address">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">State</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="state" placeholder="State">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Telephone</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="telephone" placeholder="Company Telephone">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Email</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" name="email" placeholder="Email">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Password</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" name="password1" placeholder="Password">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Confirm Password</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Bio</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" name="bio" rows="10"></textarea>
-                        </div>
-                    </div>
-
-
-                    <div class="text-right">
-
-                        <button class="btn btn-success" type="submit">Submit</button>
-                        <a class="btn btn-success" href="{% url 'home' %}">Back to Home</a>
-
-                    </div>
-
-                </form>
+                            <div class="d-flex align-items-center pt-4">
+                                <button type="submit" class="btn long mr-20">Register</button>
+                                <span class="font-12 d-block"><a href="{% url 'login' %}" class="bold">Log In</a>,If you already have an account.</span>
+                            </div>
+                        </form>
+                    </div>                                    
+                </div>
             </div>
+            <!-- End Card -->
         </div>
-        <!-- page end-->
-    </section>
-</section>
-<!--main content end-->
+    </div>
 
-{% endblock %}
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'assets/js/script.js' %}"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+</body>
+
+</html>

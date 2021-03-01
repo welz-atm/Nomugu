@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect, HttpResponse
 from .models import CustomUser, Shipper
 from payment.models import Account
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 from django.contrib import messages
 from .forms import ShopperRegisterForm, ShopperEditForm, MerchantRegisterForm, MerchantEditForm, ShipperForm, \
                                                            ShipperRegisterForm, ShipperEditForm
 from django.contrib.auth.decorators import login_required
+from NoMugu.settings import EMAIL_HOST_USER
 
 
 def login_user(request):
@@ -35,7 +36,7 @@ def login_user(request):
             messages.success(request, 'Invalid Username/Password')
             return redirect('login')
     else:
-        return render(request, 'login_user.html', {})
+        return render(request, 'login.html', {})
 
 
 def logout_user(request):
@@ -44,7 +45,7 @@ def logout_user(request):
     return redirect('home')
 
 
-def register_user(request):
+def register_shopper(request):
     if request.method == 'POST':
         form = ShopperRegisterForm(request.POST)
         if form.is_valid():
@@ -57,7 +58,7 @@ def register_user(request):
     else:
         form = ShopperRegisterForm()
     context = {'form': form}
-    return render(request, 'register_user.html', context)
+    return render(request, 'register_shopper.html', context)
 
 
 def register_merchant(request):
@@ -157,6 +158,37 @@ def view_profile(request, pk):
         'user': user
     }
     return render(request, 'view_profile.html', context)
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            if user.exists():
+                subject = 'Password Rest Requested'
+                template = "password_reset_email.txt"
+                message_context = {
+                    "email": user.email,
+                    'domain': '127.0.0.1:8000',
+                    'site_name': 'NoMugu',
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "user": user,
+                    'token': default_token_generator.make_token(user),
+                    'protocol': 'http',
+                }
+                message = render_to_string(template, message_context)
+                try:
+                    send_mail(subject, message, EMAIL_HOST_USER, [user.email], fail_silently=False)
+                except BadHeaderError:
+                    return HttpResponse('Invalid header found.')
+                return redirect("reset_done")
+    else:
+        form = PasswordResetForm()
+    context = {
+           'form': form
+       }
+    return render(request, 'password_reset.html', context)
 
 
 @login_required()
