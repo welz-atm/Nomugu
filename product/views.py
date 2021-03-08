@@ -11,7 +11,11 @@ from django.db.models import Q
 
 
 def home_view(request):
-    return render(request, 'home.html', {})
+    categories = Category.objects.all()
+    context = {
+        'categories': categories
+    }
+    return render(request, 'home.html', context)
 
 
 def search_view(request):
@@ -137,14 +141,15 @@ def detail_view(request, pk):
     return render(request, 'detail.html', context)
 
 
-def beauty_category(request):
-    cat_beauty = Product.objects.filter(category=beauty).select_related('user')
-    if cat_beauty.exists():
-        paginator = Paginator(cat_beauty, 10)
+def category_view(request, pk):
+    category = Category.objects.get(pk=pk)
+    categories = Product.objects.filter(category=category.pk).select_related('merchant')
+    if categories.exists():
+        paginator = Paginator(categories, 10)
         page_number = request.GET.get('page')
-        cat_beauty = paginator.get_page(page_number)
+        categories = paginator.get_page(page_number)
         context = {
-            'cat_beauty': cat_beauty
+            'categories': categories
         }
         return render(request, 'categories.html', context)
     else:

@@ -35,11 +35,12 @@
 
     <div class="mn-vh-100 d-flex align-items-center">
         <div class="container">
+            {% include 'messages.html' %}
             <!-- Card -->
             <div class="card justify-content-center auth-card">
                 <div class="row justify-content-center">
                     <div class="col-xl-7 col-lg-9">
-                        <h4 class="mb-5 font-20">Welcome Back.</h4>
+                        <h4 class="mb-5 font-20">Welcome <a href="{% url 'home' %}">Back.</a></h4>
 
                         <form action="{% url 'login' %}" method="post">
                             {% csrf_token %}

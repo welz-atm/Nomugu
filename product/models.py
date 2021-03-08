@@ -1,14 +1,11 @@
 from django.db import models
 from authentication.models import CustomUser
-
-categories = (('Beauty', 'Beauty'), ('Computer/Laptops', 'Computer/Laptops'), ('electronics', 'Electronics'),
-              ('Fashion', 'Fashion'), ('Flight', 'Flight'), ('Food', 'Food'), ('Fruits', 'Fruits'),
-              ('Home Appliances', 'Home Appliances'), ('Hotel', 'Hotel'), ('Kitchen appliances', 'Kitchen Appliances'),
-              ('Phones/Tablets', 'Phones/Tablets'))
+from django_resized import ResizedImageField
 
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    image = ResizedImageField(size=[230, 192], upload_to='media', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -30,9 +27,9 @@ class Product(models.Model):
     brand = models.CharField(max_length=120)
     description = models.TextField(max_length=1000)
     color = models.CharField(max_length=15)
-    image_one = models.ImageField(upload_to='media')
-    image_two = models.ImageField(upload_to='media', null=True, blank=True)
-    image_three = models.ImageField(upload_to='media', null=True, blank=True)
+    image_one = ResizedImageField(size=[230, 192], upload_to='media')
+    image_two = ResizedImageField(size=[230, 192], upload_to='media', null=True, blank=True)
+    image_three = ResizedImageField(size=[230, 192], upload_to='media', null=True, blank=True)
     price = models.IntegerField()
     quantity = models.IntegerField(null=True, blank=True)
     weight = models.IntegerField(null=True, blank=True)

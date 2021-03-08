@@ -20,18 +20,15 @@ def login_user(request):
             if user.is_authenticated and user.is_shopper:
                 login(request, credential)
                 return redirect('home')
-            elif user.is_authenticated and user.is_merchant:
+            if user.is_authenticated and user.is_merchant:
                 login(request, credential)
                 return redirect('dashboard')
-            elif user.is_authenticated and user.is_admin:
+            if user.is_authenticated and user.is_admin:
                 login(request, credential)
                 return redirect('dashboard')
-            elif user.is_authenticated and user.is_shipper:
+            if user.is_authenticated and user.is_shipper:
                 login(request, credential)
                 return redirect('dashboard')
-            else:
-                messages.success(request, 'Please confirm your login details ')
-                return redirect('login')
         else:
             messages.success(request, 'Invalid Username/Password')
             return redirect('login')
@@ -41,7 +38,6 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    messages.success(request, 'You have logged out successfully.')
     return redirect('home')
 
 
@@ -69,7 +65,6 @@ def register_merchant(request):
             merchant.is_merchant = True
             merchant.save()
             login(request, merchant, backend='django.contrib.auth.backends.ModelBackend')
-            messages.success(request, 'You have registered successfully.')
             return redirect('create_account')
 
     else:
@@ -89,7 +84,6 @@ def register_shipper(request):
             shipper.is_shipper = True
             shipper.save()
             login(request, shipper, backend='django.contrib.auth.backends.ModelBackend')
-            messages.success(request, 'You have registered successfully')
             return redirect('create_shipper_details')
     else:
         form = ShipperRegisterForm()
@@ -122,7 +116,6 @@ def profile(request):
             form = ShopperEditForm(request.POST, instance=request.user)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Update successful.')
                 return redirect('profile')
         else:
             form = ShopperEditForm(instance=request.user)
@@ -133,7 +126,6 @@ def profile(request):
             form = MerchantEditForm(request.POST, instance=request.user)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Update successful.')
                 return redirect('profile')
         else:
             form = MerchantEditForm(instance=request.user)
@@ -144,7 +136,6 @@ def profile(request):
             form = ShipperEditForm(request.POST, instance=request.user)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Update successful.')
                 return redirect('profile')
         else:
             form = ShipperEditForm(instance=request.user)
@@ -199,7 +190,6 @@ def change_password(request):
             if form.is_valid():
                 form.save()
                 update_session_auth_hash(request, form.user)
-                messages.success(request, 'Password changed successfully')
                 return redirect('dashboard')
 
         else:

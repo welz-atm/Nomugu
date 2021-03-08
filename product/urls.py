@@ -36,4 +36,5 @@ urlpatterns = [
     path('washer/', views.washers_view, name='washer'),
     path('fan/', views.fans_view, name='fan'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('category/<int:pk>', views.category_view, name='category'),
 ]

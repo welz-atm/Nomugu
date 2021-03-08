@@ -5,6 +5,7 @@ from booking.calc_distance import calc_distance
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+from django_resized import ResizedImageField
 
 
 class OrderItem(models.Model):
@@ -118,7 +119,7 @@ class Invoices(models.Model):
                                                                   MaxValueValidator(99999999)
                                                                   ])
     invoiced_date = models.DateTimeField(auto_now_add=True)
-    last_saved_date = models.DateTimeField(auto_now_add=True)
+#    last_saved_date = models.DateTimeField(auto_now_add=True)
     is_created = models.BooleanField(default=False)
 
     def __int__(self):
@@ -126,8 +127,8 @@ class Invoices(models.Model):
 
 
 class Photo(models.Model):
-    main_image = models.ImageField(upload_to='photos')
-    rear_image = models.ImageField(upload_to='photos', null=True, blank=True)
-    front_image = models.ImageField(upload_to='photos', null=True, blank=True)
-    side_image = models.ImageField(upload_to='photos', null=True, blank=True)
-    bottom_image = models.ImageField(upload_to='photos', null=True, blank=True)
+    main_image = ResizedImageField(size=[1400, 1400], upload_to='media', null=True, blank=True)
+    rear_image = ResizedImageField(size=[1400, 1400], upload_to='media', null=True, blank=True)
+    front_image = ResizedImageField(size=[1400, 1400], upload_to='media', null=True, blank=True)
+    side_image = ResizedImageField(size=[1400, 1400], upload_to='media', null=True, blank=True)
+    bottom_image = ResizedImageField(size=[1400, 1400], upload_to='media', null=True, blank=True)

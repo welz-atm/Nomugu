@@ -44,8 +44,16 @@
     <header class="header fixed-top d-flex align-content-center flex-wrap">
         <!-- Logo -->
         <div class="logo">
-            <a href="index.html" class="default-logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
-            <a href="index.html" class="mobile-logo"><img src="{% static 'assets/img/mobile-logo.png' %}" alt=""></a>
+            {% if user.is_merchant %}
+            <a href="{% url 'dashboard' %}" class="default-logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
+            <a href="{% url 'dashboard' %}" class="mobile-logo"><img src="{% static 'assets/img/mobile-logo.png' %}" alt=""></a>
+            {% elif user.is_shipper%}
+            <a href="{% url 'dashboard' %}" class="default-logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
+            <a href="{% url 'dashboard' %}" class="mobile-logo"><img src="{% static 'assets/img/mobile-logo.png' %}" alt=""></a>
+            {% else %}
+            <a href="{% url 'home' %}" class="default-logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
+            <a href="{% url 'home' %}" class="mobile-logo"><img src="{% static 'assets/img/mobile-logo.png' %}" alt=""></a>
+            {% endif %}
         </div>
         <!-- End Logo -->
 

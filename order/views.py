@@ -217,19 +217,22 @@ def view_order(request, pk):
 def attach_picture(request, pk):
     order = OrderItem.objects.get(pk=pk)
     if request.user.is_shipper is True and request.user == order.shipper:
-        form = PhotoForm(request.POST, request.FILES)
-        if form.is_valid():
-            picture = form.save()
-            order.has_images = True
-            order.image = picture
-            order.save()
-            return redirect('picked_up_order')
+        if request.method == 'POST':
+            form = PhotoForm(request.POST, request.FILES)
+            if form.is_valid():
+                picture = form.save()
+                order.has_images = True
+                order.image = picture
+                order.save()
+                return redirect('picked_up_order')
+        else:
+            form = PhotoForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'attach_picture.html', context)
     else:
-        form = PhotoForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'attach_picture.html', context)
+        return render(request, 'unauthorized.html', {})
 
 
 def view_picture(request, pk):
@@ -273,7 +276,7 @@ def pick_for_delivery(request, pk):
             order.save()
             return redirect('picked_up_order')
         else:
-            messages.success(request, 'Order has not been authorized by shopper')
+            messages.warning(request, 'Order has not been authorized by shopper')
             return redirect('picked_up_order')
     else:
         return render(request, 'unauthorized.html', {})
