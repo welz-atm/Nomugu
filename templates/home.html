@@ -1,11 +1,13 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-{% load bootstrap_pagination %}
-   <!-- Wrapper -->
-   <div class="wrapper">
-      <div class="main-wrapper">
-          <div class="main-content">
+
+
+
+
+
+         <!-- Main Content -->
+         <div class="main-content">
             <div class="container-fluid">
                 <!-- Card -->
                 <div class="card">
@@ -15,25 +17,198 @@
                         <!-- Product Grid -->
                         <div class="product-grid pt-2">
                             <div class="row">
-                                {% for category in categories %}
                                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
                                     <!-- Product Grid Item -->
                                     <div class="product-grid-item mb-30">
                                         <div class="product-img mb-3">
-                                             <a href="{% url 'category' pk=category.pk %}">
-                                                <img src='{{category.image.url}}' class="w-100" alt="">
+                                             <a href="product-details.html">
+                                                <img src="{% static 'images/laptop.jpg' %}" class="w-100" alt="">
                                              </a>
                                         </div>
                                         <div class="product-content">
-                                            <h6 class="mb-10">{{category.name}}</h6>
-                                             <a href="{% url 'category' pk=category.pk %}">
+                                            <h6 class="mb-10">Beauty</h6>
+                                             <a href="product-details.html">
                                                 <p class="white"></p>
                                              </a>
                                         </div>
                                     </div>
                                     <!-- End Product Grid Item -->
                                 </div>
-                                {% endfor %}
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                          <a href="product-details.html">
+                                             <img src="{% static 'images/laptop.jpg' %}" class="w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">Computers/Servers</h6>
+                                          <a href="product-details.html">
+                                             <p class="white"></p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                        <div class="product-img mb-3">
+                                          <a href="product-details.html">
+                                             <img src="{% static 'images/electronics.png' %}" class="w-100" alt="">
+                                          </a>
+                                        </div>
+                                        <div class="product-content">
+                                            <h6 class="mb-10">Electronics</h6>
+                                            <a href="product-details.html">
+                                               <p class="white"></p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                       <a href="product-details.html">
+                                          <img src="{% static 'images/fashion.jpg' %}" class="w-100" alt="">
+                                       </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">Fashion</h6>
+                                          <a href="product-details.html">
+                                             <p class="white"> </p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                          <a href="product-details.html">
+                                             <img src="{% static 'images/homeapp.jpg' %}" class="w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">Home Appliances</h6>
+                                          <a href="product-details.html">
+                                             <p class="white"></p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                       <a href="product-details.html">
+                                          <img src="{% static 'images/kitchenapp.jpg' %}" class="w-100" alt="">
+                                       </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">$24</h6>
+                                          <a href="product-details.html">
+                                             <p class="white">Kitchen Appliances</p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                          <a href="product-details.html">
+                                             <img src="{% static 'images/phone.jpg' %}" class="w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">Phones/Tablets</h6>
+                                          <a href="product-details.html">
+                                             <p class="white"></p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                          <a href="product-details.html">
+                                             <img src="{% static 'images/tomatoes.jpg' %}" class="w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">Food/Beverages</h6>
+                                          <a href="product-details.html">
+                                             <p class="white"></p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                          <a href="product-details.html">
+                                             <img src="{% static 'images/laptop.jpg' %}" class="w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">Fruits</h6>
+                                          <a href="product-details.html">
+                                             <p class="white"></p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                          <a href="product-details.html">
+                                             <img src="{% static 'images/laptop.jpg' %}" class="w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">Services</h6>
+                                          <a href="product-details.html">
+                                             <p class="white"></p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
+                                    <!-- Product Grid Item -->
+                                    <div class="product-grid-item mb-30">
+                                       <div class="product-img mb-3">
+                                          <a href="product-details.html">
+                                             <img src="{% static 'images/laptop.jpg' %}" class="w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h6 class="mb-10">Logistics</h6>
+                                          <a href="product-details.html">
+                                             <p class="white"></p>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <!-- End Product Grid Item -->
+                                </div>
+
+
 
 
                             </div>
@@ -44,9 +219,6 @@
                 <!-- End Card -->
             </div>
          </div>
-      </div>
-   </div>
-   <!-- End wrapper -->
-
+         <!-- End Main Content -->
 		 
 {% endblock %}
