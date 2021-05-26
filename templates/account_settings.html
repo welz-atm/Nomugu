@@ -1,0 +1,689 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<!-- Wrapper -->
+<div class="wrapper">
+    <div class="main-wrapper">
+        <div class="main-content d-flex flex-column flex-md-row">
+            <div class="mb-4 mb-md-0">
+                <!-- Tasks Aside -->
+                <div class="aside">
+                    <!-- Aside Body -->
+                    <nav class="aside-body">
+                        <h4 class="mb-3">Account Settings</h4>
+
+                        <ul class="nav flex-column">
+                            <li><a class="active" data-toggle="tab" href="#general">General</a></li>
+                            <li><a data-toggle="tab" href="#c_pass">Change Password</a></li>
+                            <li><a data-toggle="tab" href="#social">Social links</a></li>
+                            <li><a data-toggle="tab" href="#notifications">Notifications</a></li>
+                        </ul>
+                    </nav>
+                    <!-- End Aside Body -->
+                </div>
+                <!-- End Tasks Aside -->
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-xl-12 mb-30 mb-xl-0">
+                        <!-- Card -->
+                        <div class="card h-100">
+                            <div class="card-body p-30">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="general">
+                                        <h4 class="mb-4">Account Settings</h4>
+
+                                        {% if user.is_shopper %}
+                                        <form action="{% url 'edit_user' %}" method="post">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="email" class="mb-2 font-14 bold">Email</label>
+                                                        <input type="email" class="theme-input-style"
+                                                               value="{{user.email}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="userName" class="mb-2 font-14 bold">First
+                                                            Name</label>
+                                                        <input type="text" id="userName" class="theme-input-style"
+                                                               name="first_name" value="{{user.first_name}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+
+                                                </div>
+                                                <div class="col-xl-4 col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="name" class="mb-2 font-14 bold">Telephone(E.g +2348031234567890)</label>
+                                                        <input type="tel" id="name" class="theme-input-style"
+                                                               name="telephone" value="{{user.telephone}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="company" class="mb-2 font-14 bold">Last Name</label>
+                                                        <input type="text" id="company" class="theme-input-style"
+                                                               name="last_name" value="{{user.last_name}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="button-group ">
+                                                        <button type="submit" class="btn">Save Changes</button>
+                                                        <button type="button"
+                                                                class="link-btn bg-transparent ml-3 soft-pink">Cancel
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {% elif user.is_merchant %}
+                                        <form method="post" action="{% url 'edit_user' %}">
+                                            {% csrf_token %}
+                                            {% include 'errors.html' %}
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="f_name" class="mb-2 font-14 bold">First Name</label>
+                                                        <input type="text" id="f_name1" class="theme-input-style"
+                                                               name='first_name' value="{{user.first_name}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="l_name" class="mb-2 font-14 bold">Last Name</label>
+                                                        <input type="text" id="l_name1" class="theme-input-style"
+                                                               name='last_name' value="{{user.last_name}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="email" class="mb-2 font-14 bold">Email
+                                                            Address</label>
+                                                        <input type="email" id="email1" class="theme-input-style"
+                                                               name='email' value="{{user.email}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="l_name" class="mb-2 font-14 bold">Company
+                                                            Name</label>
+                                                        <input type="text" id="li_name1" class="theme-input-style"
+                                                               name='company_name' value="{{user.company_name}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">Company
+                                                            Address(PickUp Address)</label>
+                                                        <input type="text" id="ul_name1" class="theme-input-style"
+                                                               name='address' value="{{user.address}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">State</label>
+                                                        <input type="text" id="uu_name1" class="theme-input-style"
+                                                               name='state' value="{{user.state}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">City</label>
+                                                        <input type="text" id="uu_name" class="theme-input-style"
+                                                               name='city' value="{{user.city}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">Country</label>
+                                                        <select name="country" class="theme-input-style">
+                                                            <option selected>{{ user.country }}</option>
+                                                            {% for country in countries %}
+                                                            <option value="{{ country.name }}">{{ country.name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">Telephone(E.g +2348031234567890)</label>
+                                                        <input type="tel" id="u_name1" class="theme-input-style"
+                                                               name='telephone' value="{{ user.telephone }}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">Bio</label>
+                                                        <textarea name="bio" id="textarea1"
+                                                                  class="theme-input-style style--seven"
+                                                                  placeholder="Type Here" value="{{user.bio}}"></textarea>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-12">
+                                                <div class="button-group ">
+                                                    <button type="submit" class="btn">Save Changes</button>
+                                                    <button type="button"
+                                                            class="link-btn bg-transparent ml-3 soft-pink">Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+
+                                        {% elif user.is_shipper %}
+                                        <form method="post" action="{% url 'edit_user' %}">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="f_name" class="mb-2 font-14 bold">First Name</label>
+                                                        <input type="text" id="f_name" class="theme-input-style"
+                                                               placeholder="First Name" name='first_name'
+                                                               value="{{user.first_name}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="l_name" class="mb-2 font-14 bold">Last Name</label>
+                                                        <input type="text" id="l_name" class="theme-input-style"
+                                                               name='last_name' value="{{user.last_name}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="email" class="mb-2 font-14 bold">Email
+                                                            Address</label>
+                                                        <input type="email" id="email" class="theme-input-style"
+                                                               name='email' value="{{user.email}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">Address</label>
+                                                        <input type="text" id="u_name" class="theme-input-style"
+                                                               name='address' value="{{user.address}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">City</label>
+                                                        <input type="number" id="u_telephone" class="theme-input-style"
+                                                               name='city' value="{{user.city}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">State</label>
+                                                        <input type="text" id="u_state" class="theme-input-style"
+                                                               name='state' value="{{user.state}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_names" class="mb-2 font-14 bold">Address</label>
+                                                        <input type="text" id="u_names" class="theme-input-style"
+                                                               name='address' value="{{user.address}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">Bio</label>
+                                                        <textarea name="bio" id="textarea11"
+                                                                  class="theme-input-style style--seven"
+                                                                  value="{{user.bio}}"></textarea>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="f_name" class="mb-2 font-14 bold">Registration
+                                                            Name</label>
+                                                        <input type="text" class="theme-input-style"
+                                                               name="registration_name"
+                                                               required value="{{shipper.registration_name}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="l_name" class="mb-2 font-14 bold">Registration
+                                                            Number</label>
+                                                        <input type="number" class="theme-input-style"
+                                                               name="registration_number"
+                                                               value="{{shipper.registration_number}}"
+                                                               required>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="engine_number" class="mb-2 font-14 bold">Engine
+                                                            Number</label>
+                                                        <input type="number" id="engine_number"
+                                                               class="theme-input-style"
+                                                               name="engine_number"
+                                                               required value="{{shipper.engine_number}}">
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="engine_number" class="mb-2 font-14 bold">License
+                                                            Number</label>
+                                                        <input type="number" class="theme-input-style"
+                                                               name="license_number" value="{{shipper.license_number}}"
+                                                               required>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="email" class="mb-2 font-14 bold">Vehicle
+                                                            type</label>
+                                                        <select name="vehicle_type" class="theme-input-style"
+                                                                value="{{shipper.vehicle_type}}">
+                                                            <option selected>Select Vehicle Type...</option>
+                                                            <option value='Bike'>Bike</option>
+                                                            <option value='MiniBus'>MiniBus</option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="l_name" class="mb-2 font-14 bold">Year of
+                                                            Purchase</label>
+                                                        <input type="number" id="account_number"
+                                                               class="theme-input-style"
+                                                               value="{{shipper.year_of_purchase}}"
+                                                               name='year_of_purchase' required>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+
+                                                <div class="col-lg-12">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">Region
+                                                            Covered</label>
+                                                        <select name="region" class="theme-input-style">
+                                                            <option selected>{{shipper.region}}</option>
+                                                            <option value='All Regions'>All Regions</option>
+                                                            <option value='Abuja Only'>Abuja Only</option>
+                                                            <option value='Enugu Only'>Enugu Only</option>
+                                                            <option value='Lagos Only'>Lagos Only</option>
+                                                            <option value='North-Central'>North-Central</option>
+                                                            <option value='North-East'>North-East</option>
+                                                            <option value='North-West'>North-West</option>
+                                                            <option value='Port Harcourt Only'>Port Harcourt Only
+                                                            </option>
+                                                            <option value='South-East'>South-East</option>
+                                                            <option value='South-South'>South-South</option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="u_name" class="mb-2 font-14 bold">Extra Info</label>
+                                                        <textarea name="extra_info" id="textarea13"
+                                                                  class="theme-input-style style--seven"
+                                                                  placeholder="About yourself"
+                                                                  value="shipper.extra_info"></textarea>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <div class="button-group ">
+                                                    <button type="submit" class="btn">Save Changes</button>
+                                                    <button type="button"
+                                                            class="link-btn bg-transparent ml-3 soft-pink">Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="tab-pane fade" id="c_pass">
+                                        <h4 class="mb-4">Change Password</h4>
+
+                                        <form method="post" action="{% url 'change_password' %}">
+                                            {% csrf_token %}
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="oldPassword" class="mb-2 font-14 bold">Old Password</label>
+                                                <input type="password" id="oldPassword" class="theme-input-style"
+                                                       placeholder="Type Here" name="old_password">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="newPassword" class="mb-2 font-14 bold">New Password</label>
+                                                <input type="password" id="newPassword" class="theme-input-style"
+                                                       placeholder="Type Here" name="new_password1">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="retypePassword" class="mb-2 font-14 bold">Retype
+                                                    Password</label>
+                                                <input type="password" id="retypePassword" class="theme-input-style"
+                                                       placeholder="Type Here" name="new_password2">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <div class="button-group mt-30">
+                                                <button type="submit" class="btn">Save Changes</button>
+                                                <button type="button" class="link-btn bg-transparent ml-3 soft-pink">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="social">
+                                        <h4 class="mb-4">Social Links</h4>
+
+                                        <form action="#">
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="facebook" class="mb-2 font-14 bold">Facebook</label>
+                                                <input type="url" id="facebook" class="theme-input-style"
+                                                       placeholder="Add Links">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="twitter" class="mb-2 font-14 bold">Twitter</label>
+                                                <input type="url" id="twitter" class="theme-input-style"
+                                                       placeholder="Add Links">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="linkedin" class="mb-2 font-14 bold">Linkedin</label>
+                                                <input type="url" id="linkedin" class="theme-input-style"
+                                                       placeholder="Add Links">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="pinterest" class="mb-2 font-14 bold">Pinterest</label>
+                                                <input type="url" id="pinterest" class="theme-input-style"
+                                                       placeholder="Add Links">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="quora" class="mb-2 font-14 bold">Quora</label>
+                                                <input type="url" id="quora" class="theme-input-style"
+                                                       placeholder="Add Links">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="instagram" class="mb-2 font-14 bold">Instagram</label>
+                                                <input type="url" id="instagram" class="theme-input-style"
+                                                       placeholder="Add Links">
+                                            </div>
+                                            <!-- End Form Group -->
+
+                                            <div class="button-group mt-30">
+                                                <button type="submit" class="btn">Save Changes</button>
+                                                <button type="button" class="link-btn bg-transparent ml-3 soft-pink">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="notifications">
+                                        <h4 class="mb-5">Notification Settings</h4>
+
+                                        <form action="#">
+                                            <h5 class="text_color mb-4">Account Settings</h5>
+
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="switch-wrap">
+                                                    <!-- Switch -->
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked="checked">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                    <!-- End Switch -->
+                                                </div>
+
+                                                <span>Email me when someone comments onmy article</span>
+
+                                            </div>
+
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="switch-wrap">
+                                                    <!-- Switch -->
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked="checked">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                    <!-- End Switch -->
+                                                </div>
+
+                                                <span>Email me when someone answers on my form</span>
+
+                                            </div>
+
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="switch-wrap">
+                                                    <!-- Switch -->
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                    <!-- End Switch -->
+                                                </div>
+
+                                                <span>Invites me to co-own a moodboard</span>
+
+                                            </div>
+
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="switch-wrap">
+                                                    <!-- Switch -->
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked="checked">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                    <!-- End Switch -->
+                                                </div>
+
+                                                <span>Receive an email summary of notifications instead of individual emails</span>
+
+                                            </div>
+
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="switch-wrap">
+                                                    <!-- Switch -->
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                    <!-- End Switch -->
+                                                </div>
+
+                                                <span>Notifications about upcoming live events</span>
+                                            </div>
+
+
+                                            <h5 class="text_color pt-3 mb-4">Activity</h5>
+
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="switch-wrap">
+                                                    <!-- Switch -->
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked="checked">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                    <!-- End Switch -->
+                                                </div>
+
+                                                <span>Blocked users will no longer be allowed to: follow you, see your work in their feed.</span>
+                                            </div>
+
+                                            <div class="d-flex align-items-center mb-4">
+                                                <div class="switch-wrap">
+                                                    <!-- Switch -->
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked="checked">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                    <!-- End Switch -->
+                                                </div>
+
+                                                <span>Receive an email summary of notifications instead of individual emails</span>
+
+                                            </div>
+
+                                            <div class="d-flex align-items-center">
+                                                <div class="switch-wrap">
+                                                    <!-- Switch -->
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <span class="control"></span>
+                                                    </label>
+                                                    <!-- End Switch -->
+                                                </div>
+
+                                                <span>Error saving: please try again later</span>
+                                            </div>
+
+
+                                            <div class="button-group mt-30">
+                                                <button type="submit" class="btn">Save Changes</button>
+                                                <button type="button" class="link-btn bg-transparent ml-3 soft-pink">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End wrapper -->
+<script src="../../assets/plugins/select2/select2.min.js"></script>
+<script src="../../assets/plugins/datepicker/datepicker.min.js"></script>
+<script src="../../assets/plugins/datepicker/i18n/datepicker.en.js"></script>
+<script src="../../assets/plugins/datepicker/custom-form-datepicker.js"></script>
+<script>
+        $(document).ready(function() {
+            $('.language-select').select2({
+                dropdownAutoWidth:!0,
+                width:"100%"
+            });
+        });
+
+
+
+
+
+</script>
+
+
+{% endblock %}

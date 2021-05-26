@@ -1,23 +1,25 @@
 from .admin import UserCreationForm, UserChangeForm
 from django import forms
-from .models import CustomUser,Shipper
+from phonenumber_field.formfields import PhoneNumberField
+from .models import CustomUser, Shipper
+from django.contrib.auth.forms import PasswordChangeForm
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from phonenumber_field.formfields import PhoneNumberField
 
 
 class MerchantRegisterForm(UserCreationForm):
+    telephone = PhoneNumberField()
 
     class Meta:
         model = CustomUser
-        fields = ('company_name', 'company_reg', 'first_name', 'last_name', 'email', 'address', 'state', 'telephone', 'bio',)
+        fields = ('company_name', 'company_reg', 'first_name', 'last_name', 'email', 'address', 'state', 'city', 'country', 'telephone', 'bio',)
 
 
 class MerchantEditForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ('company_name', 'first_name', 'last_name', 'email', 'address', 'state', 'telephone', 'bio', 'password')
+        fields = ('company_name', 'first_name', 'last_name', 'email', 'address', 'state', 'city', 'country', 'telephone', 'bio', 'password')
 
 
 class ShopperRegisterForm(UserCreationForm):
@@ -38,14 +40,21 @@ class ShipperRegisterForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name', 'email', 'address', 'state', 'telephone', 'bio', )
+        fields = ('first_name', 'last_name', 'email', 'address', 'state', 'city', 'country', 'telephone', 'bio', )
 
 
 class ShipperEditForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ('company_name', 'first_name', 'last_name', 'email', 'address', 'state', 'telephone',)
+        fields = ('company_name', 'first_name', 'last_name', 'email', 'address', 'state', 'city', 'country', 'telephone',)
+
+
+class ChangePasswordForm(PasswordChangeForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ('old_password', 'new_password', 'new_password2')
 
 
 location_options = [('Lagos', 'Lagos'), ('Abuja', 'Abuja'), ('Port Harcourt', 'Port Harcourt'), ('South-South',

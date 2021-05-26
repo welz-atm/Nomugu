@@ -5,9 +5,11 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 from django.contrib import messages
 from .forms import ShopperRegisterForm, ShopperEditForm, MerchantRegisterForm, MerchantEditForm, ShipperForm, \
-                                                           ShipperRegisterForm, ShipperEditForm
+                                                           ShipperRegisterForm, ShipperEditForm, ChangePasswordForm
 from django.contrib.auth.decorators import login_required
+from django_countries import countries
 from NoMugu.settings import EMAIL_HOST_USER
+from .task import email_password_request, welcome_message, password_changed
 
 
 def login_user(request):
@@ -48,6 +50,7 @@ def register_shopper(request):
             shopper = form.save(commit=False)
             shopper.is_shopper = True
             shopper.save()
+            welcome_message.delay(shopper.pk)
             login(request, shopper, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('home')
 
@@ -64,6 +67,7 @@ def register_merchant(request):
             merchant = form.save(commit=False)
             merchant.is_merchant = True
             merchant.save()
+            welcome_message.delay(merchant.pk)
             login(request, merchant, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('create_account')
 
@@ -72,6 +76,7 @@ def register_merchant(request):
 
     context = {
         'form': form,
+        'countries': countries
     }
     return render(request, 'register_merchant.html', context)
 
@@ -83,14 +88,69 @@ def register_shipper(request):
             shipper = form.save(commit=False)
             shipper.is_shipper = True
             shipper.save()
+            welcome_message.delay(shipper.pk)
             login(request, shipper, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('create_shipper_details')
     else:
         form = ShipperRegisterForm()
     context = {
         'form': form,
+        'countries': countries
     }
     return render(request, 'register_shipper.html', context)
+
+
+def edit_user(request):
+    user = CustomUser.objects.get(pk=request.user.pk)
+    if request.method == 'POST' and request.user.is_merchant:
+        form = MerchantEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Update successfully')
+            return redirect('settings')
+        else:
+            form = MerchantEditForm(instance=user)
+        context = {
+            'form': form,
+            'user': user
+            }
+        return render(request, 'account_settings.html', context)
+    if request.method == 'POST' and request.user.is_shipper:
+        shipper = Shipper.objects.get(user=user)
+        form = ShipperEditForm(request.POST, instance=user)
+        detail_form = ShipperForm(request.POST, instance=shipper)
+        if form.is_valid() and detail_form.is_valid():
+            form.save()
+            detail_form.user = request.user
+            detail_form.save()
+            messages.success(request, 'Update successfully')
+            return redirect('settings')
+        else:
+            form = ShipperEditForm(instance=shipper)
+            detail_form = ShipperForm(instance=shipper)
+        context = {
+            'form': form,
+            'user': user,
+            'detail_form': detail_form,
+            'shipper': shipper
+            }
+        return render(request, 'account_settings.html', context)
+    if request.method == 'POST' and request.user.is_shopper:
+        form = ShopperEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Update successfully')
+            return redirect('settings')
+        else:
+            form = ShopperEditForm(instance=user)
+        context = {
+            'form': form,
+            'user': user,
+            }
+        return render(request, 'account_settings.html', context)
+
+    else:
+        return HttpResponse('You do not have access to do this')
 
 
 def create_shipper_details(request):
@@ -105,6 +165,24 @@ def create_shipper_details(request):
         form = ShipperForm()
     context = {
         'form': form
+    }
+    return render(request, 'create_shipper_details.html', context)
+
+
+def edit_shipper_details(request):
+    shipper = Shipper.objects.get(pk=request.user.pk)
+    if request.method == 'POST':
+        form = ShipperForm(request.POST, instance=shipper)
+        if form.is_valid():
+            shipper_form = form.save(commit=False)
+            shipper_form.user = request.user
+            shipper_form.save()
+            return redirect('settings')
+    else:
+        form = ShipperForm(instance=shipper)
+    context = {
+        'form': form,
+        'shipper': shipper
     }
     return render(request, 'create_shipper_details.html', context)
 
@@ -151,28 +229,20 @@ def view_profile(request, pk):
     return render(request, 'view_profile.html', context)
 
 
-def reset_password(request):
+def account_setting(request):
+    context = {
+        'countries': countries
+    }
+    return render(request, 'account_settings.html', context)
+
+
+def reset_password_request(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
             user = form.save()
             if user.exists():
-                subject = 'Password Rest Requested'
-                template = "password_reset_email.txt"
-                message_context = {
-                    "email": user.email,
-                    'domain': '127.0.0.1:8000',
-                    'site_name': 'NoMugu',
-                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-                    "user": user,
-                    'token': default_token_generator.make_token(user),
-                    'protocol': 'http',
-                }
-                message = render_to_string(template, message_context)
-                try:
-                    send_mail(subject, message, EMAIL_HOST_USER, [user.email], fail_silently=False)
-                except BadHeaderError:
-                    return HttpResponse('Invalid header found.')
+                email_password_request.delay(user.pk)
                 return redirect("reset_done")
     else:
         form = PasswordResetForm()
@@ -184,43 +254,33 @@ def reset_password(request):
 
 @login_required()
 def change_password(request):
-    if request.user.is_shopper is True:
-        if request.method == 'POST':
-            form = PasswordChangeForm(data=request.POST, user=request.user)
-            if form.is_valid():
-                form.save()
-                update_session_auth_hash(request, form.user)
-                return redirect('dashboard')
-
-        else:
-            form = PasswordChangeForm(user=request.user)
-        context = {'form': form}
-        return render(request, 'change_password.html', context)
-    elif request.user.is_merchant is True:
-        if request.method == 'POST':
-            form = PasswordChangeForm(data=request.POST, user=request.user)
+    if request.method == 'POST':
+        if request.user.is_shopper is True:
+            form = ChangePasswordForm(data=request.POST, user=request.user)
             if form.is_valid():
                 form.save()
                 update_session_auth_hash(request, form.user)
                 messages.success(request, 'Password changed successfully')
-                return redirect('dashboard')
-
-        else:
-            form = PasswordChangeForm(user=request.user)
-        context = {'form': form}
-        return render(request, 'change_password.html', context)
-    elif request.user.is_shipper is True:
-        if request.method == 'POST':
-            form = PasswordChangeForm(data=request.POST, user=request.user)
+                password_changed.delay(user.pk)
+                return redirect('settings')
+        elif request.user.is_merchant is True:
+            form = ChangePasswordForm(data=request.POST, user=request.user)
             if form.is_valid():
                 form.save()
                 update_session_auth_hash(request, form.user)
                 messages.success(request, 'Password changed successfully')
-                return redirect('dashboard')
+                password_changed.delay(user.pk)
+                return redirect('settings')
+        elif request.user.is_shipper is True:
+            form = ChangePasswordForm(data=request.POST, user=request.user)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user)
+                messages.success(request, 'Password changed successfully')
+                password_changed.delay(user.pk)
+                return redirect('settings')
 
-        else:
-            form = PasswordChangeForm(user=request.user)
-        context = {'form': form}
-        return render(request, 'change_password.html', context)
     else:
-        return HttpResponse('You do not have access to do this')
+        form = PasswordChangeForm(user=request.user)
+    context = {'form': form}
+    return render(request, 'account_settings.html', context)

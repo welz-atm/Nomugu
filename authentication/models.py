@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django_countries.fields import CountryField
+from django_countries import countries
 from phonenumber_field.modelfields import PhoneNumberField
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -8,13 +9,13 @@ from rest_framework.authtoken.models import Token
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, password=None,**extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
 
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=self.normalize_email(email),**extra_fields
+            email=self.normalize_email(email), **extra_fields
         )
 
         user.set_password(password)
@@ -49,6 +50,8 @@ class CustomUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     address = models.CharField(max_length=254, null=True, blank=True)
     state = models.CharField(max_length=15, null=True, blank=True)
+    city = models.CharField(max_length=25, null=True, blank=True)
+    country = models.CharField(max_length=100, null=True, blank=True, choices=countries)
     telephone = PhoneNumberField(null=True, unique=True)
     bio = models.CharField(max_length=256, null=True, blank=True)
     company_reg = models.CharField(max_length=15, null=True, blank=True)
@@ -103,7 +106,7 @@ class Shipper(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.name
+        return self.user.get_full_name()
 
 
 @receiver(post_save, sender=CustomUser)

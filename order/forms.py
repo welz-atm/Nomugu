@@ -16,7 +16,7 @@ class OrderCreateForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ('first_name', 'last_name', 'telephone', 'email', 'address', 'state', 'city', )
+        fields = ('first_name', 'last_name', 'telephone', 'email', 'address', 'state', 'city', 'country', )
 
 
 class PhotoForm(forms.ModelForm):

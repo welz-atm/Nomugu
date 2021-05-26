@@ -4,6 +4,7 @@ from product.models import Product
 from booking.calc_distance import calc_distance
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django_countries.fields import CountryField
+from django_countries import countries
 from phonenumber_field.modelfields import PhoneNumberField
 from django_resized import ResizedImageField
 
@@ -18,6 +19,7 @@ class OrderItem(models.Model):
     confirm_pickup = models.BooleanField(default=False)  # authorize shipper to pick up
 #   picked_date = models.DateTimeField(auto_now_add=True)
     address = models.CharField(max_length=254, null=True, blank=True)
+    country = models.CharField(max_length=60, null=True, blank=True, choices=countries)
     city = models.CharField(max_length=25, null=True, blank=True)
     state = models.CharField(max_length=15, null=True, blank=True)
     user = models.ForeignKey(CustomUser, related_name='shopper', on_delete=models.CASCADE)
@@ -36,8 +38,8 @@ class OrderItem(models.Model):
     def get_weight(self):
         return self.product.weight * self.quantity
 
-    def get_address(self):
-        return self.product.merchant.address
+    def get_customer_address(self):
+        return '{}, {} {}, {}'.format(self.address, self.city, self.state, self.country)
 
     def stock_left(self):
         return self.product.quantity - self.quantity
@@ -64,10 +66,11 @@ class OrderItem(models.Model):
             return 'Delivered'
 
     def shipping_cost(self):
-        per_km = 45
-        distance = calc_distance(self.product.merchant.address, self.address)
-        cost = distance * per_km
-        return cost
+        address = '{}, {}, {}'.format(self.product.merchant.address, self.product.merchant.city, self.product.merchant.state)
+        customer_address = '{}, {}, {}'.format(self.address, self.city, self.state)
+        distance = calc_distance(address, customer_address)
+        cost = distance * 45
+        return round(cost, 2)
 
 
 class Order(models.Model):

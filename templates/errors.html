@@ -1,0 +1,20 @@
+{% if form.errors %}
+<div id="errors">
+    <div class="alert {{ message.tags }} alert-dismissible alert-danger" role="alert">
+        <p>There were some errors in the information you entered. Please correct the
+            following:</p>
+        {{ form.non_field_errors }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul>
+            {% for field in form %}
+            {% if field.errors %}
+            <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}

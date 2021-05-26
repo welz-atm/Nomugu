@@ -1,0 +1,18 @@
+{% autoescape off %}
+Hi {{user.first_name}},
+
+Your order has been picked up. Your package will be delivered by our agent soon.
+
+Product Name: {{order.product.title}}
+Price: {{order.product.price}}
+Address: {{order.address}}
+City: {{order.address}}
+State: {{order.address}}
+
+
+If any issues with the details above, kindly contact sales@nomugu.com .
+
+Sincerely,
+NoMugu Team
+
+{% endautoescape %}

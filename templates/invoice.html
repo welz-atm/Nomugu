@@ -1,43 +1,145 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% load static %}
 {% block content %}
+{% load bootstrap_pagination %}
+   <!-- Wrapper -->
+   <div class="wrapper">
+      <div class="main-wrapper">
 
 
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="page-header"><i class="fa fa-table"></i> Table</h3>
-                <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-                    <li><i class="fa fa-table"></i>Table</li>
-                    <li><i class="fa fa-th-list"></i>Basic Table</li>
-                </ol>
+         <!-- Main Content -->
+         <div class="main-content d-flex flex-column flex-md-row">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-12">
+                     <!-- Invoice Header -->
+                     <div class="invoice-details-header card_color-bg d-flex align-items-sm-center flex-column flex-sm-row mb-30 justify-content-sm-between">
+                        <div class="d-flex align-items-center">
+                           <a href="#" class="mr-2"><img src="{% static 'assets/img/svg/angle-left.svg' %}" alt="" class="svg"></a>
+                           <h2 class="regular mr-3 font-30">Invoice</h2>
+                           <h4 class="c4">#256987</h4>
+                        </div>
+
+                        <div class="invoice-header-right d-flex align-items-center justify-content-around justify-content-sm-end mt-3 mt-sm-0">
+                           <!-- Starred -->
+                           <div class="star mr-20">
+                              <a href="#"><img src="{% static 'assets/img/svg/star.svg' %}" alt="" class="svg"></a>
+                           </div>
+                           <!-- End Starred -->
+
+                           <!-- Delete Mail -->
+                           <div class="delete_mail mr-20">
+                              <a href="#"><img src="{% static 'assets/img/svg/delete.svg' %}" alt="" class="svg"></a>
+                           </div>
+                           <!-- End Delete Mail -->
+
+                           <!-- Edit Invoice Button -->
+                           <div class="edit-invoice-btn pr-1">
+                              <a href="invoice-add-new.html" class="btn-circle">
+                                 <img src="{% static 'assets/img/svg/writing.svg' %}" alt="" class="svg">
+                              </a>
+                           </div>
+                           <!-- End Edit Invoice Button -->
+
+                           <!-- Pagination -->
+                           <div class="pagination style--two d-flex flex-column align-items-center ml-2">
+                                 <ul class="list-inline d-inline-flex align-items-center">
+                                 <li><a href="#">
+                                    <img src="{% static 'assets/img/svg/left-angle.svg' %}" alt="" class="svg">
+                                 </a></li>
+                                 <li><a href="#" class="current">
+                                    <img src="{% static 'assets/img/svg/right-angle.svg' %}" alt="" class="svg">
+                                 </a></li>
+                                 </ul>
+                           </div>
+                           <!-- End Pagination -->
+                        </div>
+                     </div>
+                     <!-- End Invoice Header -->
+
+                     <!-- Invoice Top -->
+
+                     <!-- End Invoice Top -->
+
+                     <!-- Invois Wrapper -->
+
+                     <!-- End Invois Wrapper -->
+
+                     <!-- Invoice Details List Wrapper -->
+                     <div class="card_color-bg details-list-wrap">
+                        <div class="table-responsive">
+                           <!-- Invoice List Table -->
+                           <table class="invoice-list-table style-two some-center text-nowrap">
+                              <thead>
+                                 <tr>
+                                    <th>#</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Shipping Cost</th>
+                                    <th>Amount</th>
+                                 </tr>
+                              </thead>
+
+                              <tbody class="card_color-bg">
+							  {% for ord in order.products.all %}
+                                 <tr>
+                                    <td class="bold">#{{ord.product.pk}}</td>
+                                    <td>{{ord.product.title}}</td>
+                                    <td>{{ord.quantity}}</td>
+                                    <td>{{ord.shipping_cost}}</td>
+                                    <td>{{ord.get_cost}}</td>
+                                 </tr>
+								 {% endfor %}
+                              </tbody>
+                           </table>
+                           <!-- End Invoice List Table -->
+                        </div>
+
+                        <!-- Cart Collaterals -->
+                        <div class="cart-collaterals">
+                           <div class="cart_totals calculated_shipping">
+                              <table class="shop_table style-two">
+                                 <tbody>
+                                    <tr class="cart-subtotal">
+                                       <th>Subtotal</th>
+                                       <th>
+                                          <span class="Price-amount amount">
+                                             <span class="Price-currencySymbol">₦</span>{{order.final_price}}</span>
+                                       </th>
+                                    </tr>
+                                    <tr class="cart-tax">
+                                       <td>Shipping Cost</td>
+                                       <td>
+                                          <span class="Price-amount amount">
+                                             <span class="Price-currencySymbol">₦</span>{{order.pickup_price}}</span>
+                                       </td>
+                                    </tr>
+
+                                    <tr class="order-total">
+                                       <td>Total</td>
+                                       <td>
+                                          <strong>
+                                             <span class="Price-amount amount"><span class="Price-currencySymbol">₦</span>{{order.total_price}}</span>
+                                          </strong>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+
+                              <div class="proceed-to-checkout d-flex align-items-center justify-content-end mr-20 mt-4">
+                                 <a href="{% url 'make_payment' pk=order.pk %}" class="btn">Order Now</a>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- End Cart Collaterals -->
+                     </div>
+                     <!-- End Invoice Details List Wrapper -->
+                  </div>
+               </div>
             </div>
-        </div>
-        <!-- page start-->
-
-
-        <div class="row">
-            <div class="col-lg-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        Orders
-                    </header>
-
-
-
-
-
-</section>
-            </div>
-        </div>
-        <!-- page end-->
-    </section>
-</section>
-<!--main content end-->
-
-
+         </div>
+         <!-- End Main Content -->
+      </div>
+   </div>
 
 {% endblock %}

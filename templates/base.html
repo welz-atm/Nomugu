@@ -1,688 +1,369 @@
 <!DOCTYPE html>
-{% load static %}
-<html lang="en">
+<html lang="zxx">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
-    <meta name="author" content="GeeksLabs">
-    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+   <!-- Page Title -->
+   <title>NoMugu..Buy,Sell and Track</title>
 
-    <title>NoMugu..Buy,Sell and Track</title>
+   <!-- Meta Data -->
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="keywords" content="">
 
-    <!-- Bootstrap CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- bootstrap theme -->
-    <link href="{% static 'css/bootstrap-theme.css' %}" rel="stylesheet">
-    <!--external css-->
-    <!-- font icon -->
-    <link href="{% static 'css/elegant-icons-style.css' %}" rel="stylesheet"/>
-    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet"/>
-    <!-- full calendar css-->
-    <link href="{% static 'assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css' %}" rel="stylesheet"/>
-    <link href="{% static 'assets/fullcalendar/fullcalendar/fullcalendar.css' %}" rel="stylesheet"/>
-    <!-- easy pie chart-->
-    <link href="{% static 'assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css' %}" rel="stylesheet" type="text/css"
-          media="screen"/>
-    <!-- owl carousel -->
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" type="text/css">
-    <link href="{% static 'css/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet">
-    <!-- Custom styles -->
-    <link rel="stylesheet" href="{% static 'css/fullcalendar.css' %}">
-    <link href="{% static 'css/widgets.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style-responsive.css' %}" rel="stylesheet"/>
-    <link href="{% static 'css/xcharts.min.css' %}" rel=" stylesheet">
-    <link href="{% static 'css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
-    <!-- =======================================================
-      Theme Name: NiceAdmin
-      Theme URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-      Author: BootstrapMade
-      Author URL: https://bootstrapmade.com
-    ======================================================= -->
+   <!-- Favicon -->
+   <link rel="shortcut icon" href="../../assets/img/favicon.png">
+
+   <!-- Web Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
+
+   <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+   <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
+   <link rel="stylesheet" href="../../assets/fonts/icofont/icofont.min.css">
+   <link rel="stylesheet" href="../../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.css">
+   <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+
+   <!-- ======= MAIN STYLES ======= -->
+   <link rel="stylesheet" href="../../assets/css/style.css">
+   <!-- ======= END MAIN STYLES ======= -->
+
 </head>
 
 <body>
-<!-- container section start -->
-<section id="container" class="">
 
-
-    <header class="header dark-bg">
-        <div class="toggle-nav">
-            <div class="icon-reorder tooltips" data-original-title="Categories" data-placement="bottom"><i
-                    class="icon_menu"></i></div>
-        </div>
-
-        <!--logo start-->
-        {% if user.is_merchant %}
-            <a href="{% url 'dashboard' %}" class="logo">No <span class="lite">Mugu</span></a>
-        {% elif user.is_shipper %}
-            <a href="{% url 'dashboard' %}" class="logo">No <span class="lite">Mugu</span></a>
-        {% else%}
-            <a href="{% url 'home' %}" class="logo">No <span class="lite">Mugu</span></a>
-        {% endif %}
-        <!--logo end-->
-
-        <div class="nav search-row" id="top_menu">
-            <!--  search form start -->
-            <ul class="nav top-menu">
-                <li>
-                    <form class="navbar-form" method="get" action="{% url 'search' %}">
-                        <input class="form-control" placeholder="Search" type="text" name="search">
-                    </form>
-                </li>
-            </ul>
-            <!--  search form end -->
-        </div>
-
-        <div class="top-nav notification-row">
-            {% if user.is_authenticated %}
-            <!-- notificatoin dropdown start-->
-            <ul class="nav pull-right top-menu">
-
-                <li id="mail_notificatoin_bar" class="dropdown">
-                    <a class="dropdown-toggle" href="{% url 'my_cart' %}">
-                        <i class="icon-envelope-l"></i>
-                        <span class="badge bg-important">{{ order_count}}</span>
-                    </a>
-
-                </li>
-
-                <!-- alert notification start-->
-                <li id="alert_notificatoin_bar" class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-                        <i class="icon-bell-l"></i>
-                        <span class="badge bg-important">7</span>
-                    </a>
-                    <ul class="dropdown-menu extended notification">
-                        <div class="notify-arrow notify-arrow-blue"></div>
-                        <li>
-                            <p class="blue">You have 4 new notifications</p>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="label label-primary"><i class="icon_profile"></i></span>
-                                Friend Request
-                                <span class="small italic pull-right">5 mins</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="label label-warning"><i class="icon_pin"></i></span>
-                                John location.
-                                <span class="small italic pull-right">50 mins</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="label label-danger"><i class="icon_book_alt"></i></span>
-                                Project 3 Completed.
-                                <span class="small italic pull-right">1 hr</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="label label-success"><i class="icon_like"></i></span>
-                                Mick appreciated your work.
-                                <span class="small italic pull-right"> Today</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">See all notifications</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- alert notification end-->
-                <!-- user login dropdown start-->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-                        <span class="username">{{ user.first_name }}</span>
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu extended logout">
-                        <div class="log-arrow-up"></div>
-                        <li class="eborder-top">
-                            <a href="{% url 'profile' %}"><i class="icon_profile"></i> My Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="icon_mail_alt"></i> My Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
-                        </li>
-                        {% if user.is_shopper %}
-                            <li>
-                            <a href="{% url 'shopper_order' %}"><i class="icon_chat_alt"></i> My Order</a>
-                        </li>
-                        {% elif user.is_merchant %}
-                            <li>
-                            <a href="{% url 'shopper_order' %}"><i class="icon_chat_alt"></i> My Order</a>
-                        </li>
-                        {% endif %}
-                        <li>
-                            <a href="{% url 'change_password' %}"><i class="icon_key_alt"></i>Change Password </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'logout_user' %}"><i class="icon_key_alt"></i> Log Out</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- user login dropdown end -->
-            </ul>
-            <!-- notificatoin dropdown end-->
-
-            {% else %}
-
-            <!--  search form start -->
-            <ul class="nav pull-right top-menu">
-            <li class="dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-                    <span class="username">Login/SignUp</span>
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu extended logout">
-                    <div class="log-arrow-up"></div>
-                    <li>
-                        <a href="{% url 'login' %}"><i class="icon_key_alt"></i> Log in</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'register_shopper' %}"><i class="icon_key_alt"></i>Shopper SignUp</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'register_merchant' %}"><i class="icon_key_alt"></i>Merchant SignUp</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'register_shipper' %}"><i class="icon_key_alt"></i>Shipper SignUp</a>
-                    </li>
-                </ul>
-            </li>
-                </ul>
-            <!--  search form end -->
-
-            {% endif %}
-        </div>
-
-
-    </header>
-    <!--header end-->
-
-    <!--sidebar start-->
-    <aside>
-        <div id="sidebar" class="nav-collapse ">
-            <!-- sidebar menu start-->
-            {% if user.is_authenticated and user.is_merchant %}
-            <ul class="sidebar-menu">
-                <li class="active">
-                    <a class="" href="#">
-                        <i class="icon_house_alt"></i>
-                        <span>Merchant</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Products</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'my_product' %}">My Product</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Orders</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'my_orders' %}">My Orders</a></li>
-                        <li><a class="" href="#">Returns</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Invoices</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">Invoices</a></li>
-                    </ul>
-                </li>
-
-                 <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Charts</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">Price Comparison</a></li>
-                        <li><a class="" href="#">Daily Sales</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Shipments</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">Tracking Status</a></li>
-                    </ul>
-                </li>
-
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Customers</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">My Customers</a></li>
-                    </ul>
-                </li>
-
-
-            </ul>
-            {% elif user.is_shipper and user.is_authenticated %}
-            <ul class="sidebar-menu">
-                <li class="active">
-                    <a class="" href="#">
-                        <i class="icon_house_alt"></i>
-                        <span>Shipper</span>
-                    </a>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>PickUps</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'available_pickup' %}">Available PickUps</a></li>
-                        <li><a class="" href="{% url 'delivered_orders' %}">My Delivered PickUps</a></li>
-                        <li><a class="" href="{% url 'picked_up_order' %}">En-route PickUps</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>My Account</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">My Account</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>My Trips</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">All Distributors</a></li>
-                        <li><a class="" href="#">Category A</a></li>
-                        <li><a class="" href="#">Category B</a></li>
-                        <li><a class="" href="#">Category C</a></li>
-                    </ul>
-                </li>
-
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Tracking Status</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">Location</a></li>
-                    </ul>
-                </li>
-
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Customers</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">My Customers</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Settings</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">Sales</a></li>
-                        <li><a class="" href="#">Invoice</a></li>
-                        <li><a class="" href="#">Bed Furnishings </a></li>
-                    </ul>
-                </li>
-
-
-            </ul>
-            {% elif user.is_shopper and user.is_authenticated %}
-                <ul class="sidebar-menu">
-                <li class="active">
-                    <a class="" href="#">
-                        <i class="icon_house_alt"></i>
-                        <span>Categories</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Computers/Latops</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'laptop' %}">Laptops</a></li>
-                        <li><a class="" href="{% url 'server' %}">Servers</a></li>
-                        <li><a class="" href="{% url 'desktop' %}">Desktop</a></li>
-                        <li><a class="" href="{% url 'networking' %}">Networking</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Phones/Tablets</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'android' %}">Android</a></li>
-                        <li><a class="" href="{% url 'ios' %}">IOS</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Fashion</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'clothing' %}">Clothing</a></li>
-                        <li><a class="" href="{% url 'fabrics' %}">Fabrics</a></li>
-                        <li><a class="" href="{% url 'footwear' %}">Footwear</a></li>
-                        <li><a class="" href="{% url 'fragrance' %}">Fragrance</a></li>
-                        <li><a class="" href="{% url 'watches' %}">Watches</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Electronics</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'television' %}">TV</a></li>
-                        <li><a class="" href="{% url 'audio' %}">Home Theatre</a></li>
-                        <li><a class="" href="{% url 'ac' %}">Air Conditioners</a></li>
-                        <li><a class="" href="{% url 'audio' %}">Audio Systems</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Kitchen Appliance</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'refrigerator' %}">Refrigerator</a></li>
-                        <li><a class="" href="{% url 'freezer' %}">Freezer</a></li>
-                        <li><a class="" href="{% url 'cooker' %}">Cookers</a></li>
-                        <li><a class="" href="{% url 'microwave' %}">Microwave</a></li>
-                        <li><a class="" href="{% url 'dispenser' %}">Water Dispenser</a></li>
-                        <li><a class="" href="{% url 'blender' %}">Blender</a></li>
-                        <li><a class="" href="{% url 'kettle' %}">Kettle</a></li>
-                    </ul>
-                </li>
-
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Beauty</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">Body Cream</a></li>
-                        <li><a class="" href="#">Wigs</a></li>
-                        <li><a class="" href="#">Lingerie</a></li>
-                        <li><a class="" href="#">Spa</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Home Appliances</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'washer' %}">Washing Machine</a></li>
-                        <li><a class="" href="{% url 'furniture' %}">Furniture</a></li>
-                        <li><a class="" href="{% url 'fan' %}">Fans</a></li>
-                        <li><a class="" href="{% url 'bed' %}">Mattresses</a></li>
-                        <li><a class="" href="{% url 'bed' %}">Bed Furnishings </a></li>
-                    </ul>
-                </li>
-
-
-            </ul>
-            {% else %}
-                <ul class="sidebar-menu">
-                <li class="active">
-                    <a class="" href="#">
-                        <i class="icon_house_alt"></i>
-                        <span>Categories</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Computers/Latops</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'laptop' %}">Laptops</a></li>
-                        <li><a class="" href="{% url 'server' %}">Servers</a></li>
-                        <li><a class="" href="{% url 'desktop' %}">Desktop</a></li>
-                        <li><a class="" href="{% url 'networking' %}">Networking</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Phones/Tablets</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'android' %}">Android</a></li>
-                        <li><a class="" href="{% url 'ios' %}">IOS</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Fashion</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'clothing' %}">Clothing</a></li>
-                        <li><a class="" href="{% url 'fabrics' %}">Fabrics</a></li>
-                        <li><a class="" href="{% url 'footwear' %}">Footwear</a></li>
-                        <li><a class="" href="{% url 'fragrance' %}">Fragrance</a></li>
-                        <li><a class="" href="{% url 'watches' %}">Watches</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Electronics</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'television' %}">TV</a></li>
-                        <li><a class="" href="{% url 'audio' %}">Home Theatre</a></li>
-                        <li><a class="" href="{% url 'ac' %}">Air Conditioners</a></li>
-                        <li><a class="" href="{% url 'audio' %}">Audio Systems</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Kitchen Appliance</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'refrigerator' %}">Refrigerator</a></li>
-                        <li><a class="" href="{% url 'freezer' %}">Freezer</a></li>
-                        <li><a class="" href="{% url 'cooker' %}">Cookers</a></li>
-                        <li><a class="" href="{% url 'microwave' %}">Microwave</a></li>
-                        <li><a class="" href="{% url 'dispenser' %}">Water Dispenser</a></li>
-                        <li><a class="" href="{% url 'blender' %}">Blender</a></li>
-                        <li><a class="" href="{% url 'kettle' %}">Kettle</a></li>
-                    </ul>
-                </li>
-
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Beauty</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="#">Body Cream</a></li>
-                        <li><a class="" href="#">Wigs</a></li>
-                        <li><a class="" href="#">Lingerie</a></li>
-                        <li><a class="" href="#">Spa</a></li>
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <span>Home Appliances</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{% url 'washer' %}">Washing Machine</a></li>
-                        <li><a class="" href="{% url 'furniture' %}">Furniture</a></li>
-                        <li><a class="" href="{% url 'fan' %}">Fans</a></li>
-                        <li><a class="" href="{% url 'bed' %}">Mattresses</a></li>
-                        <li><a class="" href="{% url 'bed' %}">Bed Furnishings </a></li>
-                    </ul>
-                </li>
-
-
-            </ul>
-            {% endif %}
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
-    <!--sidebar end-->
-
-    <div class="container-fluid">
-
-
-        {% block content %}
-        {% endblock %}
-
-    </div>
-
-
-</section>
-<!-- container section start -->
-
-<!-- javascripts -->
-<script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/jquery-ui-1.10.4.min.js' %}"></script>
-<script src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery-ui-1.9.2.custom.min.js' %}"></script>
-<!-- bootstrap -->
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<!-- nice scroll -->
-<script src="{% static 'js/jquery.scrollTo.min.js' %}"></script>
-<script src="{% static 'js/jquery.nicescroll.js' %}" type="text/javascript"></script>
-<!-- charts scripts -->
-<script src="{% static 'assets/jquery-knob/js/jquery.knob.js' %}"></script>
-<script src="{% static 'js/jquery.sparkline.js' %}" type="text/javascript"></script>
-<script src="{% static 'assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js' %}"></script>
-<script src="{% static 'js/owl.carousel.js' %}"></script>
-<!-- jQuery full calendar -->
-<
-<script src="{% static 'js/fullcalendar.min.js' %}"></script>
-<!-- Full Google Calendar - Calendar -->
-<script src="{% static 'assets/fullcalendar/fullcalendar/fullcalendar.js' %}"></script>
-<!--script for this page only-->
-<script src="{% static 'js/calendar-custom.js' %}"></script>
-<script src="{% static 'js/jquery.rateit.min.js' %}"></script>
-<!-- custom select -->
-<script src="{% static 'js/jquery.customSelect.min.js' %}"></script>
-<script src="{% static 'assets/chart-master/Chart.js' %}"></script>
-
-<!--custome script for all page-->
-<script src="{% static 'js/scripts.js' %}"></script>
-<!-- custom script for this page-->
-<script src="{% static 'js/sparkline-chart.js' %}"></script>
-<script src="{% static 'js/easy-pie-chart.js' %}"></script>
-<script src="{% static 'js/jquery-jvectormap-1.2.2.min.js' %}"></script>
-<script src="{% static 'js/jquery-jvectormap-world-mill-en.js' %}"></script>
-<script src="{% static 'js/xcharts.min.js' %}"></script>
-<script src="{% static 'js/jquery.autosize.min.js' %}"></script>
-<script src="{% static 'js/jquery.placeholder.min.js' %}"></script>
-<script src="{% static 'js/gdp-data.js' %}"></script>
-<script src="{% static 'js/morris.min.js' %}"></script>
-<script src="{% static 'js/sparklines.js' %}"></script>
-<script src="{% static 'js/charts.js' %}"></script>
-<script src="{% static 'js/jquery.slimscroll.min.js' %}"></script>
-<script>
-      //knob
-      $(function() {
-        $(".knob").knob({
-          'draw': function() {
-            $(this.i).val(this.cv + '%')
-          }
-        })
-      });
-
-      //carousel
-      $(document).ready(function() {
-        $("#owl-slider").owlCarousel({
-          navigation: true,
-          slideSpeed: 300,
-          paginationSpeed: 400,
-          singleItem: true
-
-        });
-      });
-
-      //custom select box
-
-      $(function() {
-        $('select.styled').customSelect();
-      });
-
-      /* ---------- Map ---------- */
-      $(function() {
-        $('#map').vectorMap({
-          map: 'world_mill_en',
-          series: {
-            regions: [{
-              values: gdpData,
-              scale: ['#000', '#000'],
-              normalizeFunction: 'polynomial'
-            }]
-          },
-          backgroundColor: '#eef3f7',
-          onLabelShow: function(e, el, code) {
-            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
-          }
-        });
-      });
-
-
-</script>
-
+   <!-- Offcanval Overlay -->
+   <div class="offcanvas-overlay"></div>
+   <!-- Offcanval Overlay -->
+
+   <!-- Wrapper -->
+   <div class="wrapper">
+      <!-- Header -->
+      <header class="header white-bg fixed-top d-flex align-content-center flex-wrap">
+         <!-- Logo -->
+         <div class="logo">
+            <a href="../../index.html" class="default-logo"><img src="../../assets/img/logo.png" alt=""></a>
+            <a href="../../index.html" class="mobile-logo"><img src="../../assets/img/mobile-logo.png" alt=""></a>
+         </div>
+         <!-- End Logo -->
+
+         <!-- Main Header -->
+         <div class="main-header">
+            <div class="container-fluid">
+               <div class="row justify-content-between">
+                  <div class="col-3 col-lg-1 col-xl-4">
+                     <!-- Header Left -->
+                     <div class="main-header-left h-100 d-flex align-items-center">
+                        <!-- Main Header User -->
+                        <div class="main-header-user">
+                           <a href="#" class="d-flex align-items-center" data-toggle="dropdown">
+                              <div class="menu-icon">
+                                 <span></span>
+                                 <span></span>
+                                 <span></span>
+                              </div>
+
+                              <div class="user-profile d-xl-flex align-items-center d-none">
+                                 <!-- User Avatar -->
+                                 <div class="user-avatar">
+                                    <img src="../../assets/img/avatar/user.png" alt="">
+                                 </div>
+                                 <!-- End User Avatar -->
+
+                                 <!-- User Info -->
+                                 <div class="user-info">
+                                    <h4 class="user-name">Abrilay Khatun</h4>
+                                    <p class="user-email">abrilakh@gmail.com</p>
+                                 </div>
+                                 <!-- End User Info -->
+                              </div>
+                           </a>
+                           <div class="dropdown-menu">
+                              <a href="#">My Profile</a>
+                              <a href="#">task</a>
+                              <a href="#">Settings</a>
+                              <a href="#">Log Out</a>
+                           </div>
+                        </div>
+                        <!-- End Main Header User -->
+
+                        <!-- Main Header Menu -->
+                        <div class="main-header-menu d-block d-lg-none">
+                           <div class="header-toogle-menu">
+                              <!-- <i class="icofont-navigation-menu"></i> -->
+                              <img src="../../assets/img/menu.png" alt="">
+                           </div>
+                        </div>
+                        <!-- End Main Header Menu -->
+                     </div>
+                     <!-- End Header Left -->
+                  </div>
+                  <div class="col-9 col-lg-11 col-xl-8">
+                     <!-- Header Right -->
+                     <div class="main-header-right d-flex justify-content-end">
+                        <ul class="nav">
+                           <li class="ml-0">
+                              <!-- Main Header Language -->
+                              <div class="main-header-language">
+                                 <a href="#" data-toggle="dropdown">
+                                    <img src="../../assets/img/svg/globe-icon.svg" alt="">
+                                 </a>
+                                 <div class="dropdown-menu style--three">
+                                    <a href="#">
+                                       <span><img src="../../assets/img/usa.png" alt=""></span>
+                                       USA
+                                    </a>
+                                    <a href="#">
+                                       <span><img src="../../assets/img/china.png" alt=""></span>
+                                       China
+                                    </a>
+                                    <a href="#">
+                                       <span><img src="../../assets/img/russia.png" alt=""></span>
+                                       Russia
+                                    </a>
+                                    <a href="#">
+                                       <span><img src="../../assets/img/spain.png" alt=""></span>
+                                       Spain
+                                    </a>
+                                    <a href="#">
+                                       <span><img src="../../assets/img/brazil.png" alt=""></span>
+                                       Brazil
+                                    </a>
+                                    <a href="#">
+                                       <span><img src="../../assets/img/france.png" alt=""></span>
+                                       France
+                                    </a>
+                                    <a href="#">
+                                       <span><img src="../../assets/img/algeria.png" alt=""></span>
+                                       Algeria
+                                    </a>
+                                 </div>
+                              </div>
+                              <!-- End Main Header Language -->
+                           </li>
+                           <li class="ml-0 d-none d-lg-flex">
+                              <!-- Main Header Print -->
+                              <div class="main-header-print">
+                                 <a href="#">
+                                    <img src="../../assets/img/svg/print-icon.svg" alt="">
+                                 </a>
+                              </div>
+                              <!-- End Main Header Print -->
+                           </li>
+                           <li class="d-none d-lg-flex">
+                              <!-- Main Header Time -->
+                              <div class="main-header-date-time text-right">
+                                 <h3 class="time">
+                                    <span id="hours">21</span>
+                                    <span id="point">:</span>
+                                    <span id="min">06</span>
+                                 </h3>
+                                 <span class="date"><span id="date">Tue, 12 October 2019</span></span>
+                              </div>
+                              <!-- End Main Header Time -->
+                           </li>
+                           <li class="d-none d-lg-flex">
+                              <!-- Main Header Button -->
+                              <div class="main-header-btn ml-md-1">
+                                 <a href="#" class="btn">Pending Tasks</a>
+                              </div>
+                              <!-- End Main Header Button -->
+                           </li>
+                           <li class="order-2 order-sm-0">
+                              <!-- Main Header Search -->
+                              <div class="main-header-search">
+                                 <form action="#" class="search-form">
+                                    <div class="theme-input-group header-search">
+                                       <input type="text" class="theme-input-style" placeholder="Search Here">
+
+                                       <button type="submit"><img src="../../assets/img/svg/search-icon.svg" alt=""
+                                             class="svg"></button>
+                                    </div>
+                                 </form>
+                              </div>
+                              <!-- End Main Header Search -->
+                           </li>
+                           <li>
+                              <!-- Main Header Messages -->
+                              <div class="main-header-message">
+                                 <a href="#" class="header-icon" data-toggle="dropdown">
+                                    <img src="../../assets/img/svg/message-icon.svg" alt="" class="svg">
+                                 </a>
+                                 <div class="dropdown-menu dropdown-menu-right">
+                                    <!-- Dropdown Header -->
+                                    <div class="dropdown-header d-flex align-items-center justify-content-between">
+                                       <h5>3 Unread messages</h5>
+                                       <a href="#" class="text-mute d-inline-block">Clear all</a>
+                                    </div>
+                                    <!-- End Dropdown Header -->
+
+                                    <!-- Dropdown Body -->
+                                    <div class="dropdown-body">
+                                       <!-- Item Single -->
+                                       <a href="#" class="item-single d-flex media align-items-center">
+                                          <div class="figure">
+                                             <img src="../../assets/img/avatar/m1.png" alt="">
+                                             <span class="avatar-status bg-teal"></span>
+                                          </div>
+                                          <div class="content media-body">
+                                             <div class="d-flex align-items-center mb-2">
+                                                <h6 class="name">Sender Name</h6>
+                                                <p class="time">2 min ago</p>
+                                             </div>
+                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
+                                          </div>
+                                       </a>
+                                       <!-- End Item Single -->
+
+                                       <!-- Item Single -->
+                                       <a href="#" class="item-single d-flex media align-items-center">
+                                          <div class="figure">
+                                             <img src="../../assets/img/avatar/m2.png" alt="">
+                                             <span class="avatar-status bg-teal"></span>
+                                          </div>
+                                          <div class="content media-body">
+                                             <div class="d-flex align-items-center mb-2">
+                                                <h6 class="name">Tonya Lee</h6>
+                                                <p class="time">2 min ago</p>
+                                             </div>
+                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
+                                          </div>
+                                       </a>
+                                       <!-- End Item Single -->
+
+                                       <!-- Item Single -->
+                                       <a href="#" class="item-single d-flex media align-items-center">
+                                          <div class="figure">
+                                             <img src="../../assets/img/avatar/m3.png" alt="">
+                                             <span class="avatar-status bg-teal"></span>
+                                          </div>
+                                          <div class="content media-body">
+                                             <div class="d-flex align-items-center mb-2">
+                                                <h6 class="name">Cathy Nichols</h6>
+                                                <p class="time">2 min ago</p>
+                                             </div>
+                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
+                                          </div>
+                                       </a>
+                                       <!-- End Item Single -->
+
+                                       <!-- Item Single -->
+                                       <a href="#" class="item-single d-flex media align-items-center">
+                                          <div class="figure">
+                                             <img src="../../assets/img/avatar/m4.png" alt="">
+                                             <span class="avatar-status bg-teal"></span>
+                                          </div>
+                                          <div class="content media-body">
+                                             <div class="d-flex align-items-center mb-2">
+                                                <h6 class="name">Hubert Griffith</h6>
+                                                <p class="time">2 min ago</p>
+                                             </div>
+                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
+                                          </div>
+                                       </a>
+                                       <!-- End Item Single -->
+                                    </div>
+                                    <!-- End Dropdown Body -->
+                                 </div>
+                              </div>
+                              <!-- End Main Header Messages -->
+                           </li>
+                           <li>
+                              <!-- Main Header Notification -->
+                              <div class="main-header-notification">
+                                 <a href="#" class="header-icon notification-icon" data-toggle="dropdown">
+                                    <span class="count" data-bg-img="../../assets/img/count-bg.png">22</span>
+                                    <img src="../../assets/img/svg/notification-icon.svg" alt="" class="svg">
+                                 </a>
+                                 <div class="dropdown-menu style--two dropdown-menu-right">
+                                    <!-- Dropdown Header -->
+                                    <div class="dropdown-header d-flex align-items-center justify-content-between">
+                                       <h5>5 New notifications</h5>
+                                       <a href="#" class="text-mute d-inline-block">Clear all</a>
+                                    </div>
+                                    <!-- End Dropdown Header -->
+
+                                    <!-- Dropdown Body -->
+                                    <div class="dropdown-body">
+                                       <!-- Item Single -->
+                                       <a href="#" class="item-single d-flex align-items-center">
+                                          <div class="content">
+                                             <div class="mb-2">
+                                                <p class="time">2 min ago</p>
+                                             </div>
+                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus amet.</p>
+                                          </div>
+                                       </a>
+                                       <!-- End Item Single -->
+
+                                       <!-- Item Single -->
+                                       <a href="#" class="item-single d-flex align-items-center">
+                                          <div class="content">
+                                             <div class="mb-2">
+                                                <p class="time">2 min ago</p>
+                                             </div>
+                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
+                                          </div>
+                                       </a>
+                                       <!-- End Item Single -->
+
+                                       <!-- Item Single -->
+                                       <a href="#" class="item-single d-flex align-items-center">
+                                          <div class="content">
+                                             <div class="mb-2">
+                                                <p class="time">2 min ago</p>
+                                             </div>
+                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
+                                          </div>
+                                       </a>
+                                       <!-- End Item Single -->
+
+                                       <!-- Item Single -->
+                                       <a href="#" class="item-single d-flex align-items-center">
+                                          <div class="content">
+                                             <div class="mb-2">
+                                                <p class="time">2 min ago</p>
+                                             </div>
+                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
+                                          </div>
+                                       </a>
+                                       <!-- End Item Single -->
+                                    </div>
+                                    <!-- End Dropdown Body -->
+                                 </div>
+                              </div>
+                              <!-- End Main Header Notification -->
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- End Header Right -->
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- End Main Header -->
+      </header>
+      <!-- End Header -->
+
+      <!-- Main Wrapper -->
+     {% block content %}
+       {% endblock %}
+      <!-- End Main Wrapper -->
+
+      <!-- Footer -->
+      <footer class="footer">
+         Dashmin © 2020 created by <a href="https://www.themelooks.com/"> ThemeLooks</a>
+      </footer>
+      <!-- End Footer -->
+   </div>
+   <!-- End wrapper -->
+
+   <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+   <script src="../../assets/js/jquery.min.js"></script>
+   <script src="../../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <script src="../../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+   <script src="../../assets/js/script.js"></script>
+   <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
 </body>
 
 </html>

@@ -2,22 +2,23 @@
 {% load static %}
 {% block content %}
 {% load bootstrap_pagination %}
-
-
-
-<div class="main-content">
+   <!-- Wrapper -->
+   <div class="wrapper">
+      <div class="main-wrapper">
+         <div class="main-content">
             <div class="container-fluid">
                 <!-- Card -->
                 <div class="card">
                     <div class="card-body">
                         <h4 class="pt-2 mb-4">Clothing</h4>
-        
+
                         <!-- Product Grid -->
                         <div class="product-grid pt-2">
                             <div class="row">
+                                {% for product in filter %}
                                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
                                     <!-- Product Grid Item -->
-									{% for product in filter %}
+
                                     <div class="product-grid-item mb-30">
                                         <div class="product-img mb-3">
                                              <a href="{% url 'detail' product.id %}">
@@ -31,16 +32,16 @@
                                              </a>
                                         </div>
                                     </div>
-									{% endfor %}
-                                    <!-- End Product Grid Item -->
+
                                 </div>
-                                
-								
-                                
-                             
-                                <div class="col-xl-12">
+                                {% endfor %}
+
+
+
+
+                                <div class="col-xl-12 ">
                                     <!-- Pagination -->
-                                    <div class="pagination d-flex flex-column align-items-center mb-10">
+                                    <div class="pagination d-flex flex-column align-items-center">
                                        {% bootstrap_paginate filter range=10 show_prev_next="false" show_first_last="true" %}
                                     </div>
                                     <!-- End Pagination -->
@@ -53,5 +54,9 @@
                 <!-- End Card -->
             </div>
          </div>
+      </div>
+   </div>
+   <!-- End wrapper -->
+
 		 
 {% endblock %}

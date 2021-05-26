@@ -18,7 +18,7 @@ def register_product(request):
         data = {}
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
-            product = serializer.save()
+            product = serializer.save(merchant=request.user)
             data['name'] = product.name
             data['category'] = product.category
             data['title'] = product.title

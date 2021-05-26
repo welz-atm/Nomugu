@@ -1,0 +1,13 @@
+{% autoescape off %}
+Hi {{product.merchant.first_name}},
+
+This {{product.name}} was viewed by a user. Thank your for selling on NoMugu.
+
+Product Name: {{product.title}}
+Price: {{product.price}}
+Brand: {{product.brand}}
+
+Best Regards,
+NoMugu Team
+
+{% endautoescape %}

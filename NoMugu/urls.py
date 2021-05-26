@@ -21,10 +21,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('product.urls')),
-    path('', include('authentication.urls')),
+    path('auth', include('authentication.urls')),
     path('order/', include('order.urls')),
     path('payment/', include('payment.urls')),
     path('booking/', include('booking.urls')),
+    path('market/', include('market.urls')),
 
     # API urls
     path('api/authentication/', include('authentication.api.urls')),

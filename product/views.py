@@ -2,27 +2,27 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from .models import Product, Category
-from .image_resize import resize
+from market.models import Market
 from order.models import OrderItem
 from django.contrib import messages
 from .forms import ProductForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from .task import product_viewed, new_product_added
 
 
 def home_view(request):
-    categories = Category.objects.all()
+    markets = Market.objects.all()
     context = {
-        'categories': categories
+        'markets': markets
     }
-    return render(request, 'home.html', context)
+    return render(request, 'market.html', context)
 
 
 def search_view(request):
-    qs = Product.objects.all()
     search_product = request.GET.get('search')
     if search_product is not None:
-        qs = qs.filter((Q(title__contains=search_product) | Q(name__exact=search_product) | Q(category=search_product)))
+        qs = Product.objects.filter(Q(title__contains=search_product) | Q(name__exact=search_product))
         if qs.exists():
             paginator = Paginator(qs, 10)
             page_number = request.GET.get('page')
@@ -37,7 +37,7 @@ def search_view(request):
 
 @login_required
 def dashboard(request):
-    all_products = Product.objects.filter(merchant=request.user).select_related('merchant', )
+    all_products = Product.objects.filter(merchant=request.user).select_related('merchant', 'category', 'market' )
     products = all_products.count()
     orders = OrderItem.objects.filter(ordered=True).count()
     delivered = OrderItem.objects.filter(delivered=True).count()
@@ -51,10 +51,11 @@ def dashboard(request):
 
 
 @login_required
-def my_product(request):
+def my_product_list(request):
     categories = Category.objects.all()
     if request.user.is_merchant is True:
-        products = Product.objects.filter(merchant=request.user)
+        products = Product.objects.filter(merchant=request.user).order_by('id').select_related('merchant', 'category',
+                                                                                               'market')
         paginator = Paginator(products, 10)
         page_number = request.GET.get('page')
         products = paginator.get_page(page_number)
@@ -62,7 +63,25 @@ def my_product(request):
             'products': products,
             'categories': categories
         }
-        return render(request, 'my_product.html', context)
+        return render(request, 'my_product_list.html', context)
+    else:
+        raise PermissionDenied
+
+
+@login_required
+def my_product_grid(request):
+    categories = Category.objects.all()
+    if request.user.is_merchant is True:
+        products = Product.objects.filter(merchant=request.user).order_by('id').select_related('merchant', 'category',
+                                                                                                 'market')
+        paginator = Paginator(products, 10)
+        page_number = request.GET.get('page')
+        products = paginator.get_page(page_number)
+        context = {
+            'products': products,
+            'categories': categories
+        }
+        return render(request, 'my_product_grid.html', context)
     else:
         raise PermissionDenied
 
@@ -70,6 +89,7 @@ def my_product(request):
 @login_required
 def add_product(request):
     categories = Category.objects.all()
+    markets = Market.objects.all()
     if request.user.is_merchant is True or request.user.is_admin:
         if request.method == 'POST':
             form = ProductForm(request.POST, request.FILES)
@@ -77,7 +97,7 @@ def add_product(request):
                 product = form.save(commit=False)
                 product.merchant = request.user
                 product.save()
-                messages.success(request, 'Product added successfully')
+                new_product_added.delay(product.pk)
                 return redirect('my_product')
 
         else:
@@ -86,6 +106,7 @@ def add_product(request):
         context = {
             'categories': categories,
             'form': form,
+            'markets': markets
             }
 
         return render(request, 'add_product.html', context)
@@ -122,7 +143,7 @@ def edit_product(request, pk):
 @login_required
 def delete_product(request,pk):
     product = get_object_or_404(Product, pk=pk)
-    if request.user.is_merchant is True and product.merchant is request.user:
+    if request.user.is_merchant is True and product.merchant == request.user:
         product.delete()
         return redirect('my_product')
     else:
@@ -133,7 +154,9 @@ def detail_view(request, pk):
     detail = get_object_or_404(Product, pk=pk)
     detail.view_product += 1
     detail.save()
-    related_products = Product.objects.filter(category=detail.category).select_related('merchant')[:4]
+    product_viewed.delay(detail.pk)
+    related_products = Product.objects.filter(category=detail.category).select_related('merchant',  'category',
+                                                                                       'market')[:4]
     context = {
         'detail': detail,
         'related_product': related_products
@@ -141,15 +164,18 @@ def detail_view(request, pk):
     return render(request, 'detail.html', context)
 
 
-def category_view(request, pk):
+def view_category(request, pk, market_id):
     category = Category.objects.get(pk=pk)
-    categories = Product.objects.filter(category=category.pk).select_related('merchant')
-    if categories.exists():
-        paginator = Paginator(categories, 10)
+    market = Market.objects.get(id=market_id)
+    products = Product.objects.filter(category=category, market=market).order_by('name').select_related('merchant',
+                                                                                                        'category',
+                                                                                                        'market')
+    if products.exists():
+        paginator = Paginator(products, 10)
         page_number = request.GET.get('page')
-        categories = paginator.get_page(page_number)
+        products = paginator.get_page(page_number)
         context = {
-            'categories': categories
+            'products': products,
         }
         return render(request, 'categories.html', context)
     else:
@@ -500,7 +526,7 @@ def fragrance_view(request):
 
 
 def watch_view(request):
-    qs= Product.objects.filter(name='Watch').order_by('id').select_related('merchant', )
+    qs = Product.objects.filter(name='Watch').order_by('id').select_related('merchant', )
     brand = request.GET.get('brand')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
@@ -923,7 +949,7 @@ def washers_view(request):
 
 
 def furniture_view(request):
-    qs= Product.objects.filter(name='Furniture').order_by('id').select_related('merchant',)
+    qs = Product.objects.filter(name='Furniture').order_by('id').select_related('merchant',)
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     brand = request.GET.get('brand')
@@ -1021,5 +1047,3 @@ def bed_view(request):
         return render(request, 'bed_list.html', context)
     else:
         return render(request, '404.html')
-
-

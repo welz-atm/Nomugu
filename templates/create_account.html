@@ -1,8 +1,11 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-
-<div class="main-content">
+{% load bootstrap_pagination %}
+   <!-- Wrapper -->
+   <div class="wrapper">
+      <div class="main-wrapper">
+         <div class="main-content">
     <div class="container-fluid">
         <div class="row">
 
@@ -13,9 +16,11 @@
 
                     <h4 class="font-20 mb-20">Account Details</h4>
 
+
                     <!-- Form -->
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" action="{% url 'create_account' %}">
                         {% csrf_token %}
+                        {% include 'errors.html' %}
 
 
                         <div class="media flex-column flex-sm-row">
@@ -23,45 +28,18 @@
 
                             <div class="contact-account-setting media-body">
 
-
-
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Employer Name</label>
-                                    <input type="text" class="theme-input-style" name="employer"
-                                           placeholder="Present Employer Name" required>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Employer Address</label>
-                                    <input type="text" class="theme-input-style" name="employer"
-                                           placeholder="Employer Address" required>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Salary</label>
-                                    <input type="number" id="as_brand" class="theme-input-style" name="salary"
-                                           placeholder="Salary" required>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Employer Address</label>
-                                    <input type="text" class="theme-input-style" name="employer"
-                                           placeholder="Employer Address" required>
-                                </div>
-
                                 <div class="mb-4">
                                     <label class="bold mb-2">Account Name</label>
                                     <input type="text" id="as_color" class="theme-input-style" name="account_name"
-                                           placeholder="Account Name" required>
+                                           required>
                                 </div>
 
                                 <div class="mb-4">
                                     <label class="bold mb-2">Select Bank</label>
                                     <select name="bank_name" class="theme-input-style">
-                                        <option selected>Choose...</option>
+                                        <option selected>Choose Bank</option>
                                         {% for bank in list_banks %}
-                                        <option value="{{ bank.code }}">{{ bank.name }}</option>
+                                        <option value="{{ bank.name }}">{{ bank.name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -69,7 +47,7 @@
                                 <div class="mb-4">
                                     <label class="bold mb-2">Account Number</label>
                                     <input type="number" id="account_number" class="theme-input-style"
-                                           placeholder="account_number" name='account_number' required>
+                                           name='account_number' required>
                                 </div>
 
 
@@ -92,5 +70,9 @@
     </div>
 </div>
 </div>
+      </div>
+   </div>
+   <!-- End wrapper -->
+
 
 {% endblock %}

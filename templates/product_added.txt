@@ -1,0 +1,13 @@
+{% autoescape off %}
+Hi {{user.first_name}},
+
+You have added the below product to your product catalog. Thank your for selling on NoMugu.
+
+Product Name: {{product.title}}
+Price: {{product.price}}
+Brand: {{product.brand}}
+
+Best Regards,
+NoMugu Team
+
+{% endautoescape %}

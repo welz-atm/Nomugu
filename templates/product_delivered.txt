@@ -1,0 +1,15 @@
+{% autoescape off %}
+Hi {{user.first_name}},
+
+Your product has been successfully delivered. You will be credited in 14days.
+
+Product Name: {{order.product.title}}
+Price: {{order.product.price}}
+Address: {{order.address}}
+City: {{order.address}}
+State: {{order.address}}
+
+Best Regards,
+NoMugu Team
+
+{% endautoescape %}

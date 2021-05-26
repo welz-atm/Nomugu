@@ -4,7 +4,7 @@
 
 <head>
    <!-- Page Title -->
-   <title>NoMugu..Buy,Sell and Track</title>
+   <title>NoMugu..Never be a Mugu</title>
 
    <!-- Meta Data -->
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,16 +18,12 @@
 
    <!-- Web Fonts -->
    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
-   
+
    <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
    <link rel="stylesheet" href="{% static 'assets/fonts/icofont/icofont.min.css' %}">
    <link rel="stylesheet" href="{% static 'assets/plugins/perfect-scrollbar/perfect-scrollbar.min.css' %}">
    <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
-   
-   <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
-   <link rel="stylesheet" href="{% static 'assets/plugins/apex/apexcharts.css' %}">
-   <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
 
    <!-- ======= MAIN STYLES ======= -->
    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
@@ -71,7 +67,7 @@
                      <!-- Header Left -->
                      <div class="main-header-left h-100 d-flex align-items-center">
                         <!-- Main Header User -->
-                        <div class="main-header-user">						
+                        <div class="main-header-user">
                            <a href="#" class="d-flex align-items-center" data-toggle="dropdown">
                               <div class="menu-icon">
                                  <span></span>
@@ -84,8 +80,6 @@
 						   {% if user.is_authenticated %}
                            <div class="dropdown-menu">
                               <a href="{% url 'profile' %}">My Profile</a>
-                              <a href="#">task</a>
-                              <a href="#">Settings</a>
                               <a href="{% url 'logout_user' %}">Log Out</a>
                            </div>
 						   {% else %}
@@ -113,10 +107,10 @@
                      <div class="main-header-right d-flex justify-content-end">
                         <ul class="nav">
                            <li class="ml-0">
-                              
+
                            </li>
                            <li class="ml-0 d-none d-lg-flex">
-                              
+
                            </li>
                            <li class="d-none d-lg-flex">
                               <!-- Main Header Time -->
@@ -148,7 +142,7 @@
                               <div class="main-header-search">
                                  <form action="{% url 'search' %}" class="search-form">
                                     <div class="theme-input-group header-search">
-                                       <input type="text" class="theme-input-style" placeholder="Search Here" name="search">
+                                       <input type="text" class="theme-input-style" placeholder="Find product" name="search">
 
                                        <button type="submit"><img src="{% static 'assets/img/svg/search-icon.svg' %}" alt=""
                                              class="svg"></button>
@@ -157,160 +151,7 @@
                               </div>
                               <!-- End Main Header Search -->
                            </li>
-						   {% if user.is_authenticated %}
-                           <li>
-                              <!-- Main Header Messages -->
-							  
-                              <div class="main-header-message">
-                                 <a href="#" class="header-icon" data-toggle="dropdown">
-                                    <img src="{% static 'assets/img/svg/message-icon.svg' %}" alt="" class="svg">
-                                 </a>
-                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <!-- Dropdown Header -->
-                                    <div class="dropdown-header d-flex align-items-center justify-content-between">
-                                       <h5>3 Unread messages</h5>
-                                       <a href="#" class="text-mute d-inline-block">Clear all</a>
-                                    </div>
-                                    <!-- End Dropdown Header -->
 
-                                    <!-- Dropdown Body -->
-                                    <div class="dropdown-body">
-                                       <!-- Item Single -->
-                                       <a href="#" class="item-single d-flex media align-items-center">
-                                          <div class="figure">
-                                             <img src="{% static 'assets/img/avatar/m1.png' %}" alt="">
-                                             <span class="avatar-status bg-teal"></span>
-                                          </div>
-                                          <div class="content media-body">
-                                             <div class="d-flex align-items-center mb-2">
-                                                <h6 class="name">Sender Name</h6>
-                                                <p class="time">2 min ago</p>
-                                             </div>	
-                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
-                                          </div>
-                                       </a>
-                                       <!-- End Item Single -->
-
-                                       <!-- Item Single -->
-                                       <a href="#" class="item-single d-flex media align-items-center">
-                                          <div class="figure">
-                                             <img src="{% static 'assets/img/avatar/m2.png' %}" alt="">
-                                             <span class="avatar-status bg-teal"></span>
-                                          </div>
-                                          <div class="content media-body">
-                                             <div class="d-flex align-items-center mb-2">
-                                                <h6 class="name">Tonya Lee</h6>
-                                                <p class="time">2 min ago</p>
-                                             </div>	
-                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
-                                          </div>
-                                       </a>
-                                       <!-- End Item Single -->
-
-                                       <!-- Item Single -->
-                                       <a href="#" class="item-single d-flex media align-items-center">
-                                          <div class="figure">
-                                             <img src="{% static 'assets/img/avatar/m3.png' %}" alt="">
-                                             <span class="avatar-status bg-teal"></span>
-                                          </div>
-                                          <div class="content media-body">
-                                             <div class="d-flex align-items-center mb-2">
-                                                <h6 class="name">Cathy Nichols</h6>
-                                                <p class="time">2 min ago</p>
-                                             </div>	
-                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
-                                          </div>
-                                       </a>
-                                       <!-- End Item Single -->
-
-                                       <!-- Item Single -->
-                                       <a href="#" class="item-single d-flex media align-items-center">
-                                          <div class="figure">
-                                             <img src="{% static 'assets/img/avatar/m4.png' %}" alt="">
-                                             <span class="avatar-status bg-teal"></span>
-                                          </div>
-                                          <div class="content media-body">
-                                             <div class="d-flex align-items-center mb-2">
-                                                <h6 class="name">Hubert Griffith</h6>
-                                                <p class="time">2 min ago</p>
-                                             </div>	
-                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
-                                          </div>
-                                       </a>
-                                       <!-- End Item Single -->
-                                    </div>
-                                    <!-- End Dropdown Body -->
-                                 </div>
-                              </div>
-                              <!-- End Main Header Messages -->
-                           </li>
-                           <li>
-                              <!-- Main Header Notification -->
-                              <div class="main-header-notification">
-                                 <a href="#" class="header-icon notification-icon" data-toggle="dropdown">
-                                    <span class="count" data-bg-img="{% static 'assets/img/count-bg.png' %}">22</span>
-                                    <img src="{% static 'assets/img/svg/notification-icon.svg' %}" alt="" class="svg">
-                                 </a>
-                                 <div class="dropdown-menu style--two dropdown-menu-right">
-                                    <!-- Dropdown Header -->
-                                    <div class="dropdown-header d-flex align-items-center justify-content-between">
-                                       <h5>5 New notifications</h5>
-                                       <a href="#" class="text-mute d-inline-block">Clear all</a>
-                                    </div>
-                                    <!-- End Dropdown Header -->
-
-                                    <!-- Dropdown Body -->
-                                    <div class="dropdown-body">
-                                       <!-- Item Single -->
-                                       <a href="#" class="item-single d-flex align-items-center">
-                                          <div class="content">
-                                             <div class="mb-2">
-                                                <p class="time">2 min ago</p>
-                                             </div>	
-                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus amet.</p>
-                                          </div>
-                                       </a>
-                                       <!-- End Item Single -->
-
-                                       <!-- Item Single -->
-                                       <a href="#" class="item-single d-flex align-items-center">
-                                          <div class="content">
-                                             <div class="mb-2">
-                                                <p class="time">2 min ago</p>
-                                             </div>	
-                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
-                                          </div>
-                                       </a>
-                                       <!-- End Item Single -->
-
-                                       <!-- Item Single -->
-                                       <a href="#" class="item-single d-flex align-items-center">
-                                          <div class="content">
-                                             <div class="mb-2">
-                                                <p class="time">2 min ago</p>
-                                             </div>	
-                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
-                                          </div>
-                                       </a>
-                                       <!-- End Item Single -->
-
-                                       <!-- Item Single -->
-                                       <a href="#" class="item-single d-flex align-items-center">
-                                          <div class="content">
-                                             <div class="mb-2">
-                                                <p class="time">2 min ago</p>
-                                             </div>	
-                                             <p class="main-text">Donec dapibus mauris id odio ornare tempus. Duis sit amet accumsan justo.</p>
-                                          </div>
-                                       </a>
-                                       <!-- End Item Single -->
-                                    </div>
-                                    <!-- End Dropdown Body -->
-                                 </div>
-                              </div>
-                              <!-- End Main Header Notification -->
-                           </li>
-						   {% endif %}
                         </ul>
                      </div>
                      <!-- End Header Right -->
@@ -321,7 +162,7 @@
          <!-- End Main Header -->
       </header>
       <!-- End Header -->
-	  
+
 
       <!-- Main Wrapper -->
       <div class="main-wrapper">
@@ -342,9 +183,8 @@
                <!-- Nav -->
 			   {% if user.is_shopper and user.is_authenticated %}
                <ul class="nav">
-                  <li class="nav-category">Main</li>
                   <li class="active">
-                     <a href="#">
+                     <a href="">
                         <i class="icofont-pie-chart"></i>
                         <span class="link-title">Categories</span>
                      </a>
@@ -364,10 +204,10 @@
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
-				  
+
                   <li>
                      <a href="#">
-                        <i class="icofont-mail-box"></i>
+                        <i class="icofont-computer"></i>
                         <span class="link-title">Computer/Servers</span>
                      </a>
                      <!-- Sub Menu -->
@@ -379,7 +219,7 @@
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
-                  
+
                   <li>
                      <a href="#">
                         <i class="icofont-listing-box"></i>
@@ -412,7 +252,38 @@
                   </li>
                   <li>
                      <a href="#">
-                        <i class="icofont-contact-add"></i>
+                        <i class="icofont-food-cart"></i>
+                           <span class="link-title">Food</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Rice</a></li>
+                        <li><a href="#">Beans</a></li>
+                        <li><a href="#">Yam</a></li>
+                        <li><a href="#">Frozen</a></li>
+                        <li><a href="#">Grocery</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-fruits"></i>
+                        <span class="link-title">Fruits</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Banana</a></li>
+                        <li><a href="#">Pineapple</a></li>
+                        <li><a href="#">Strawberry</a></li>
+                        <li><a href="#">Pawpaw</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-ui-home"></i>
                         <span class="link-title">Home Appliances</span>
                      </a>
 
@@ -446,7 +317,7 @@
                   </li>
                   <li>
                      <a href="#">
-                        <i class="icofont-files-stack"></i>
+                        <i class="icofont-mobile-phone"></i>
                         <span class="link-title">Phones/Tablets</span>
                      </a>
 
@@ -457,7 +328,7 @@
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
-				  
+
                   <li>
                      <a href="#">
                         <i class="icofont-brand-icofont"></i>
@@ -472,12 +343,21 @@
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
-				  	  
-				  
-                 
+
+                  <li >
+                     <a href="{% url 'settings' %}">
+                        <i class="icofont-settings-alt"></i>
+                        <span class="link-title">Account Settings</span>
+                     </a>
+                  </li>
+
+
+
+
+
                </ul>
 			   {% elif user.is_authenticated and user.is_shipper %}
-			   
+
 			   <ul class="nav">
                   <li class="nav-category">Shipper</li>
                   <li class="active">
@@ -486,7 +366,7 @@
                         <span class="link-title">Dashboard</span>
                      </a>
                   </li>
-				  
+
                   <li>
                      <a href="#">
                         <i class="icofont-shopping-cart"></i>
@@ -496,32 +376,39 @@
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
                         <li><a href="{% url 'available_pickup' %}">Available Pick-Ups</a></li>
-                        <li><a href="{% url 'delivered_orders' %}">En-route Pick-Ups</a></li>
-                        <li><a href="{% url 'picked_up_order' %}">Delivered Orders</a></li>
+                        <li><a href="{% url 'picked_up_order' %}">En-route Pick-Ups</a></li>
+                        <li><a href="{% url 'delivered_orders' %}">Delivered Orders</a></li>
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
-				  
-                  <li class="active">
-                     <a href="{% url 'my_orders' %}">
+
+                  <li class="nav sub-menu">
+                     <a href="{% url 'account_details' %}">
                         <i class="icofont-shopping-cart"></i>
                         <span class="link-title">Account</span>
                      </a>
                   </li>
-                  
-                  <li>
+
+                  <li class="nav sub-menu">
                      <a href="#">
                         <i class="icofont-listing-box"></i>
                         <span class="link-title">Trips</span>
                      </a>
                   </li>
-				  	  
-				  
-                 
+
+                  <li >
+                     <a href="{% url 'settings' %}">
+                        <i class="icofont-settings-alt"></i>
+                        <span class="link-title">Account Settings</span>
+                     </a>
+                  </li>
+
+
+
                </ul>
-			   
+
 			   {% elif user.is_authenticated and user.is_merchant %}
-			   
+
 			   <ul class="nav">
                   <li class="nav-category">Merchant</li>
                   <li class="active">
@@ -530,7 +417,7 @@
                         <span class="link-title">Dashboard</span>
                      </a>
                   </li>
-				  
+
                   <li>
                      <a href="#">
                         <i class="icofont-shopping-cart"></i>
@@ -539,31 +426,37 @@
 
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
-                        <li><a href="{% url 'my_product' %}">My Products</a></li>
+                        <li><a href="{% url 'my_product_grid' %}">My Products</a></li>
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
-				  
+
                   <li class="active">
                      <a href="{% url 'my_orders' %}">
                         <i class="icofont-shopping-cart"></i>
                         <span class="link-title">Orders</span>
                      </a>
                   </li>
-                  
+
                   <li>
                      <a href="#">
                         <i class="icofont-listing-box"></i>
                         <span class="link-title">Invoices</span>
                      </a>
                   </li>
-				  	  
-				  
-                 
+
+                  <li >
+                     <a href="{% url 'settings' %}">
+                        <i class="icofont-settings-alt"></i>
+                        <span class="link-title">Account Settings</span>
+                     </a>
+                  </li>
+
+
                </ul>
-			   
+
 			   {% else %}
-			   
+
 			   <ul class="nav">
                   <li class="nav-category">Main</li>
                   <li class="active">
@@ -587,10 +480,10 @@
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
-				  
+
                   <li>
                      <a href="#">
-                        <i class="icofont-mail-box"></i>
+                        <i class="icofont-computer"></i>
                         <span class="link-title">Computer/Servers</span>
                      </a>
                      <!-- Sub Menu -->
@@ -602,7 +495,21 @@
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
-                  
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-computer"></i>
+                        <span class="link-title">Construction</span>
+                     </a>
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Cement</a></li>
+                        <li><a href="#">Sand</a></li>
+                        <li><a href="#">Iron Rod</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
                   <li>
                      <a href="#">
                         <i class="icofont-listing-box"></i>
@@ -635,7 +542,38 @@
                   </li>
                   <li>
                      <a href="#">
-                        <i class="icofont-contact-add"></i>
+                        <i class="icofont-food-cart"></i>
+                           <span class="link-title">Food</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Rice</a></li>
+                        <li><a href="#">Beans</a></li>
+                        <li><a href="#">Yam</a></li>
+                        <li><a href="#">Frozen</a></li>
+                        <li><a href="#">Grocery</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-fruits"></i>
+                        <span class="link-title">Fruits</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Banana</a></li>
+                        <li><a href="#">Pineapple</a></li>
+                        <li><a href="#">Strawberry</a></li>
+                        <li><a href="#">Pawpaw</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-ui-home"></i>
                         <span class="link-title">Home Appliances</span>
                      </a>
 
@@ -670,7 +608,7 @@
                   </li>
                   <li>
                      <a href="#">
-                        <i class="icofont-files-stack"></i>
+                        <i class="icofont-mobile-phone"></i>
                         <span class="link-title">Phones/Tablets</span>
                      </a>
 
@@ -680,11 +618,11 @@
                         <li><a href="{% url 'ios' %}">IOS</a></li>
                      </ul>
                      <!-- End Sub Menu -->
-                  </li>			  	  
-				  
-                 
+                  </li>
+
+
                </ul>
-			   
+
 			   {% endif %}
                <!-- End Nav -->
             </div>
@@ -698,9 +636,11 @@
                {% block content %}
                {% endblock %}
          <!-- End Main Content -->
-      
-      <!-- End Main Wrapper -->
 
+      <!-- End Main Wrapper -->
+      <footer class="footer">
+         Dashmin © 2020 created by <a href="https://www.themelooks.com/"> ThemeLooks</a>
+      </footer>
 
    </div>
    <!-- End wrapper -->
@@ -713,8 +653,27 @@
    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
 
    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-   <script src="{% static 'assets/plugins/apex/apexcharts.min.js' %}"></script>
-   <script src="{% static 'assets/plugins/apex/custom-apexcharts.js' %}"></script>
+   <script src="{% static 'assets/plugins/chartjs/Chart.min.js' %}"></script>
+   <script src="{% static 'assets/plugins/chartjs/custom-chart.js' %}"></script>
+   <script src="{% static 'assets/plugins/elevatezoom/jquery.elevateZoom-3.0.8.min.js' %}"></script>
+   <script>
+         //initiate the plugin and pass the id of the div containing gallery images
+         $("#img_01").elevateZoom({
+            gallery:'gal1',
+            cursor: 'pointer',
+            galleryActiveClass: 'active',
+            imageCrossfade: true, loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif',
+            zoomType				: "inner",
+            cursor: "crosshair"
+         });
+
+         //pass the images to Fancybox
+         $("#img_01").bind("click", function(e) {
+            var ez =   $('#img_01').data('elevateZoom');
+               $.fancybox(ez.getGalleryList());
+            return false;
+         });
+   </script>
    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 </body>
 

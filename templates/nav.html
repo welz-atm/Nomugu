@@ -1,0 +1,447 @@
+ <nav class="sidebar" data-trigger="scrollbar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header d-none d-lg-block">
+               <!-- Sidebar Toggle Pin Button -->
+               <div class="sidebar-toogle-pin">
+                  <i class="icofont-tack-pin"></i>
+               </div>
+               <!-- End Sidebar Toggle Pin Button -->
+            </div>
+            <!-- End Sidebar Header -->
+
+            <!-- Sidebar Body -->
+            <div class="sidebar-body">
+               <!-- Nav -->
+			   {% if user.is_shopper and user.is_authenticated %}
+               <ul class="nav">
+                  <li class="active">
+                     <a href="">
+                        <i class="icofont-pie-chart"></i>
+                        <span class="link-title">Categories</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-shopping-cart"></i>
+                        <span class="link-title">Beauty</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Body Cream</a></li>
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Lingerie</a></li>
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Spa</a></li>
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Wigs</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-computer"></i>
+                        <span class="link-title">Computer/Servers</span>
+                     </a>
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Desktop</a></li>
+                        <li><a href="{% url 'laptop' pk=market.pk %}">Laptops</a></li>
+                        <li><a href="{% url 'networking' pk=market.pk %}">Networking</a></li>
+                        <li><a href="{% url 'server' pk=market.pk %}">Server</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-listing-box"></i>
+                        <span class="link-title">Electronics</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'audio' pk=market.pk %}">Audio Systems</a></li>
+                        <li><a href="{% url 'audio' pk=market.pk %}">Home Theatre</a></li>
+                        <li><a href="{% url 'television' pk=market.pk %}">Television</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-file-document"></i>
+                        <span class="link-title">Fashion</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'clothing' pk=market.pk %}">Clothing</a></li>
+                        <li><a href="{% url 'fabrics' pk=market.pk %}">Fabrics</a></li>
+                        <li><a href="{% url 'footwear' pk=market.pk %}">Footwear</a></li>
+                        <li><a href="{% url 'fragrance' pk=market.pk %}">Fragrance</a></li>
+                        <li><a href="{% url 'watches' pk=market.pk %}">Watches</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-food-cart"></i>
+                           <span class="link-title">Food</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Vegetable</a></li>
+                        <li><a href="#">Grains</a></li>
+                        <li><a href="#">Tuber</a></li>
+                        <li><a href="#">Frozen</a></li>
+                        <li><a href="#">Grocery</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-fruits"></i>
+                        <span class="link-title">Fruits</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Banana</a></li>
+                        <li><a href="#">Pineapple</a></li>
+                        <li><a href="#">Strawberry</a></li>
+                        <li><a href="#">Pawpaw</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-ui-home"></i>
+                        <span class="link-title">Home Appliances</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+						<li><a href="{% url 'ac' pk=market.pk %}">Air Conditioner</a></li>
+                        <li><a href="{% url 'bed' pk=market.pk %}">Bed Furnishings</a></li>
+                        <li><a href="{% url 'fan' pk=market.pk %}">Fans</a></li>
+                        <li><a href="{% url 'furniture' pk=market.pk %}">Furniture</a></li>
+                        <li><a href="{% url 'bed' pk=market.pk %}">Mattresses</a></li>
+						<li><a href="{% url 'washer' pk=market.pk %}">Washing Machine</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-calendar"></i>
+                        <span class="link-title">Kitchen Appliances</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'refrigerator' pk=market.pk %}">Blender</a></li>
+                        <li><a href="{% url 'cooker' pk=market.pk %}">Cookers</a></li>
+                        <li><a href="{% url 'freezer' pk=market.pk %}">Freezer</a></li>
+                        <li><a href="{% url 'kettle' pk=market.pk %}">Kettle</a></li>
+                        <li><a href="{% url 'microwave' pk=market.pk %}">Microwave</a></li>
+                        <li><a href="{% url 'refrigerator' pk=market.pk %}">Refrigerator</a></li>
+                        <li><a href="{% url 'dispenser' pk=market.pk %}">Water Dispenser</a></li> </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-mobile-phone"></i>
+                        <span class="link-title">Phones/Tablets</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'android' pk=market.pk %}">Android</a></li>
+                        <li><a href="{% url 'ios' pk=market.pk %}">IOS</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-brand-icofont"></i>
+                        <span class="link-title">My Order</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'my_orders' pk=market.pk %}">My Orders</a></li>
+                        <li><a href="#">My Favourites</a></li>
+                        <li><a href="#">Outstanding bills</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li >
+                     <a href="{% url 'settings' %}">
+                        <i class="icofont-settings-alt"></i>
+                        <span class="link-title">Account Settings</span>
+                     </a>
+                  </li>
+
+
+
+
+
+               </ul>
+			   {% elif user.is_authenticated and user.is_shipper %}
+
+			   <ul class="nav">
+                  <li class="nav-category">Shipper</li>
+                  <li class="active">
+                     <a href="{% url 'dashboard' %}">
+                        <i class="icofont-pie-chart"></i>
+                        <span class="link-title">Dashboard</span>
+                     </a>
+                  </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-shopping-cart"></i>
+                        <span class="link-title">Pick-Ups</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'available_pickup' pk=market.pk %}">Available Pick-Ups</a></li>
+                        <li><a href="{% url 'picked_up_order' pk=market.pk %}">En-route Pick-Ups</a></li>
+                        <li><a href="{% url 'delivered_orders' pk=market.pk %}">Delivered Orders</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li class="nav sub-menu">
+                     <a href="{% url 'account_details' %}">
+                        <i class="icofont-shopping-cart"></i>
+                        <span class="link-title">Account</span>
+                     </a>
+                  </li>
+
+                  <li class="nav sub-menu">
+                     <a href="#">
+                        <i class="icofont-listing-box"></i>
+                        <span class="link-title">Trips</span>
+                     </a>
+                  </li>
+
+                  <li >
+                     <a href="{% url 'settings' %}">
+                        <i class="icofont-settings-alt"></i>
+                        <span class="link-title">Account Settings</span>
+                     </a>
+                  </li>
+
+
+
+               </ul>
+
+			   {% elif user.is_authenticated and user.is_merchant %}
+
+			   <ul class="nav">
+                  <li class="nav-category">Merchant</li>
+                  <li class="active">
+                     <a href="{% url 'dashboard' %}">
+                        <i class="icofont-pie-chart"></i>
+                        <span class="link-title">Dashboard</span>
+                     </a>
+                  </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-shopping-cart"></i>
+                        <span class="link-title">Product</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'my_product' %}">My Products</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li class="active">
+                     <a href="{% url 'my_orders' %}">
+                        <i class="icofont-shopping-cart"></i>
+                        <span class="link-title">Orders</span>
+                     </a>
+                  </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-listing-box"></i>
+                        <span class="link-title">Invoices</span>
+                     </a>
+                  </li>
+
+                  <li >
+                     <a href="{% url 'settings' %}">
+                        <i class="icofont-settings-alt"></i>
+                        <span class="link-title">Account Settings</span>
+                     </a>
+                  </li>
+
+
+               </ul>
+
+			   {% else %}
+
+			   <ul class="nav">
+                  <li class="nav-category">Main</li>
+                  <li class="active">
+                     <a href="#">
+                        <i class="icofont-pie-chart"></i>
+                        <span class="link-title">Categories</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-shopping-cart"></i>
+                        <span class="link-title">Beauty</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Body Cream</a></li>
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Lingerie</a></li>
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Spa</a></li>
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Wigs</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-computer"></i>
+                        <span class="link-title">Computer/Servers</span>
+                     </a>
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'desktop' pk=market.pk %}">Desktop</a></li>
+                        <li><a href="{% url 'laptop' pk=market.pk %}">Laptops</a></li>
+                        <li><a href="{% url 'networking' pk=market.pk %}">Networking</a></li>
+                        <li><a href="{% url 'server' pk=market.pk %}">Server</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-listing-box"></i>
+                        <span class="link-title">Electronics</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'audio' pk=market.pk  %}">Audio Systems</a></li>
+                        <li><a href="{% url 'audio' pk=market.pk %}">Home Theatre</a></li>
+                        <li><a href="{% url 'television' pk=market.pk %}">Television</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-file-document"></i>
+                        <span class="link-title">Fashion</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'clothing' pk=market.pk %}">Clothing</a></li>
+                        <li><a href="{% url 'fabrics' pk=market.pk %}">Fabrics</a></li>
+                        <li><a href="{% url 'footwear' pk=market.pk %}">Footwear</a></li>
+                        <li><a href="{% url 'fragrance' pk=market.pk %}">Fragrance</a></li>
+                        <li><a href="{% url 'watches' pk=market.pk %}">Watches</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-food-cart"></i>
+                           <span class="link-title">Food</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Rice</a></li>
+                        <li><a href="#">Beans</a></li>
+                        <li><a href="#">Yam</a></li>
+                        <li><a href="#">Frozen</a></li>
+                        <li><a href="#">Grocery</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-fruits"></i>
+                        <span class="link-title">Fruits</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="#">Banana</a></li>
+                        <li><a href="#">Pineapple</a></li>
+                        <li><a href="#">Strawberry</a></li>
+                        <li><a href="#">Pawpaw</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-ui-home"></i>
+                        <span class="link-title">Home Appliances</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+						<li><a href="{% url 'ac' pk=market.pk %}">Air Conditioner</a></li>
+                        <li><a href="{% url 'bed' pk=market.pk %}">Bed Furnishings</a></li>
+                        <li><a href="{% url 'fan' pk=market.pk %}">Fans</a></li>
+                        <li><a href="{% url 'furniture' pk=market.pk %}">Furniture</a></li>
+                        <li><a href="{% url 'bed' pk=market.pk %}">Mattresses</a></li>
+						<li><a href="{% url 'washer' pk=market.pk %}">Washing Machine</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-calendar"></i>
+                        <span class="link-title">Kitchen Appliances</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'refrigerator' pk=market.pk %}">Blender</a></li>
+                        <li><a href="{% url 'cooker' pk=market.pk %}">Cookers</a></li>
+                        <li><a href="{% url 'freezer' pk=market.pk %}">Freezer</a></li>
+                        <li><a href="{% url 'kettle' pk=market.pk %}">Kettle</a></li>
+                        <li><a href="{% url 'microwave' pk=market.pk %}">Microwave</a></li>
+                        <li><a href="{% url 'refrigerator' pk=market.pk %}">Refrigerator</a></li>
+                        <li><a href="{% url 'dispenser' pk=market.pk %}">Water Dispenser</a></li>
+					</ul>
+                     <!-- End Sub Menu -->
+                  </li>
+                  <li>
+                     <a href="#">
+                        <i class="icofont-mobile-phone"></i>
+                        <span class="link-title">Phones/Tablets</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'android' pk=market.pk %}">Android</a></li>
+                        <li><a href="{% url 'ios' pk=market.pk %}">IOS</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+
+               </ul>
+
+			   {% endif %}
+               <!-- End Nav -->
+            </div>
+            <!-- End Sidebar Body -->
+         </nav>

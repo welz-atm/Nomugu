@@ -1,0 +1,105 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+{% load bootstrap_pagination %}
+   <!-- Wrapper -->
+   <div class="wrapper">
+      <div class="main-wrapper">
+         <div class="main-content d-flex flex-column flex-md-row">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-12">
+                    <!-- Card -->
+                    <div class="card bg-transparent">
+                        <div class="card-body card_color-bg mb-30">
+                            <form method="post">
+                                {% csrf_token %}
+                                {% include 'errors.html' %}
+
+
+                                <div class="media flex-column flex-sm-row">
+
+
+                                    <div class="contact-account-setting media-body">
+
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">First Name</label>
+                                            <input type="text" class="theme-input-style" name="first_name"
+                                                   placeholder="Present Employer Name" value="{{order.first_name}}"
+                                                   required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Last Name</label>
+                                            <input type="text" class="theme-input-style" name="last_name"
+                                                   placeholder="Employer Address" value="{{order.last_name}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Telephone</label>
+                                            <input type="tel" id="as_brand" class="theme-input-style"
+                                                   name="telephone" value="{{order.telephone}}" placeholder="Telephone"
+                                                   required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Email</label>
+                                            <input type="email" class="theme-input-style" name="email"
+                                                   placeholder="Employer Address" value="{{order.email}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Address</label>
+                                            <input type="text" id="as_color1" class="theme-input-style" name="address"
+                                                   placeholder="Account Name" value="{{order.address}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">City</label>
+                                            <input type="text" id="as_color2" class="theme-input-style" name="city"
+                                                   placeholder="Account Name" value="{{order.city}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">State</label>
+                                            <input type="text" id="as_color3" class="theme-input-style" name="state"
+                                                   placeholder="Account Name" value="{{order.state}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Country</label>
+                                            <select name="country" class="theme-input-style">
+                                                <option selected>{{order.country}}</option>
+                                                {% for country in countries %}
+                                                <option value="{{ country.name }}">{{ country.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+
+                                        <div class="">
+                                            <button type='submit' class="btn mr-4">Submit</button>
+                                            {% if user.is_shopper %}
+                                            <a class="btn btn-success" href="{% url 'my_cart' %}">Back to My Cart</a>
+                                            {% else %}
+                                            <a class="btn btn-success" href="{% url 'my_product' %}">Back to My
+                                                Product</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                           </div>
+                    </div>
+                    <!-- End Card -->
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- End wrapper -->
+
+
+{% endblock %}

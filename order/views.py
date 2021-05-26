@@ -1,13 +1,17 @@
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import OrderItem, Order, Invoices
 from .forms import OrderItemForm, OrderCreateForm, PhotoForm
+from .task import product_disapproved, order_picked, order_selected
 from authentication.decorators import merchant_required, shipper_required
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from product.models import Product
+from django_countries import countries
 import datetime
+from django.http import JsonResponse
+from django.core import serializers
 
 
 @login_required()
@@ -50,15 +54,44 @@ def my_cart(request):
             for item in order_items:
                 item.save()
             created_form.save()
-            redirect('my_cart')
+            return redirect('my_cart')
     else:
         form = OrderCreateForm(instance=order)
 
     context = {
         'order': order,
         'form': form,
+        'countries': countries
     }
     return render(request, 'cart.html', context)
+
+
+@login_required()
+def edit_create_form(request, pk):
+    order = Order.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = OrderCreateForm(request.POST, instance=order)
+        if form.is_valid():
+            created_form = form.save(commit=False)
+            created_form.detail_created = True
+            created_form.user = request.user
+            order.products.update(address=created_form.address, city=created_form.city, state=created_form.state,
+                                  country=created_form.country)
+            order.save()
+            order_items = order.products.all()
+            for item in order_items:
+                item.save()
+            created_form.save()
+            return redirect('my_cart')
+    else:
+        form = OrderCreateForm(instance=order)
+
+    context = {
+        'order': order,
+        'form': form,
+        'countries': countries
+    }
+    return render(request, 'edit_order_form.html', context)
 
 
 @login_required()
@@ -85,6 +118,14 @@ def update_cart(request, pk):
         'order': order
     }
     return render(request, 'update_cart.html', context)
+
+
+def final_cart(request):
+    order = Order.objects.get(user=request.user, ordered=False)
+    context = {
+        'order': order,
+    }
+    return render(request, 'invoice.html', context)
 
 
 def cart_count(request):
@@ -166,7 +207,8 @@ def picked_up_orders(request):
 @login_required()
 def available_pickup(request):
     if request.user.is_shipper or request.user.is_admin or request.user.is_merchant:
-        pick_ups = OrderItem.objects.filter(ordered=True, picked=False).order_by('-order_date').select_related('user', 'product')
+        pick_ups = OrderItem.objects.filter(ordered=True, picked=False).order_by('-order_date').select_related('user',
+                                                                                                               'product')
         if pick_ups.exists():
             paginator = Paginator(pick_ups, 10)
             page_number = request.GET.get('page')
@@ -189,6 +231,7 @@ def select_order_pickup(request, pk):
             order_item.picked = True
             order_item.shipper = request.user
             order_item.save()
+            order_item.delay(request.user.pk, order_item.pk)
             return redirect('picked_up_order')
         else:
             messages.success(request, 'This order has been selected.')
@@ -263,6 +306,7 @@ def disapprove_picture(request, pk):
         if order.has_images is True:
             order.confirm_pickup = False
             order.save()
+            product_disapproved.delay(order.pk)
             return redirect('shopper_order')
     else:
         return render(request, 'unauthorized.html', {})
@@ -274,6 +318,7 @@ def pick_for_delivery(request, pk):
         if order.has_images is True and order.confirm_pickup is True:
             order.picked_for_delivery = True
             order.save()
+            order_picked.delay(request.user.pk, order.pk)
             return redirect('picked_up_order')
         else:
             messages.warning(request, 'Order has not been authorized by shopper')

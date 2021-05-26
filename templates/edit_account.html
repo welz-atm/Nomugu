@@ -1,80 +1,101 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% load static %}
 {% block content %}
+{% load bootstrap_pagination %}
+<!-- Wrapper -->
+<div class="wrapper">
+    <div class="main-wrapper">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-lg-10">
+
+                        <!-- Base Horizontal Form With Icons -->
+                        <div class="form-element py-30 multiple-column">
+
+                            <h4 class="font-20 mb-20">Account Details</h4>
 
 
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper">
-        <h3 class="page-header "><i class="fa fa-users"></i>Edit Account Number</h3>
-        <!-- page start-->
+                            <!-- Form -->
+                            <form method="post">
+                                {% csrf_token %}
 
 
-        <div class="row">
-            <div class="col-lg-12">
-                <form class="form-horizontal " method="post" >
-                    {% csrf_token %}
+                                <div class="media flex-column flex-sm-row">
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Account Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="account_name" placeholder="Account Name" value="{{account.account_name}}">
+
+                                    <div class="contact-account-setting media-body">
+
+                                        {% if user.is_shopper %}
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Employer Name</label>
+                                            <input type="text" class="theme-input-style" name="employer"
+                                                   value="{{account.employer_name}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Employer Address</label>
+                                            <input type="text" class="theme-input-style" name="employer"
+                                                   value="{{account.employer_address}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Salary</label>
+                                            <input type="number" class="theme-input-style" name="salary"
+                                                   value="{{account.salary}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Employer Address</label>
+                                            <input type="text" class="theme-input-style" name="employer"
+                                                   value="{{account.job_role}}" required>
+                                        </div>
+
+                                        {% endif %}
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Account Name</label>
+                                            <input type="text" class="theme-input-style" name="account_name"
+                                                   value="{{account.account_name}}" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Select Bank</label>
+                                            <select name="bank_name" class="theme-input-style">
+                                                <option selected>{{account.bank_name}}</option>
+                                                {% for bank in list_banks %}
+                                                <option value="{{ bank.name }}">{{ bank.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Account Number</label>
+                                            <input type="text" class="theme-input-style" name='account_number'
+                                                   value="{{account.account_number}}" required>
+                                        </div>
+
+
+                                        <div class="">
+                                            <button type='submit' class="btn mr-4">Submit</button>
+                                            <a class="btn btn-success" href="{% url 'account_details' %}">Back to My
+                                                Cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- End Form -->
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Bank Name</label>
-                        <div class="col-sm-10">
-                            <select name="bank_name" class="form-control">
-                                <option selected>{{account.account_name}}</option>
-                                <option>Access Bank</option>
-                                <option>Citibank</option>
-                                <option>Diamond Bank</option>
-                                <option>Ecobank Nigeria</option>
-                                <option>Fidelity Bank Nigeria</option>
-                                <option>First Bank of Nigeria</option>
-                                <option>First City Monument Bank</option>
-                                <option>Guaranty Trust Bank</option>
-                                <option>Heritage Bank Plc</option>
-                                <option>Jaiz Bank</option>
-                                <option>Keystone Bank Limited</option>
-                                <option>Providus Bank Plc</option>
-                                <option>Polaris Bank</option>
-                                <option>Stanbic IBTC Bank Nigeria Limited</option>
-                                <option>Standard Bank</option>
-                                <option>Standard Chartered Bank</option>
-                                <option>Sterling Bank</option>
-                                <option>Suntrust Bank Nigeria Limited</option>
-                                <option>Union Bank of Nigeria</option>
-                                <option>United Bank for Africa</option>
-                                <option>Unity Bank Plc</option>
-                                <option>Wema Bank</option>
-                                <option>Zenith Bank</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label text-success">Account Number</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="account_number" placeholder="Account Number" value="{{account.account_number}}">
-                        </div>
-                    </div>
-
-
-                    <div class="text-right">
-
-                        <button class="btn btn-success" type="submit">Submit</button>
-                        <a class="btn btn-success" href="{% url 'my_product' %}">Back to My Product</a>
-
-                    </div>
-
-                </form>
+                    <!-- End Horizontal Form With Icons -->
+                </div>
             </div>
         </div>
-        <!-- page end-->
-    </section>
-</section>
-<!--main content end-->
+    </div>
+</div>
+</div>
+<!-- End wrapper -->
+
 
 {% endblock %}

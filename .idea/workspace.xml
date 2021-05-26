@@ -175,44 +175,46 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mall" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\SDSDAdmin\NoMugus\product" />
-      <recent name="C:\Users\SDSDAdmin\NoMugus\payment" />
-      <recent name="C:\Users\SDSDAdmin\NoMugus\order" />
-      <recent name="C:\Users\SDSDAdmin\NoMugus\authentication" />
-      <recent name="C:\Users\SDSDAdmin\NoMugus\Templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SDSD101\Documents\GitHub\nomuguDjangoandBootstrap\static" />
       <recent name="C:\Users\SDSD101\Documents\GitHub\nomuguDjangoandBootstrap\media" />
       <recent name="C:\Users\SDSDAdmin\NoMugus\authentication" />
       <recent name="C:\Users\SDSDAdmin\NoMugu\src\product" />
       <recent name="C:\Users\SDSDAdmin\NoMugu\src\notification" />
-      <recent name="C:\Users\SDSDAdmin\NoMugu\src\Template" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SDSD101\Documents\GitHub\nomuguDjangoandBootstrap\mall" />
+      <recent name="C:\Users\SDSD101\Documents\GitHub\nomuguDjangoandBootstrap\market" />
+      <recent name="C:\Users\SDSDAdmin\NoMugus\product" />
+      <recent name="C:\Users\SDSDAdmin\NoMugus\payment" />
+      <recent name="C:\Users\SDSDAdmin\NoMugus\order" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Unittests for authentication.tests.TestCustomUser.test_user_creation" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests in tests.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="NoMugu" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="SDK_HOME" value="C:\Users\SDSD101\anaconda3\envs\notesapp\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_pattern" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;authentication.tests.TestCustomUser.test_user_creation&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/authentication/tests.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests for authentication.tests.TestCustomUser.test_user_creation" />
+        <item itemvalue="Python tests.Unittests in tests.py" />
       </list>
     </recent_temporary>
   </component>
@@ -230,17 +232,6 @@
     </task>
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="Unittests_for_authentication_tests_TestCustomUser_test_user_creation - 2020.04.02 at 12h 46m 25s.xml">
-      <configuration name="Unittests for authentication.tests.TestCustomUser.test_user_creation" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_authentication_tests_TestCustomUser_test_user_creation - 2020.04.02 at 13h 15m 46s.xml">
-      <configuration name="Unittests for authentication.tests.TestCustomUser.test_user_creation" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_authentication_tests_TestCustomUser_test_user_creation - 2020.04.02 at 13h 25m 25s.xml">
-      <configuration name="Unittests for authentication.tests.TestCustomUser.test_user_creation" configurationId="tests" />
-    </history-entry>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -254,10 +245,34 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="444" y="186" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606214501079">
+    <state x="137" y="30" width="1092" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1618119807962">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="444" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.768@0.0.1366.768" timestamp="1606214501079" />
+    <state x="137" y="30" width="1092" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.768@0.0.1366.768" timestamp="1618119807962" />
+    <state x="413" y="131" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1616085365362">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="413" y="131" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.768@0.0.1366.768" timestamp="1616085365362" />
+    <state x="463" y="154" key="FileChooserDialogImpl" timestamp="1618119763203">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="463" y="154" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1618119763203" />
+    <state width="1345" height="191" key="GridCell.Tab.0.bottom" timestamp="1618119959642">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1345" height="191" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1618119959642" />
+    <state width="1345" height="191" key="GridCell.Tab.0.center" timestamp="1618119959642">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1345" height="191" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1618119959642" />
+    <state width="1345" height="191" key="GridCell.Tab.0.left" timestamp="1618119959642">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1345" height="191" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1618119959642" />
+    <state width="1345" height="191" key="GridCell.Tab.0.right" timestamp="1618119959642">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1345" height="191" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1618119959642" />
     <state x="184" y="29" key="SettingsEditor" timestamp="1614850467869">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

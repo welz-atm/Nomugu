@@ -1,0 +1,18 @@
+{% autoescape off %}
+Hi {{user.first_name}},
+
+Your order has been selected for pick-up by Agent {{order.shipper}}. He will contact you soon for pick-up confirmation with pictures.
+
+Product Name: {{order.product.title}}
+Price: {{order.product.price}}
+Address: {{order.address}}
+City: {{order.address}}
+State: {{order.address}}
+
+
+If any issues with the details above, kindly contact sales@nomugu.com .
+
+Sincerely,
+NoMugu Team
+
+{% endautoescape %}

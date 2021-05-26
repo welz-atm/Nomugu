@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.core.exceptions import PermissionDenied
-from .forms import AccountForm, ShopperAccountForm
+from .forms import AccountForm
 from .models import Account, Payment
 from product.models import Product
 from order.models import Order, OrderItem
@@ -20,107 +20,72 @@ def create_account(request):
     banks = Misc.list_banks()
     for bank in banks['data']:
         list_banks.append(bank)
-    if request.user.is_shipper:
-        if request.method == 'POST':
-            form = AccountForm(request.POST)
-            if form.is_valid():
-                account = form.save(commit=False)
-                account.user = request.user
-                paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
-                response = paystack.verification.verify_account(account.account_number)
-                verified_name = response['data']['account_name']
-                verified_bank_id = response['data']['bank_id']
-                if account.account_name == verified_name and account.bank_name == verified_bank_id:
-                    paystack.subaccount.create(business_name=account.account_name, settlement_bank=account.bank_name,
-                                      account_number=account.account_number, percentage_charge='0.97')
-                    account.account_id = response['data']['id']
-                    account.save()
-                    return redirect('dashboard')
-                else:
-                    messages.success(request, 'Please confirm account details.')
-        else:
-            form = AccountForm()
-        context = {
-            'form': form,
-            'list_banks': list_banks
-        }
-        return render(request, 'create_account.html', context)
-    elif request.user.is_merchant:
-        if request.method == 'POST':
-            form = AccountForm(request.POST)
-            if form.is_valid():
-                account = form.save(commit=False)
-                account.user = request.user
-                paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
-                response = paystack.verification.verify_account(account.account_number)
-                verified_name = response['data']['account_name']
-                verified_bank_id = response['data']['bank_id']
-                if account.account_name == verified_name and account.bank_name == verified_bank_id:
-                    response = paystack.subaccount.create(business_name=account.account_name,
-                                                          settlement_bank=account.bank_name,
-                                                          account_number=account.account_number, percentage_charge='0.97')
-                    account.account_id = response['data']['id']
-                    account.save()
-                    return redirect('dashboard')
-        else:
-            form = AccountForm()
-        context = {
-            'form': form,
-            'list_banks': list_banks
-        }
-        return render(request, 'create_account.html', context)
-    elif request.user.is_shopper:
-        if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_shipper or request.user.is_merchant:
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            account = form.save(commit=False)
+            paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
             try:
-                Account.object.get(user=request.user)
-            except Account.DoesNotExist:
-                form = ShopperAccountForm(request.POST)
-                if form.is_valid():
-                    account = form.save(commit=False)
-                    account.user = request.user
-                    paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
-                    response = paystack.verification.verify_account(account.account_number)
-                    verified_name = response['data']['account_name']
-                    verified_bank_id = response['data']['bank_id']
-                    if account.account_name == verified_name and account.bank_name == verified_bank_id:
-                        account.save()
-                        return redirect('confirm_eligibility')
-                    else:
-                        messages.success(request, 'Please confirm account details.')
-                        return redirect('create_account')
-            return redirect('confirm_eligibility')
-        else:
-            form = AccountForm()
-        context = {
-            'form': form,
-            'list_banks': list_banks
-        }
-        return render(request, 'create_account.html', context)
-
+                response = paystack.verification.verify_account(account_number=account.account_number,
+                                                                bank_code=account.bank_name)
+            except paystack.DoesNotExist:
+                render(request, '404.html')
+            if response['status']:
+                account.user = request.user
+                account.is_created = True
+                account.save()
+                return redirect('dashboard')
+    elif request.method == 'POST' and request.user.is_shopper:
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            account = form.save(commit=False)
+            paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
+            response = paystack.verification.verify_account(account_number=account.account_number,
+                                                            bank_code=account.bank_name)
+            if response['status']:
+                account.user = request.user
+                account.is_created = True
+                account.save()
+                return redirect('home')
     else:
-        return HttpResponse('You do not have access to this page')
+        form = AccountForm()
+    context = {
+        'form': form,
+        'list_banks': list_banks
+        }
+    return render(request, 'create_account.html', context)
 
 
 @login_required()
 def edit_account(request, pk):
+    list_banks = []
+    banks = Misc.list_banks()
+    for bank in banks['data']:
+        list_banks.append(bank)
     account = Account.objects.get(pk=pk)
     if account.user == request.user:
-        if request.method == 'POST':
+        if request.method == 'POST' and request.user.is_merchant or request.user.is_shipper:
             form = AccountForm(request.POST, instance=account)
             if form.is_valid():
                 account = form.save(commit=False)
                 account.user = request.user
-                paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
-                paystack.subaccount.update(account.account_id, business_name=account.account_name, settlement_bank=account.bank_name,
-                                           account_number=account.account_number, percentage_charge='0.97')
+                account.is_created = True
                 account.save()
-                messages.success(request, 'Account updated successfully.')
+                return redirect('account_details')
+        elif request.method == 'POST' and request.user.is_shopper:
+            form = AccountForm(request.POST, instance=account)
+            if form.is_valid():
+                account = form.save(commit=False)
+                account.user = request.user
+                account.is_created = True
+                account.save()
                 return redirect('account_details')
         else:
             form = AccountForm(instance=account)
         context = {
             'form': form,
-            'account': account
+            'account': account,
+            'list_banks': list_banks
         }
         return render(request, 'edit_account.html', context)
     else:
@@ -128,21 +93,14 @@ def edit_account(request, pk):
 
 
 def account_details(request):
-    if request.user.is_shipper is True:
-        accounts = Account.objects.filter(user=request.user).select_related('user')
+    if request.user.is_shipper or request.user.is_merchant or request.user.is_shopper:
+        account = get_object_or_404(Account, pk=request.user.pk)
         context = {
-            'accounts': accounts
-        }
-        return render(request, 'account_details.html', context)
-    elif request.user.is_merchant is True:
-        accounts = Account.objects.filter(user=request.user).select_related('user')
-        context = {
-            'accounts': accounts
+            'account': account
         }
         return render(request, 'account_details.html', context)
 
-    else:
-        return HttpResponse('You do not have access to this page')
+    return HttpResponse('You do not have access to this page')
 
 
 def make_payment(request, pk):
@@ -153,7 +111,7 @@ def make_payment(request, pk):
                                                callback_url='http://localhost:8000/payment/my_payment/')
     url = response['data']['authorization_url']
     reference = response['data']['reference']
-    amount_formatted = amount
+    amount_formatted = amount/100
     payment = Payment.objects.create(user=request.user, reference=reference, amount=amount_formatted, order=order)
     payment.save()
     return redirect(url)
@@ -188,7 +146,7 @@ def my_payment(request):
         }
         return render(request, 'payment_verification.html', context)
 
-    payments = Payment.objects.filter(order=order).order_by('payment_date')
+    payments = Payment.objects.filter(order=order).order_by('payment_date').select_related('user', 'order')
     payment = payments[0]
     paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
     response = paystack.transaction.verify(reference=payment.reference)

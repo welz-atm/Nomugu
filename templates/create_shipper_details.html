@@ -1,101 +1,109 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
+{% load bootstrap_pagination %}
+<!-- Wrapper -->
+<div class="wrapper">
+    <div class="main-wrapper">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
 
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
+                    <div class="col-lg-10">
+                        <div class="form-element py-30 multiple-column">
+                            <h4 class="font-20 mb-20">Shipper Details</h4>
+                            <form method="post" action="{% url 'create_shipper_details' %}">
+                                {% csrf_token %}
+                                {% include 'errors.html' %}
+                                <div class="media flex-column flex-sm-row">
+                                    <div class="contact-account-setting media-body">
 
-            <div class="col-lg-10">
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Registration Name</label>
+                                            <input type="text" class="theme-input-style" name="registration_name"
+                                                    required>
+                                        </div>
 
-                <!-- Base Horizontal Form With Icons -->
-                <div class="form-element py-30 multiple-column">
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Registration Number</label>
+                                            <input type="number" class="theme-input-style" name="registration_number"
+                                                   required>
+                                        </div>
 
-                    <h4 class="font-20 mb-20">Shipper Details</h4>
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Engine Number</label>
+                                            <input type="number" id="engine_number" class="theme-input-style"
+                                                   name="engine_number" required>
+                                        </div>
 
-                    <!-- Form -->
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">License Number</label>
+                                            <input type="number" class="theme-input-style" name="license_number"
+                                                   required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Vehicle Type</label>
+                                            <select name="vehicle_type" class="theme-input-style">
+                                                <option selected>Select Vehicle Type...</option>
+                                                <option value='Bike'>Bike</option>
+                                                <option value='MiniBus'>MiniBus</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Vehicle Brand</label>
+                                            <input type="text" class="theme-input-style" name="brand"
+                                                   required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Year of Purchase</label>
+                                            <input type="number" id="account_number" class="theme-input-style"
+                                                   name='year_of_purchase' required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Region</label>
+                                            <select name="region" class="theme-input-style">
+                                                <option selected>Select Region...</option>
+                                                <option value='All Regions'>All Regions</option>
+                                                <option value='Abuja Only'>Abuja Only</option>
+                                                <option value='Enugu Only'>Enugu Only</option>
+                                                <option value='Lagos Only'>Lagos Only</option>
+                                                <option value='North-Central'>North-Central</option>
+                                                <option value='North-East'>North-East</option>
+                                                <option value='North-West'>North-West</option>
+                                                <option value='Port Harcourt Only'>Port Harcourt Only</option>
+                                                <option value='South-East'>South-East</option>
+                                                <option value='South-South'>South-South</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="bold mb-2">Extra Information</label>
+                                            <textarea name="extra_info" id="textarea1"
+                                                      class="theme-input-style style--seven"
+                                                      ></textarea>
+                                        </div>
 
 
-                        <div class="media flex-column flex-sm-row">
-
-
-                            <div class="contact-account-setting media-body">
-
-
-
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Registration Name</label>
-                                    <input type="text" class="theme-input-style" name="registration_name" placeholder="Name on Vehicle" required>
+                                        <div class="text-right">
+                                            <button type='submit' class="btn mr-4">Submit</button>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Registration Number</label>
-                                    <input type="number" class="theme-input-style" name="registration_number" placeholder="Registration Number" required>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Engine Number</label>
-                                    <input type="number" id="engine_number" class="theme-input-style" name="engine_number" placeholder="Engine Number" required>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">License Number</label>
-                                    <input type="number" class="theme-input-style" name="license_number" placeholder="License Number" required>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Vehicle Type</label>
-                                    <select name="vehicle_type" class="theme-input-style">
-                                        <option selected>Select Vehicle Type...</option>
-										<option value='Bike'>Bike</option>
-										<option value='MiniBus'>MiniBus</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="bold mb-2">Year of Purchase</label>
-                                    <input type="number" id="account_number" class="theme-input-style" placeholder="Year of Purchase" name='year_of_purchase' required>
-                                </div>
-
-								<div class="mb-4">
-                                    <label class="bold mb-2">Region</label>
-                                    <select name="region" class="theme-input-style">
-                                        <option selected>Select Region...</option>
-										<option value='All Regions'>All Regions</option>
-										<option value='Abuja Only'>Abuja Only</option>
-										<option value='Enugu Only'>Enugu Only</option>
-										<option value='Lagos Only'>Lagos Only</option>
-										<option value='North-Central'>North-Central</option>
-										<option value='North-East'>North-East</option>
-										<option value='North-West'>North-West</option>
-										<option value='Port Harcourt Only'>Port Harcourt Only</option>
-										<option value='South-East'>South-East</option>
-										<option value='South-South'>South-South</option>
-                                    </select>
-                                </div>
-
-								<div class="mb-4">
-                                    <label class="bold mb-2">Extra Information</label>
-                                    <textarea name="extra_info" id="textarea1" class="theme-input-style style--seven" placeholder="About yourself"></textarea>
-                                </div>
-
-
-                                <div class="text-right">
-                                    <button type='submit' class="btn mr-4">Submit</button>
-                                </div>
-                            </div>
+                            </form>
+                            <!-- End Form -->
                         </div>
-                    </form>
-                    <!-- End Form -->
+                    </div>
                 </div>
             </div>
-            <!-- End Horizontal Form With Icons -->
         </div>
     </div>
 </div>
 </div>
+<!-- End wrapper -->
+
 
 {% endblock %}

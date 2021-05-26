@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .models import CustomUser
+from .models import CustomUser, Shipper
 
 
 class UserCreationForm(forms.ModelForm):
@@ -75,4 +75,11 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
+class ShipperAdmin(admin.ModelAdmin):
+    list_display = ('vehicle_type', 'registration_name', 'registration_number', 'license_number', 'engine_number', 'brand',
+                    'year_of_purchase', 'region', 'extra_info', )
+    list_filter = ('vehicle_type', 'brand', 'region', )
+
+
 admin.site.register(CustomUser, UserAdmin)
+admin.site.register(Shipper, ShipperAdmin)

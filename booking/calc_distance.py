@@ -17,5 +17,4 @@ def calc_distance(x, y):
     src = (source_lat, source_long)
     dest = (dest_lat, dest_long)
     result = geodesic(src, dest).km
-#    result = hs.haversine(src, dest)
     return result

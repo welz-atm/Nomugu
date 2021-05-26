@@ -1,0 +1,13 @@
+{% autoescape off %}
+Hello {{user.first_name}},
+
+Welcome to Nomugu. We are pleased to have you on our platform.
+
+Kindly go through our range of products to enjoy our full services.
+
+{{ protocol }}://{{ domain }}{% url 'home' %}
+
+Sincerely,
+NoMugu Team
+
+{% endautoescape %}
