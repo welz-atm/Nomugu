@@ -20,50 +20,13 @@
                            <h4 class="c4">#256987</h4>
                         </div>
 
-                        <div class="invoice-header-right d-flex align-items-center justify-content-around justify-content-sm-end mt-3 mt-sm-0">
-                           <!-- Starred -->
-                           <div class="star mr-20">
-                              <a href="#"><img src="{% static 'assets/img/svg/star.svg' %}" alt="" class="svg"></a>
-                           </div>
-                           <!-- End Starred -->
 
-                           <!-- Delete Mail -->
-                           <div class="delete_mail mr-20">
-                              <a href="#"><img src="{% static 'assets/img/svg/delete.svg' %}" alt="" class="svg"></a>
-                           </div>
-                           <!-- End Delete Mail -->
-
-                           <!-- Edit Invoice Button -->
-                           <div class="edit-invoice-btn pr-1">
-                              <a href="invoice-add-new.html" class="btn-circle">
-                                 <img src="{% static 'assets/img/svg/writing.svg' %}" alt="" class="svg">
-                              </a>
-                           </div>
-                           <!-- End Edit Invoice Button -->
-
-                           <!-- Pagination -->
-                           <div class="pagination style--two d-flex flex-column align-items-center ml-2">
-                                 <ul class="list-inline d-inline-flex align-items-center">
-                                 <li><a href="#">
-                                    <img src="{% static 'assets/img/svg/left-angle.svg' %}" alt="" class="svg">
-                                 </a></li>
-                                 <li><a href="#" class="current">
-                                    <img src="{% static 'assets/img/svg/right-angle.svg' %}" alt="" class="svg">
-                                 </a></li>
-                                 </ul>
-                           </div>
-                           <!-- End Pagination -->
-                        </div>
                      </div>
                      <!-- End Invoice Header -->
 
                      <!-- Invoice Top -->
 
                      <!-- End Invoice Top -->
-
-                     <!-- Invois Wrapper -->
-
-                     <!-- End Invois Wrapper -->
 
                      <!-- Invoice Details List Wrapper -->
                      <div class="card_color-bg details-list-wrap">
@@ -75,7 +38,7 @@
                                     <th>#</th>
                                     <th>Description</th>
                                     <th>Quantity</th>
-                                    <th>Shipping Cost</th>
+                                    <th>Weight</th>
                                     <th>Amount</th>
                                  </tr>
                               </thead>
@@ -86,7 +49,7 @@
                                     <td class="bold">#{{ord.product.pk}}</td>
                                     <td>{{ord.product.title}}</td>
                                     <td>{{ord.quantity}}</td>
-                                    <td>{{ord.shipping_cost}}</td>
+                                    <td>{{ord.get_weight}}</td>
                                     <td>{{ord.get_cost}}</td>
                                  </tr>
 								 {% endfor %}
@@ -111,7 +74,7 @@
                                        <td>Shipping Cost</td>
                                        <td>
                                           <span class="Price-amount amount">
-                                             <span class="Price-currencySymbol">₦</span>{{order.pickup_price}}</span>
+                                             <span class="Price-currencySymbol">₦</span>{{order.shipping_cost}}</span>
                                        </td>
                                     </tr>
 
@@ -127,6 +90,8 @@
                               </table>
 
                               <div class="proceed-to-checkout d-flex align-items-center justify-content-end mr-20 mt-4">
+                                 <a href="{% url 'make_payment' pk=order.pk %}" class="btn">Order Now</a>
+                                 <br>
                                  <a href="{% url 'make_payment' pk=order.pk %}" class="btn">Order Now</a>
                               </div>
                            </div>

@@ -81,9 +81,9 @@
                                         <div class="">
                                             <button type='submit' class="btn mr-4">Submit</button>
                                             {% if user.is_shopper %}
-                                            <a class="btn btn-success" href="{% url 'my_cart' %}">Back to My Cart</a>
+                                            <a class="btn btn-success" href="#" onClick="goBack()">Back to My Cart</a>
                                             {% else %}
-                                            <a class="btn btn-success" href="{% url 'my_product' %}">Back to My
+                                            <a class="btn btn-success" href="#" onClick="goBack()">Back to My
                                                 Product</a>
                                             {% endif %}
                                         </div>

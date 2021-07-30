@@ -18,7 +18,7 @@
 
 
                     <!-- Form -->
-                    <form method="post" action="{% url 'create_account' %}">
+                    <form method="post" action="{% url 'create_account' %}" id="account_form">
                         {% csrf_token %}
                         {% include 'errors.html' %}
 
@@ -39,7 +39,7 @@
                                     <select name="bank_name" class="theme-input-style">
                                         <option selected>Choose Bank</option>
                                         {% for bank in list_banks %}
-                                        <option value="{{ bank.name }}">{{ bank.name }}</option>
+                                        <option value="{{ bank.code }}">{{ bank.name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -54,9 +54,9 @@
                                 <div class="">
                                     <button type='submit' class="btn mr-4">Submit</button>
                                     {% if user.is_shopper %}
-                                    <a class="btn btn-success" href="{% url 'my_cart' %}">Back to My Cart</a>
+                                    <a class="btn btn-success" href="#" onClick="goBack()">Back</a>
                                     {% else %}
-                                    <a class="btn btn-success" href="{% url 'my_product' %}">Back to My Product</a>
+                                    <a class="btn btn-success" href="#" onClick="goBack()">Back</a>
                                     {% endif %}
                                 </div>
                             </div>

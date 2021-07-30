@@ -14,7 +14,7 @@
    <meta name="keywords" content="">
 
    <!-- Favicon -->
-   <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}">
+   <link rel="shortcut icon" href="{% static 'assets/img/favicon1.png' %}">
 
    <!-- Web Fonts -->
    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
@@ -27,6 +27,7 @@
 
    <!-- ======= MAIN STYLES ======= -->
    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/fonts/elegant_icons/elegant-icons.css' %}">
    <!-- ======= END MAIN STYLES ======= -->
 
 </head>
@@ -46,13 +47,13 @@
          <div class="logo">
             {% if user.is_merchant %}
             <a href="{% url 'dashboard' %}" class="default-logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
-            <a href="{% url 'dashboard' %}" class="mobile-logo"><img src="{% static 'assets/img/mobile-logo.png' %}" alt=""></a>
+            <a href="{% url 'dashboard' %}" class="mobile-logo"><img src="{% static 'assets/img/new-logo1.png' %}" alt=""></a>
             {% elif user.is_shipper%}
             <a href="{% url 'dashboard' %}" class="default-logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
-            <a href="{% url 'dashboard' %}" class="mobile-logo"><img src="{% static 'assets/img/mobile-logo.png' %}" alt=""></a>
+            <a href="{% url 'dashboard' %}" class="mobile-logo"><img src="{% static 'assets/img/new-logo1.png' %}" alt=""></a>
             {% else %}
             <a href="{% url 'home' %}" class="default-logo"><img src="{% static 'assets/img/logo.png' %}" alt=""></a>
-            <a href="{% url 'home' %}" class="mobile-logo"><img src="{% static 'assets/img/mobile-logo.png' %}" alt=""></a>
+            <a href="{% url 'home' %}" class="mobile-logo"><img src="{% static 'assets/img/new-logo1.png' %}" alt=""></a>
             {% endif %}
 
          </div>
@@ -140,9 +141,9 @@
                            <li class="order-2 order-sm-0">
                               <!-- Main Header Search -->
                               <div class="main-header-search">
-                                 <form action="{% url 'search' %}" class="search-form">
+                                 <form action="{% url 'search' %}" class="search-form" method="get">
                                     <div class="theme-input-group header-search">
-                                       <input type="text" class="theme-input-style" placeholder="Find product" name="search">
+                                       <input type="text" id="search" class="theme-input-style" placeholder="Find product" name="search" method='get'>
 
                                        <button type="submit"><img src="{% static 'assets/img/svg/search-icon.svg' %}" alt=""
                                              class="svg"></button>
@@ -184,9 +185,9 @@
 			   {% if user.is_shopper and user.is_authenticated %}
                <ul class="nav">
                   <li class="active">
-                     <a href="">
+                     <a href="{% url 'home' %}">
                         <i class="icofont-pie-chart"></i>
-                        <span class="link-title">Categories</span>
+                        <span class="link-title">Markets</span>
                      </a>
                   </li>
                   <li>
@@ -197,10 +198,9 @@
 
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
-                        <li><a href="{% url 'desktop' %}">Body Cream</a></li>
-                        <li><a href="{% url 'desktop' %}">Lingerie</a></li>
-                        <li><a href="{% url 'desktop' %}">Spa</a></li>
-                        <li><a href="{% url 'desktop' %}">Wigs</a></li>
+                        <li><a href="{% url 'body_cream' %}">Body Cream</a></li>
+                        <li><a href="{% url 'lingerie' %}">Lingerie</a></li>
+                        <li><a href="{% url 'wig' %}">Wigs</a></li>
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
@@ -222,6 +222,20 @@
 
                   <li>
                      <a href="#">
+                        <i class="icofont-computer"></i>
+                        <span class="link-title">Construction</span>
+                     </a>
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+                        <li><a href="{% url 'cement' %}">Cement</a></li>
+                        <li><a href="{% url 'sand' %}">Sand</a></li>
+                        <li><a href="{% url 'iron_rod' %}">Iron Rod</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
+                  <li>
+                     <a href="#">
                         <i class="icofont-listing-box"></i>
                         <span class="link-title">Electronics</span>
                      </a>
@@ -229,7 +243,7 @@
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
                         <li><a href="{% url 'audio' %}">Audio Systems</a></li>
-                        <li><a href="{% url 'audio' %}">Home Theatre</a></li>
+                        <li><a href="{% url 'home_theatre' %}">Home Theatre</a></li>
                         <li><a href="{% url 'television' %}">Television</a></li>
                      </ul>
                      <!-- End Sub Menu -->
@@ -242,7 +256,9 @@
 
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
-                        <li><a href="{% url 'clothing' %}">Clothing</a></li>
+                        <li><a href="{% url 'shirts' %}">Shirts</a></li>
+                        <li><a href="{% url 't_shirts' %}">T-Shirts</a></li>
+                        <li><a href="{% url 'jeans' %}">Jeans</a></li>
                         <li><a href="{% url 'fabrics' %}">Fabrics</a></li>
                         <li><a href="{% url 'footwear' %}">Footwear</a></li>
                         <li><a href="{% url 'fragrance' %}">Fragrance</a></li>
@@ -258,11 +274,14 @@
 
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
-                        <li><a href="#">Rice</a></li>
-                        <li><a href="#">Beans</a></li>
-                        <li><a href="#">Yam</a></li>
-                        <li><a href="#">Frozen</a></li>
-                        <li><a href="#">Grocery</a></li>
+                        <li><a href="{% url 'grain' %}">Grains</a></li>
+                        <li><a href="{% url 'tuber' %}">Tuber</a></li>
+                        <li><a href="{% url 'frozen' %}">Frozen</a></li>
+                        <li><a href="{% url 'grocery' %}">Grocery</a></li>
+                        <li><a href="{% url 'livestock' %}">Livestock</a></li>
+                        <li><a href="{% url 'poultry' %}">Poultry</a></li>
+                        <li><a href="{% url 'vegetable' %}">Vegetables</a></li>
+                        <li><a href="#">Spices</a></li>
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
@@ -281,6 +300,22 @@
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-ui-home"></i>
+                        <span class="link-title">Furniture</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+						<li><a href="{% url 'furniture' %}">Sofa</a></li>
+                        <li><a href="{% url 'dining_set' %}">Dining Set</a></li>
+                        <li><a href="{% url 'bed' %}">Bed Furnishings</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
                   <li>
                      <a href="#">
                         <i class="icofont-ui-home"></i>
@@ -290,14 +325,12 @@
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
 						<li><a href="{% url 'ac' %}">Air Conditioner</a></li>
-                        <li><a href="{% url 'bed' %}">Bed Furnishings</a></li>
                         <li><a href="{% url 'fan' %}">Fans</a></li>
-                        <li><a href="{% url 'furniture' %}">Furniture</a></li>
-                        <li><a href="{% url 'bed' %}">Mattresses</a></li>
 						<li><a href="{% url 'washer' %}">Washing Machine</a></li>
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
+
                   <li>
                      <a href="#">
                         <i class="icofont-calendar"></i>
@@ -431,7 +464,7 @@
                      <!-- End Sub Menu -->
                   </li>
 
-                  <li class="active">
+                  <li>
                      <a href="{% url 'my_orders' %}">
                         <i class="icofont-shopping-cart"></i>
                         <span class="link-title">Orders</span>
@@ -473,10 +506,9 @@
 
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
-                        <li><a href="{% url 'desktop' %}">Body Cream</a></li>
-                        <li><a href="{% url 'desktop' %}">Lingerie</a></li>
-                        <li><a href="{% url 'desktop' %}">Spa</a></li>
-                        <li><a href="{% url 'desktop' %}">Wigs</a></li>
+                        <li><a href="{% url 'body_cream' %}">Body Cream</a></li>
+                        <li><a href="{% url 'lingerie' %}">Lingerie</a></li>
+                        <li><a href="{% url 'wig' %}">Wigs</a></li>
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
@@ -503,9 +535,9 @@
                      </a>
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
-                        <li><a href="#">Cement</a></li>
-                        <li><a href="#">Sand</a></li>
-                        <li><a href="#">Iron Rod</a></li>
+                        <li><a href="{% url 'cement' %}">Cement</a></li>
+                        <li><a href="{% url 'sand' %}">Sand</a></li>
+                        <li><a href="{% url 'iron_rod' %}">Iron Rod</a></li>
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
@@ -532,7 +564,9 @@
 
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
-                        <li><a href="{% url 'clothing' %}">Clothing</a></li>
+                        <li><a href="{% url 'shirts' %}">Shirts</a></li>
+                        <li><a href="{% url 't_shirts' %}">T-Shirts</a></li>
+                        <li><a href="{% url 'jeans' %}">Jeans</a></li>
                         <li><a href="{% url 'fabrics' %}">Fabrics</a></li>
                         <li><a href="{% url 'footwear' %}">Footwear</a></li>
                         <li><a href="{% url 'fragrance' %}">Fragrance</a></li>
@@ -548,14 +582,18 @@
 
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
-                        <li><a href="#">Rice</a></li>
-                        <li><a href="#">Beans</a></li>
-                        <li><a href="#">Yam</a></li>
-                        <li><a href="#">Frozen</a></li>
-                        <li><a href="#">Grocery</a></li>
+                        <li><a href="{% url 'grain' %}">Grains</a></li>
+                        <li><a href="{% url 'tuber' %}">Tuber</a></li>
+                        <li><a href="{% url 'frozen' %}">Frozen</a></li>
+                        <li><a href="{% url 'grocery' %}">Grocery</a></li>
+                        <li><a href="{% url 'livestock' %}">Livestock</a></li>
+                        <li><a href="{% url 'poultry' %}">Poultry</a></li>
+                        <li><a href="{% url 'vegetable' %}">Vegetables</a></li>
+                        <li><a href="#">Spices</a></li>
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
+
                   <li>
                      <a href="#">
                         <i class="icofont-fruits"></i>
@@ -571,6 +609,24 @@
                      </ul>
                      <!-- End Sub Menu -->
                   </li>
+
+                  <li>
+                     <a href="#">
+                        <i class="icofont-ui-home"></i>
+                        <span class="link-title">Furniture</span>
+                     </a>
+
+                     <!-- Sub Menu -->
+                     <ul class="nav sub-menu">
+						<li><a href="{% url 'ac' %}">Sofa</a></li>
+                        <li><a href="{% url 'bed' %}">Dining Set</a></li>
+                        <li><a href="{% url 'furniture' %}">Furniture</a></li>
+                        <li><a href="{% url 'bed' %}">Bed Furnishings</a></li>
+                        <li><a href="{% url 'bed' %}">Mattresses</a></li>
+                     </ul>
+                     <!-- End Sub Menu -->
+                  </li>
+
                   <li>
                      <a href="#">
                         <i class="icofont-ui-home"></i>
@@ -580,10 +636,7 @@
                      <!-- Sub Menu -->
                      <ul class="nav sub-menu">
 						<li><a href="{% url 'ac' %}">Air Conditioner</a></li>
-                        <li><a href="{% url 'bed' %}">Bed Furnishings</a></li>
                         <li><a href="{% url 'fan' %}">Fans</a></li>
-                        <li><a href="{% url 'furniture' %}">Furniture</a></li>
-                        <li><a href="{% url 'bed' %}">Mattresses</a></li>
 						<li><a href="{% url 'washer' %}">Washing Machine</a></li>
                      </ul>
                      <!-- End Sub Menu -->
@@ -638,9 +691,6 @@
          <!-- End Main Content -->
 
       <!-- End Main Wrapper -->
-      <footer class="footer">
-         Dashmin © 2020 created by <a href="https://www.themelooks.com/"> ThemeLooks</a>
-      </footer>
 
    </div>
    <!-- End wrapper -->
@@ -655,6 +705,8 @@
    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
    <script src="{% static 'assets/plugins/chartjs/Chart.min.js' %}"></script>
    <script src="{% static 'assets/plugins/chartjs/custom-chart.js' %}"></script>
+   <script src="{% static 'assets/plugins/apex/apexcharts.min.js' %}"></script>
+   <script src="{% static 'assets/plugins/apex/custom-apexcharts.js' %}"></script>
    <script src="{% static 'assets/plugins/elevatezoom/jquery.elevateZoom-3.0.8.min.js' %}"></script>
    <script>
          //initiate the plugin and pass the id of the div containing gallery images
@@ -673,6 +725,11 @@
                $.fancybox(ez.getGalleryList());
             return false;
          });
+   </script>
+   <script>
+      function goBack() {
+         window.history.back();
+      }
    </script>
    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 </body>

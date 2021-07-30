@@ -24,13 +24,23 @@ def login_user(request):
                 return redirect('home')
             if user.is_authenticated and user.is_merchant:
                 login(request, credential)
-                return redirect('dashboard')
+                try:
+                    account = Account.objects.get(user=user)
+                except Account.DoesNotExist:
+                    return redirect('create_account')
+                if account:
+                    return redirect('dashboard')
             if user.is_authenticated and user.is_admin:
                 login(request, credential)
                 return redirect('dashboard')
             if user.is_authenticated and user.is_shipper:
                 login(request, credential)
-                return redirect('dashboard')
+                try:
+                    account = Account.objects.get(user=user)
+                except Account.DoesNotExist:
+                    return redirect('create_account')
+                if account:
+                    return redirect('dashboard')
         else:
             messages.success(request, 'Invalid Username/Password')
             return redirect('login')
@@ -230,8 +240,10 @@ def view_profile(request, pk):
 
 
 def account_setting(request):
+    shipper = Shipper.objects.get(user=request.user)
     context = {
-        'countries': countries
+        'countries': countries,
+        'shipper': shipper
     }
     return render(request, 'account_settings.html', context)
 

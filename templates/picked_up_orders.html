@@ -45,13 +45,11 @@
                                                 Pic</a>
                                             {% endif %}
 
-                                            <a href="#" class="btn btn-info">Chat Buyer</a>
-
                                             {% if product.picked_for_delivery %}
-                                            <a href="#" class="btn btn-success">Picked Up</a>
+                                            <a href="#" class="btn btn-success">Collected</a>
                                             {% else %}
                                             <a href="{% url 'pick_for_delivery' pk=product.pk %}" class="btn btn-info">Mark
-                                                as Picked</a>
+                                                as Collected</a>
                                             {% endif %}
                                         </td>
                                     </tr>

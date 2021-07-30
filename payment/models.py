@@ -18,6 +18,7 @@ class Payment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     amount = models.IntegerField()
+    initialized_date = models.DateTimeField(auto_now_add=True)
     payment_date = models.DateTimeField(null=True, blank=True)
     reference = models.CharField(max_length=50)
     status = models.CharField(max_length=50, null=True, blank=True)
@@ -27,5 +28,4 @@ class Payment(models.Model):
 
     def __str__(self):
         return '{} {}'.format(self.user.first_name, self.user.last_name)
-
 

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -177,7 +180,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/mall" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -245,14 +248,18 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="406" y="185" key="#Notifications" timestamp="1625984164646">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="406" y="185" key="#Notifications/0.0.1280.720@0.0.1280.720" timestamp="1625984164646" />
     <state x="137" y="30" width="1092" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1618119807962">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="137" y="30" width="1092" height="738" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.768@0.0.1366.768" timestamp="1618119807962" />
-    <state x="413" y="131" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1616085365362">
-      <screen x="0" y="0" width="1366" height="768" />
+    <state x="93" y="93" width="1095" height="535" key="DiffContextDialog" timestamp="1624718926900">
+      <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="413" y="131" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.768@0.0.1366.768" timestamp="1616085365362" />
+    <state x="93" y="93" width="1095" height="535" key="DiffContextDialog/0.0.1280.720@0.0.1280.720" timestamp="1624718926900" />
     <state x="463" y="154" key="FileChooserDialogImpl" timestamp="1618119763203">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -273,13 +280,13 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state width="1345" height="191" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1618119959642" />
-    <state x="184" y="29" key="SettingsEditor" timestamp="1614850467869">
-      <screen x="0" y="0" width="1366" height="768" />
+    <state x="337" y="63" key="RollbackChangesDialog" timestamp="1624718654344">
+      <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="184" y="29" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1614850467869" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1610877753703">
-      <screen x="0" y="0" width="1366" height="768" />
+    <state x="337" y="63" key="RollbackChangesDialog/0.0.1280.720@0.0.1280.720" timestamp="1624718654344" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1624119504296">
+      <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1366.768@0.0.1366.768" timestamp="1610877753703" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1624119504296" />
   </component>
 </project>

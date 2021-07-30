@@ -8,7 +8,7 @@ class PaymentAdmin(admin.ModelAdmin):
 
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('account_name', 'bank_name', 'user',)
+    list_display = ('account_name', 'bank_name', 'user', 'is_created')
     list_filter = ('bank_name',)
 
 

@@ -16,8 +16,7 @@
                                 <div class="contact-header-left media-body d-flex align-items-center mr-4">
                                     <!-- Add New Contact Btn -->
                                     <div class="add-new-contact mr-20">
-                                        <a href="#" class="btn-circle" data-toggle="modal"
-                                           data-target="#contactAddModal">
+                                        <a href="{% url 'add_product' %}" class="btn-circle" >
                                             <img src="{% static 'assets/img/svg/plus_white.svg' %}" alt="" class="svg">
                                         </a>
                                     </div>
@@ -35,21 +34,16 @@
                                     </div>
                                     <!-- End Grid -->
 
-                                    <!-- Delete Mail -->
-                                    <div class="delete_mail">
-                                        <a href="#"><img src="{% static 'assets/img/svg/delete.svg' %}" alt=""
-                                                         class="svg"></a>
-                                    </div>
-                                    <!-- End Delete Mail -->
-
 
                                 </div>
                             </div>
                             <!-- End Contact Header -->
-
-                            {% for product in products %}
+                                <div class="row">
+                                    {% for product in products %}
                             <div class="col-xl-2 col-md-4 col-sm-6">
                                 <!-- Contact -->
+
+
                                 <div class="contact-box mb-30">
                                     <div class="contact-head">
                                         <div class="d-flex align-items-center">
@@ -84,173 +78,15 @@
                                     </div>
                                 </div>
                                 <!-- End Contact -->
+
+                                </div>
+                                    {% endfor %}
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
                     <!-- End Card -->
 
-                    <!-- Contact Add New PopUp -->
-                    <div id="contactAddModal" class="modal fade">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <!-- Modal Body -->
-                                <div class="modal-body">
-                                    <form action="{% url 'add_product' %}" method="post"
-                                          enctype="multipart/form-data">
-                                        {% csrf_token %}
 
-
-                                        <div class="media flex-column flex-sm-row">
-                                            <div class="modal-upload-avatar mr-0 mr-sm-3 mr-md-5 mb-5 mb-sm-0">
-
-                                                <div class="attach-file style--two mb-3">
-                                                    <img src="{% static 'assets/img/img-placeholder.png' %}"
-                                                         class="profile-avatar" alt="">
-                                                    <div class="upload-button">
-                                                        <img src="{% static 'assets/img/svg/gallery.svg' %}" alt=""
-                                                             class="svg mr-2">
-                                                        <span>Upload Photo</span>
-                                                        <input class="file-input" type="file" id="fileUpload"
-                                                               accept="image/*" name='image_one'>
-                                                    </div>
-                                                </div>
-
-                                                <div class="content">
-                                                    <h4 class="mb-2">Upload a Photo</h4>
-                                                    <p class="font-12 c4">Allowed JPG, GIF or PNG. Max size <br/> of
-                                                        800kB
-                                                    </p>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="contact-account-setting media-body">
-
-                                                <h4 class="mb-4">New Product</h4>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Name</label>
-                                                    <select class="theme-input-style" id="exampleSelect2"
-                                                            name='Name'>
-                                                        <option selected>Choose...</option>
-                                                        <option value="Air Conditioner">Air Conditioner</option>
-                                                        <option value="Android">Android</option>
-                                                        <option value="Audio">Audio</option>
-                                                        <option value="Blender">Blender</option>
-                                                        <option value="Bed/Mattress">Bed/Mattress</option>
-                                                        <option value="Clothing">Clothing</option>
-                                                        <option value="Cooker">Cooker</option>
-                                                        <option value="Desktop">Desktop</option>
-                                                        <option value="Dispenser">Dispenser</option>
-                                                        <option value="Fabrics">Fabrics</option>
-                                                        <option value="Fans">Fans</option>
-                                                        <option value="Footwear">Footwear</option>
-                                                        <option value="Fragrance">Fragrance</option>
-                                                        <option value="Freezer">Freezer</option>
-                                                        <option value="Fruit">Fruit</option>
-                                                        <option value="Furniture">Furniture</option>
-                                                        <option value="IOS">IOS</option>
-                                                        <option value="Kettle">Kettle</option>
-                                                        <option value="Laptop">Laptop</option>
-                                                        <option value="Microwave">Microwave</option>
-                                                        <option value="Networking">Networking</option>
-                                                        <option value="Refrigerator">Refrigerator</option>
-                                                        <option value="Server">Server</option>
-                                                        <option value="Television">Television</option>
-                                                        <option value="Washers">Washers</option>
-                                                        <option value="Watch">Watch</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Title</label>
-                                                    <input type="text" class="theme-input-style"
-                                                           placeholder="Type Here" name='title' required>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Brand</label>
-                                                    <input type="text" id="as_brand" class="theme-input-style"
-                                                           placeholder="Type Here" name='brand' required>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Category</label>
-                                                    <select name="category" class="theme-input-style">
-                                                        <option selected>Choose...</option>
-                                                        {% for category in categories %}
-                                                        <option value="{{ category.pk }}">{{ category.name }}
-                                                        </option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Color</label>
-                                                    <input type="text" id="as_color" class="theme-input-style"
-                                                           placeholder="Type Here" name='color' required>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Price</label>
-                                                    <input type="number" id="price" class="theme-input-style"
-                                                           placeholder="Type Here" name='price' required>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Quantity</label>
-                                                    <input type="number" id="as_quantity" class="theme-input-style"
-                                                           placeholder="Type Here" name='quantity' required>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Weight</label>
-                                                    <input type="number" id="as_weight" class="theme-input-style"
-                                                           placeholder="Type Here" name='weight' required>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Unit</label>
-                                                    <select class="theme-input-style" id="as_unit" name='unit'>
-                                                        <option selected>Choose...</option>
-                                                        <option>Gram</option>
-                                                        <option>Kilogram</option>
-                                                        <option>Tonnes</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Secondary Image</label>
-                                                    <input class="theme-input-style" type="file" name='image_two'>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Extra Image</label>
-                                                    <input class="theme-input-style" type="file" name='image_three'>
-                                                </div>
-
-                                                <div class="mb-4">
-                                                    <label class="bold mb-2">Description</label>
-                                                    <textarea id="exampleTextarea1" class="theme-input-style"
-                                                              placeholder="Type Here" name="description"></textarea>
-                                                </div>
-
-
-                                                <div class="">
-                                                    <button type='submit' class="btn mr-4">Save Changes</button>
-                                                    <a href="#" class="cancel font-14 bold"
-                                                       data-dismiss="modal">Cancel</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- End Modal Body -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Contact Add New PopUp -->
                 </div>
             </div>
         </div>

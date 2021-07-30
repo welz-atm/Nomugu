@@ -8,25 +8,23 @@
         <div class="main-content">
             <div class="container-fluid">
                 <!-- Card -->
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="pt-2 mb-4">Markets</h4>
-
-                        <!-- Product Grid -->
-                        <div class="product-grid pt-2">
+                <div class="card mb-30">
+                        <div class="p-30">
+                            <a href="#"><h4 class="mb-30">Markets</h4></a>
+							<div class="product-grid pt-2">
                             <div class="row">
                                 {% for market in markets %}
                                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
                                     <!-- Product Grid Item -->
                                     <div class="product-grid-item mb-30">
                                         <div class="product-img mb-3">
-                                            <a href="{% url 'market_category' pk=market.pk %}">
+                                            <a href="{% url 'market_category' market_name=market.name %}">
                                                 <img src='{{market.image.url}}' class="w-100" alt="">
                                             </a>
                                         </div>
                                         <div class="product-content">
                                             <h6 class="mb-10">{{market.name}}</h6>
-                                            <a href="{% url 'market_category' pk=market.pk %}">
+                                            <a href="{% url 'market_category' market_name=market.name %}">
                                                 <p class="white"></p>
                                             </a>
                                         </div>
@@ -38,10 +36,12 @@
 
                             </div>
                         </div>
-                        <!-- End Product Grid -->
+
+
+                        </div>
                     </div>
-                </div>
                 <!-- End Card -->
+
             </div>
         </div>
     </div>

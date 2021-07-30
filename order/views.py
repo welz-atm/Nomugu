@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import OrderItem, Order, Invoices
+from django.db.models import Sum
+from booking.calc_distance import calc_distance
 from .forms import OrderItemForm, OrderCreateForm, PhotoForm
-from .task import product_disapproved, order_picked, order_selected
-from authentication.decorators import merchant_required, shipper_required
+from .task import product_disapproved, order_picked, order_selected, send_text_for_order_picked
+from authentication.decorators import merchant_required, shipper_required, shopper_required
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -14,7 +16,7 @@ from django.http import JsonResponse
 from django.core import serializers
 
 
-@login_required()
+@shopper_required()
 def add_cart(request, pk):
     product = get_object_or_404(Product, pk=pk)
     order_item = OrderItem.objects.create(product=product, user=request.user)
@@ -36,14 +38,15 @@ def add_cart(request, pk):
         return redirect("my_cart")
 
 
-@login_required()
+@shopper_required()
 def my_cart(request):
     try:
-        order = Order.objects.get(user=request.user, ordered=False)
+        orders = Order.objects.filter(user=request.user, ordered=False)
+        order = orders[0]
     except Order.DoesNotExist:
         return render(request, 'no_cart.html', {})
     if request.method == 'POST':
-        form = OrderCreateForm(request.POST, instance=order)
+        form = OrderCreateForm(request.POST)
         if form.is_valid():
             created_form = form.save(commit=False)
             created_form.detail_created = True
@@ -56,7 +59,7 @@ def my_cart(request):
             created_form.save()
             return redirect('my_cart')
     else:
-        form = OrderCreateForm(instance=order)
+        form = OrderCreateForm()
 
     context = {
         'order': order,
@@ -66,7 +69,7 @@ def my_cart(request):
     return render(request, 'cart.html', context)
 
 
-@login_required()
+@shopper_required()
 def edit_create_form(request, pk):
     order = Order.objects.get(pk=pk)
     if request.method == 'POST':
@@ -94,14 +97,14 @@ def edit_create_form(request, pk):
     return render(request, 'edit_order_form.html', context)
 
 
-@login_required()
+@shopper_required()
 def remove_from_cart(request, pk):
     ordered_item = get_object_or_404(OrderItem, pk=pk)
     ordered_item.delete()
     return redirect('my_cart')
 
 
-@login_required()
+@shopper_required()
 def update_cart(request, pk):
     order = OrderItem.objects.get(pk=pk)
     if request.method == 'POST':
@@ -120,6 +123,7 @@ def update_cart(request, pk):
     return render(request, 'update_cart.html', context)
 
 
+@login_required()
 def final_cart(request):
     order = Order.objects.get(user=request.user, ordered=False)
     context = {
@@ -231,7 +235,7 @@ def select_order_pickup(request, pk):
             order_item.picked = True
             order_item.shipper = request.user
             order_item.save()
-            order_item.delay(request.user.pk, order_item.pk)
+            order_selected.delay(request.user.pk, order_item.pk)
             return redirect('picked_up_order')
         else:
             messages.success(request, 'This order has been selected.')
@@ -257,6 +261,7 @@ def view_order(request, pk):
         return render(request, 'unauthorized.html', {})
 
 
+@shipper_required()
 def attach_picture(request, pk):
     order = OrderItem.objects.get(pk=pk)
     if request.user.is_shipper is True and request.user == order.shipper:
@@ -278,6 +283,7 @@ def attach_picture(request, pk):
         return render(request, 'unauthorized.html', {})
 
 
+@login_required()
 def view_picture(request, pk):
     order = OrderItem.objects.get(pk=pk)
     context = {
@@ -286,6 +292,7 @@ def view_picture(request, pk):
     return render(request, 'view_picture.html', context)
 
 
+@shopper_required()
 def confirm_picture(request, pk):
     order = OrderItem.objects.get(pk=pk)
     if request.user.is_shopper and order.user == request.user:
@@ -300,6 +307,7 @@ def confirm_picture(request, pk):
         return render(request, 'unauthorized.html', {})
 
 
+@shopper_required()
 def disapprove_picture(request, pk):
     order = OrderItem.objects.get(pk=pk)
     if request.user.is_shopper and order.user == request.user:
@@ -312,6 +320,7 @@ def disapprove_picture(request, pk):
         return render(request, 'unauthorized.html', {})
 
 
+@shipper_required()
 def pick_for_delivery(request, pk):
     order = OrderItem.objects.get(pk=pk)
     if request.user == order.shipper:
@@ -319,6 +328,7 @@ def pick_for_delivery(request, pk):
             order.picked_for_delivery = True
             order.save()
             order_picked.delay(request.user.pk, order.pk)
+            send_text_for_order_picked.delay(order.user.pk)
             return redirect('picked_up_order')
         else:
             messages.warning(request, 'Order has not been authorized by shopper')

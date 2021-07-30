@@ -1,6 +1,7 @@
 from django.db import models
 from authentication.models import CustomUser
 from product.models import Product
+from django.db.models import Sum
 from booking.calc_distance import calc_distance
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django_countries.fields import CountryField
@@ -17,7 +18,7 @@ class OrderItem(models.Model):
     delivered = models.BooleanField(default=False)
     picked = models.BooleanField(default=False)  # order selected by shipper
     confirm_pickup = models.BooleanField(default=False)  # authorize shipper to pick up
-#   picked_date = models.DateTimeField(auto_now_add=True)
+    #    picked_date = models.DateTimeField(auto_now_add=True)
     address = models.CharField(max_length=254, null=True, blank=True)
     country = models.CharField(max_length=60, null=True, blank=True, choices=countries)
     city = models.CharField(max_length=25, null=True, blank=True)
@@ -57,20 +58,31 @@ class OrderItem(models.Model):
 
     def get_pickup_status(self):
         if self.picked is True:
-            return 'Picked'
+            return 'Selected'
         else:
-            return 'Awaiting Pickup'
+            return 'Awaiting Selection by   Shipper'
 
     def delivery_status(self):
         if self.delivered is True:
             return 'Delivered'
 
     def shipping_cost(self):
-        address = '{}, {}, {}'.format(self.product.merchant.address, self.product.merchant.city, self.product.merchant.state)
-        customer_address = '{}, {}, {}'.format(self.address, self.city, self.state)
-        distance = calc_distance(address, customer_address)
-        cost = distance * 45
-        return round(cost, 2)
+        total = 0
+        if self.product.market == 'Online Mall':
+            address = '{}, {}, {}'.format(self.product.merchant.address, self.product.merchant.city,
+                                          self.product.merchant.state)
+            customer_address = '{}, {}, {}'.format(self.address, self.city, self.state)
+            distance = calc_distance(address, customer_address)
+            cost = distance * 45
+            total += cost
+        else:
+            address = self.product.market.address
+            customer_address = '{}, {}, {}'.format(self.address, self.city, self.state)
+            distance = calc_distance(address, customer_address)
+            cost = distance * 45
+            total += cost
+
+        return round(total, 2)
 
 
 class Order(models.Model):
@@ -93,10 +105,21 @@ class Order(models.Model):
         total = self.products.count()
         return total
 
+    def total_weight(self):
+        weight = 0
+        for order in self.products.all():
+            weight += order.get_weight()
+        return weight
+
     def final_price(self):
         total = 0
         for order in self.products.all():
-            total += order.get_cost()
+            standard_weight = 15
+            weight = self.products.all().aggregate(Sum("product__weight"))['product__weight__sum']
+            if weight >= standard_weight:
+                total += order.get_cost()
+            else:
+                total += order.get_cost()
         return total
 
     def pickup_price(self):
@@ -105,8 +128,21 @@ class Order(models.Model):
             total += order.shipping_cost()
         return total
 
+    def shipping_cost(self):
+        shipping_cost = 1500
+        standard_weight = 15
+        # next_standard_weight = 35
+        weight = self.products.all().aggregate(Sum("product__weight"))['product__weight__sum']
+        if weight is None:
+            return 0
+        elif weight >= standard_weight:
+            shipping_cost += 1500
+        # elif weight >= next_standard_weight:
+        #    shipping_cost += 2000
+        return shipping_cost
+
     def total_price(self):
-        return self.final_price() + self.pickup_price()
+        return self.final_price() + self.shipping_cost()
 
     def get_status(self):
         if self.delivered is True:
@@ -122,7 +158,7 @@ class Invoices(models.Model):
                                                                   MaxValueValidator(99999999)
                                                                   ])
     invoiced_date = models.DateTimeField(auto_now_add=True)
-#    last_saved_date = models.DateTimeField(auto_now_add=True)
+    #    last_saved_date = models.DateTimeField(auto_now_add=True)
     is_created = models.BooleanField(default=False)
 
     def __int__(self):

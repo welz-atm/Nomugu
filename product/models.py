@@ -4,7 +4,7 @@ from django_resized import ResizedImageField
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     image = ResizedImageField(size=[230, 192], upload_to='media', null=True, blank=True)
 
     def __str__(self):
@@ -13,12 +13,14 @@ class Category(models.Model):
 
 unit_options = [('Kilogram', 'Kilogram'), ('Gram', 'Gram'), ('Tonnes', 'Tonnes')]
 NAMES = (('Air Conditioner', 'Air Conditioner'), ('Android', 'Android'), ('Audio', 'Audio'), ('Blender', 'Blender'),
-         ('Bed/Mattress', 'Bed/Mattress'), ('Clothing', 'Clothing'), ('Cooker', 'Cooker'), ('Desktop', 'Desktop'),
-         ('Dispenser', 'Dispenser'), ('Fabrics', 'Fabrics'), ('Fans', 'Fans'), ('Footwear', 'Footwear'),
-         ('Fragrance', 'Fragrance'), ('Freezer', 'Freezer'), ('Fruit', 'Fruit'), ('Furniture', 'Furniture'),
-         ('IOS', 'IOS'), ('Kettle', 'Kettle'), ('Laptop', 'Laptop'), ('Microwave', 'Microwave'),
-         ('Networking', 'Networking'), ('Refrigerator', 'Refrigerator'), ('Server', 'Server'),
-         ('Television', 'Television'), ('Vegetable', 'Vegetable'), ('Washers', 'Washers'), ('Watch', 'Watch'))
+         ('Bed/Mattress', 'Bed/Mattress'), ('Body Cream', 'Body Cream'), ('Clothing', 'Clothing'), ('Cooker', 'Cooker'),
+         ('Desktop', 'Desktop'), ('Dispenser', 'Dispenser'), ('Fabrics', 'Fabrics'), ('Fans', 'Fans'), ('Food', 'Food'),
+         ('Footwear', 'Footwear'), ('Fragrance', 'Fragrance'), ('Freezer', 'Freezer'), ('Fruit', 'Fruit'),
+         ('Furniture', 'Furniture'), ('Fruits', 'Fruits'), ('IOS', 'IOS'), ('Jeans', 'Jeans'), ('Kettle', 'Kettle'),
+         ('Laptop', 'Laptop'), ('Lingerie', 'Lingerie'), ('Microwave', 'Microwave'), ('Networking', 'Networking'),
+         ('Refrigerator', 'Refrigerator'), ('Server', 'Server'), ('Shirts', 'Shirts'), ('T-Shirts', 'T-Shirts'),
+         ('Television', 'Television'), ('Trousers', 'Trousers'), ('Vegetable', 'Vegetable'),
+         ('Washing Machine', 'Washing Machine'), ('Watch', 'Watch'), ('Wigs', 'Wigs'))
 
 
 class Product(models.Model):

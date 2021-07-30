@@ -261,7 +261,7 @@
                                                     <!-- Form Group -->
                                                     <div class="form-group mb-20">
                                                         <label for="u_name" class="mb-2 font-14 bold">City</label>
-                                                        <input type="number" id="u_telephone" class="theme-input-style"
+                                                        <input type="text" id="u_telephone" class="theme-input-style"
                                                                name='city' value="{{user.city}}">
                                                     </div>
                                                     <!-- End Form Group -->
@@ -293,7 +293,7 @@
                                                         <label for="u_name" class="mb-2 font-14 bold">Bio</label>
                                                         <textarea name="bio" id="textarea11"
                                                                   class="theme-input-style style--seven"
-                                                                  value="{{user.bio}}"></textarea>
+                                                                  >{{user.bio}}</textarea>
                                                     </div>
                                                     <!-- End Form Group -->
                                                 </div>
@@ -406,8 +406,8 @@
                                                         <label for="u_name" class="mb-2 font-14 bold">Extra Info</label>
                                                         <textarea name="extra_info" id="textarea13"
                                                                   class="theme-input-style style--seven"
-                                                                  placeholder="About yourself"
-                                                                  value="shipper.extra_info"></textarea>
+                                                                  placeholder="About yourself">{{shipper.extra_info}}
+                                                        </textarea>
                                                     </div>
                                                     <!-- End Form Group -->
                                                 </div>
@@ -418,7 +418,8 @@
                                                 <div class="button-group ">
                                                     <button type="submit" class="btn">Save Changes</button>
                                                     <button type="button"
-                                                            class="link-btn bg-transparent ml-3 soft-pink">Cancel
+                                                            class="link-btn bg-transparent ml-3 soft-pink"
+                                                            onClick="goBack()">Cancel
                                                     </button>
                                                 </div>
                                             </div>

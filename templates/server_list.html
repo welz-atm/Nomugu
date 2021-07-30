@@ -15,9 +15,9 @@
                         <!-- Product Grid -->
                         <div class="product-grid pt-2">
                             <div class="row">
+                                {% for product in filter %}
                                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
                                     <!-- Product Grid Item -->
-									{% for product in filter %}
                                     <div class="product-grid-item mb-30">
                                         <div class="product-img mb-3">
                                              <a href="{% url 'detail' product.id %}">
@@ -31,9 +31,9 @@
                                              </a>
                                         </div>
                                     </div>
-									{% endfor %}
                                     <!-- End Product Grid Item -->
                                 </div>
+                                {% endfor %}
 
 
 

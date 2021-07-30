@@ -57,7 +57,7 @@
                                         <div class="mb-4">
                                             <label class="bold mb-2">Account Name</label>
                                             <input type="text" class="theme-input-style" name="account_name"
-                                                   value="{{account.account_name}}" required>
+                                                   value="{{account.account_name}}" >
                                         </div>
 
                                         <div class="mb-4">
@@ -73,14 +73,13 @@
                                         <div class="mb-4">
                                             <label class="bold mb-2">Account Number</label>
                                             <input type="text" class="theme-input-style" name='account_number'
-                                                   value="{{account.account_number}}" required>
+                                                   value="{{account.account_number}}">
                                         </div>
 
 
                                         <div class="">
                                             <button type='submit' class="btn mr-4">Submit</button>
-                                            <a class="btn btn-success" href="{% url 'account_details' %}">Back to My
-                                                Cart</a>
+                                            <a class="btn btn-success" href="#" onClick="goBack()>Back</a>
                                         </div>
                                     </div>
                                 </div>

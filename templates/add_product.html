@@ -16,7 +16,7 @@
                     <h4 class="font-20 mb-20">New Product</h4>
 
                     <!-- Form -->
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'add_product' %}">
                         {% csrf_token %}
                         {% include 'errors.html' %}
 

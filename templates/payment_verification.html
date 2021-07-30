@@ -24,7 +24,8 @@
                                 <th>Date</th>
                                 <th>Amount Paid</th>
                                 <th>Payment Status</th>
-                                <th>Action</th>
+                                <th>Card Type</th>
+                                <th>Bank Name</th>
                                         </tr>
                                     </thead>
                                     <tbody class="card_color-bg">
@@ -35,13 +36,8 @@
                                 <td>{{ payment.amount }}</td>
                                 <td>{{ payment.status}}</td>
 
-                                <td>
-                                    <div class="btn-group">
-                                        <a class="btn btn-primary" href="#" data-toggle="tooltip" data-placement="top"
-                                           title="Refresh"><i class="icon_plus_alt2"></i></a>
-
-                                    </div>
-                                </td>
+                                <td>{{ payment.card_type}}</td>
+                                <td>{{ payment.bank_name}}</td>
                                         </tr>
 									{% endfor %}
 

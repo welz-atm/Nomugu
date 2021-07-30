@@ -1,11 +1,10 @@
 from opencage.geocoder import OpenCageGeocode
 from geopy.distance import geodesic
-import haversine as hs
-from NoMugu.settings import opencage_key
+from django.conf import settings
 
 
 def calc_distance(x, y):
-    client = OpenCageGeocode(opencage_key)
+    client = OpenCageGeocode(settings.OPENCAGE_KEY)
     qs_src = client.geocode(x)
     source_lat = qs_src[0]['geometry']['lat']
     source_long = qs_src[0]['geometry']['lng']

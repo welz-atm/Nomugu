@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from .models import Product, Category
+from authentication.models import CustomUser
 from market.models import Market
 from order.models import OrderItem
 from django.contrib import messages
@@ -13,8 +14,10 @@ from .task import product_viewed, new_product_added
 
 def home_view(request):
     markets = Market.objects.all()
+    shops = CustomUser.objects.filter(is_merchant=True)[:5]
     context = {
-        'markets': markets
+        'markets': markets,
+        'shops': shops
     }
     return render(request, 'market.html', context)
 
@@ -53,6 +56,7 @@ def dashboard(request):
 @login_required
 def my_product_list(request):
     categories = Category.objects.all()
+    markets = Market.objects.all()
     if request.user.is_merchant is True:
         products = Product.objects.filter(merchant=request.user).order_by('id').select_related('merchant', 'category',
                                                                                                'market')
@@ -61,7 +65,8 @@ def my_product_list(request):
         products = paginator.get_page(page_number)
         context = {
             'products': products,
-            'categories': categories
+            'categories': categories,
+            'markets': markets
         }
         return render(request, 'my_product_list.html', context)
     else:
@@ -71,6 +76,7 @@ def my_product_list(request):
 @login_required
 def my_product_grid(request):
     categories = Category.objects.all()
+    markets = Market.objects.all()
     if request.user.is_merchant is True:
         products = Product.objects.filter(merchant=request.user).order_by('id').select_related('merchant', 'category',
                                                                                                  'market')
@@ -79,7 +85,8 @@ def my_product_grid(request):
         products = paginator.get_page(page_number)
         context = {
             'products': products,
-            'categories': categories
+            'categories': categories,
+            'markets': markets
         }
         return render(request, 'my_product_grid.html', context)
     else:
@@ -90,26 +97,24 @@ def my_product_grid(request):
 def add_product(request):
     categories = Category.objects.all()
     markets = Market.objects.all()
-    if request.user.is_merchant is True or request.user.is_admin:
-        if request.method == 'POST':
-            form = ProductForm(request.POST, request.FILES)
-            if form.is_valid():
-                product = form.save(commit=False)
-                product.merchant = request.user
-                product.save()
-                new_product_added.delay(product.pk)
-                return redirect('my_product')
+    if request.user.is_merchant or request.user.is_admin and request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.merchant = request.user
+            product.save()
+            new_product_added.delay(product.pk)
+            return redirect('my_product_grid')
 
         else:
             form = ProductForm(request.POST, request.FILES)
-
         context = {
             'categories': categories,
             'form': form,
             'markets': markets
-            }
-
+        }
         return render(request, 'add_product.html', context)
+
     else:
         raise PermissionDenied
 
@@ -145,7 +150,7 @@ def delete_product(request,pk):
     product = get_object_or_404(Product, pk=pk)
     if request.user.is_merchant is True and product.merchant == request.user:
         product.delete()
-        return redirect('my_product')
+        return redirect('my_product_grid')
     else:
         raise PermissionDenied
 
@@ -164,9 +169,9 @@ def detail_view(request, pk):
     return render(request, 'detail.html', context)
 
 
-def view_category(request, pk, market_id):
-    category = Category.objects.get(pk=pk)
-    market = Market.objects.get(id=market_id)
+def view_category(request, category_name, market_name):
+    category = Category.objects.get(name=category_name)
+    market = Market.objects.get(name=market_name)
     products = Product.objects.filter(category=category, market=market).order_by('name').select_related('merchant',
                                                                                                         'category',
                                                                                                         'market')
@@ -176,43 +181,15 @@ def view_category(request, pk, market_id):
         products = paginator.get_page(page_number)
         context = {
             'products': products,
+            'category': category
         }
         return render(request, 'categories.html', context)
     else:
         return render(request, '404.html')
 
 
-def is_valid_queryparam(param):
-    return param is not None
-
-
 def laptops_list(request):
     qs = Product.objects.filter(name='Laptop').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    processor = request.GET.get('processor')
-    ram = request.GET.get('ram')
-    series = request.GET.get('series')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(title__contains=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(processor) and processor != 'Choose...':
-        qs = qs.filter(title__contains=processor)
-
-    if is_valid_queryparam(ram) and ram != 'Choose...':
-        qs = qs.filter(title__contains=ram)
-
-    if is_valid_queryparam(series) and series != 'Choose...':
-        qs = qs.filter(title__contains=series)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -227,31 +204,6 @@ def laptops_list(request):
 
 def servers_list(request):
     qs = Product.objects.filter(name='Server').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    processor = request.GET.get('processor')
-    ram = request.GET.get('ram')
-    series = request.GET.get('series')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(title__contains=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(processor) and processor != 'Choose...':
-        qs = qs.filter(title__contains=processor)
-
-    if is_valid_queryparam(ram) and ram != 'Choose...':
-        qs = qs.filter(title__contains=ram)
-
-    if is_valid_queryparam(series) and series != 'Choose...':
-        qs = qs.filter(title__contains=series)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -266,31 +218,6 @@ def servers_list(request):
 
 def desktops_list(request):
     qs = Product.objects.filter(name='Desktop').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    processor = request.GET.get('processor')
-    ram = request.GET.get('ram')
-    series = request.GET.get('series')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(title__contains=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(processor) and processor != 'Choose...':
-        qs = qs.filter(title__contains=processor)
-
-    if is_valid_queryparam(ram) and ram != 'Choose...':
-        qs = qs.filter(title__contains=ram)
-
-    if is_valid_queryparam(series) and series != 'Choose...':
-        qs = qs.filter(title__contains=series)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -305,27 +232,6 @@ def desktops_list(request):
 
 def network_list(request):
     qs = Product.objects.filter(name='Desktop').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-    series = request.GET.get('series')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(title__contains=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
-    if is_valid_queryparam(series) and series != 'Choose...':
-        qs = qs.filter(title__contains=series)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -340,23 +246,6 @@ def network_list(request):
 
 def android_list(request):
     qs = Product.objects.filter(name='Android').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    ram = request.GET.get('ram')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(title__contains=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(ram) and ram != 'Choose...':
-        qs = qs.filter(title__contains=ram)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -371,31 +260,6 @@ def android_list(request):
 
 def ios_list(request):
     qs = Product.objects.filter(name='IOS').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    proc = request.GET.get('proc')
-    ram = request.GET.get('ram')
-    series = request.GET.get('series')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(title__contains=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(proc) and proc != 'Choose...':
-        qs = qs.filter(title__contains=proc)
-
-    if is_valid_queryparam(ram) and ram != 'Choose...':
-        qs = qs.filter(title__contains=ram)
-
-    if is_valid_queryparam(series) and series != 'Choose...':
-        qs = qs.filter(title__contains=series)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -408,33 +272,36 @@ def ios_list(request):
         return render(request, '404.html')
 
 
-def clothing_view(request):
-    qs = Product.objects.filter(name='Clothing').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    color = request.GET.get('color')
-    size = request.GET.get('size')
-    type = request.GET.get('type')
+def t_shirts_view(request):
+    qs = Product.objects.filter(name='T-Shirts').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'clothing_list.html', context)
+    else:
+        return render(request, '404.html')
 
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
 
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
+def jeans_view(request):
+    qs = Product.objects.filter(name='Jeans').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'clothing_list.html', context)
+    else:
+        return render(request, '404.html')
 
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
 
-    if is_valid_queryparam(color) and color != 'Choose...':
-        qs = qs.filter(color__exact=color)
-
-    if is_valid_queryparam(size) and size != 'Choose...':
-        qs = qs.filter(title__contains=size)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
+def shirts_view(request):
+    qs = Product.objects.filter(name='Shirts').order_by('id').select_related('merchant',)
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -449,31 +316,6 @@ def clothing_view(request):
 
 def footwear_view(request):
     qs = Product.objects.filter(name='Footwear').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    color = request.GET.get('color')
-    size = request.GET.get('size')
-    type = request.GET.get('type')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(color) and color != 'Choose...':
-        qs = qs.filter(color__exact=color)
-
-    if is_valid_queryparam(size) and size != 'Choose...':
-        qs = qs.filter(title__contains=size)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -488,31 +330,6 @@ def footwear_view(request):
 
 def fragrance_view(request):
     qs = Product.objects.filter(name='Fragrance').order_by('id').select_related('merchant',)
-    brand = request.GET.get('brand')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    color = request.GET.get('color')
-    size = request.GET.get('size')
-    type = request.GET.get('type')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(color) and color != 'Choose...':
-        qs = qs.filter(color__exact=color)
-
-    if is_valid_queryparam(size) and size != 'Choose...':
-        qs = qs.filter(title__contains=size)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -527,27 +344,6 @@ def fragrance_view(request):
 
 def watch_view(request):
     qs = Product.objects.filter(name='Watch').order_by('id').select_related('merchant', )
-    brand = request.GET.get('brand')
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    color = request.GET.get('color')
-    type = request.GET.get('type')
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(color) and color != 'Choose...':
-        qs = qs.filter(color__exact=color)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -562,31 +358,6 @@ def watch_view(request):
 
 def fabrics_view(request):
     qs = Product.objects.filter(name='Fabric').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    color = request.GET.get('color')
-    country = request.GET.get('country')
-    sex = request.GET.get('sex')
-    type = request.GET.get('type')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(color) and color != 'Choose...':
-        qs = qs.filter(color__exact=color)
-
-    if is_valid_queryparam(country) and country != 'Choose...':
-        qs = qs.filter(title__contains=country)
-
-    if is_valid_queryparam(sex) and sex != 'Choose...':
-        qs = qs.filter(sex__exact=sex)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -601,23 +372,6 @@ def fabrics_view(request):
 
 def tv_view(request):
     qs = Product.objects.filter(name='Television').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -632,27 +386,6 @@ def tv_view(request):
 
 def ac_view(request):
     qs = Product.objects.filter(name='Air Conditioner').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    horsepower = request.GET.get('hp')
-    type = request.GET.get('type')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(horsepower) and horsepower != 'Choose...':
-        qs = qs.filter(title__contains=horsepower)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -667,23 +400,20 @@ def ac_view(request):
 
 def audio_view(request):
     qs = Product.objects.filter(name='Audio').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'audio_list.html', context)
+    else:
+        return render(request, '404.html')
 
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
 
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
+def home_theatre_view(request):
+    qs = Product.objects.filter(name='Home Theatre').order_by('id').select_related('merchant',)
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -698,27 +428,6 @@ def audio_view(request):
 
 def refrigerator_view(request):
     qs = Product.objects.filter(name='Refrigerator').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-    color = request.GET.get('color')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(color) and color != 'Choose...':
-        qs = qs.filter(color__exact=color)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -733,27 +442,6 @@ def refrigerator_view(request):
 
 def freezer_view(request):
     qs = Product.objects.filter(name='Freezer').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-    color = request.GET.get('color')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(color) and color != 'Choose...':
-        qs = qs.filter(title__contains=color)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -768,23 +456,6 @@ def freezer_view(request):
 
 def cookers_view(request):
     qs = Product.objects.filter(name='Cooker').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -799,23 +470,6 @@ def cookers_view(request):
 
 def microwave_view(request):
     qs = Product.objects.filter(name='Microwave').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -830,19 +484,6 @@ def microwave_view(request):
 
 def dispenser_view(request):
     qs = Product.objects.filter(name='Dispenser').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -857,19 +498,6 @@ def dispenser_view(request):
 
 def blender_view(request):
     qs = Product.objects.filter(name='Blender').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -884,23 +512,6 @@ def blender_view(request):
 
 def kettle_view(request):
     qs = Product.objects.filter(name='Kettle').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -914,28 +525,7 @@ def kettle_view(request):
 
 
 def washers_view(request):
-    qs = Product.objects.filter(name='Washers').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-    color = request.GET.get('color')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(color) and color != 'Choose...':
-        qs = qs.filter(title__contains=color)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
+    qs = Product.objects.filter(name='Washing Machine').order_by('id').select_related('merchant',)
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -948,25 +538,8 @@ def washers_view(request):
         return render(request, '404.html')
 
 
-def furniture_view(request):
-    qs = Product.objects.filter(name='Furniture').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
+def sofa_view(request):
+    qs = Product.objects.filter(name='Sofa').order_by('id').select_related('merchant',)
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -974,34 +547,27 @@ def furniture_view(request):
         context = {
                    'filter': qs
                   }
-        return render(request, 'furniture_list.html', context)
+        return render(request, 'sofa_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def dining_set_view(request):
+    qs = Product.objects.filter(name='Dining Set').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'dining_list.html', context)
     else:
         return render(request, '404.html')
 
 
 def fans_view(request):
-    qs = Product.objects.filter(name='Fans').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-    charge = request.GET.get('charge')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(charge) and charge != 'Choose...':
-        qs = qs.filter(color__exact=charge)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
+    qs = Product.objects.filter(name='Fan').order_by('id').select_related('merchant',)
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -1016,27 +582,6 @@ def fans_view(request):
 
 def bed_view(request):
     qs = Product.objects.filter(name='Bed').order_by('id').select_related('merchant',)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    brand = request.GET.get('brand')
-    type = request.GET.get('type')
-    size = request.GET.get('size')
-
-    if min_price != '' and min_price is not None:
-        qs = qs.filter(price__gte=min_price)
-
-    if max_price != '' and max_price is not None:
-        qs = qs.filter(price__lte=max_price)
-
-    if is_valid_queryparam(brand) and brand != 'Choose...':
-        qs = qs.filter(brand__exact=brand)
-
-    if is_valid_queryparam(type) and type != 'Choose...':
-        qs = qs.filter(title__contains=type)
-
-    if is_valid_queryparam(size) and size != 'Choose...':
-        qs = qs.filter(title__contains=size)
-
     if qs.exists():
         paginator = Paginator(qs, 10)
         page_number = request.GET.get('page')
@@ -1045,5 +590,187 @@ def bed_view(request):
                    'filter': qs
                   }
         return render(request, 'bed_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def cement_view(request):
+    qs = Product.objects.filter(name='Cement').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'cement_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def sand_view(request):
+    qs = Product.objects.filter(name='Sand').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'sand_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def iron_rod_view(request):
+    qs = Product.objects.filter(name='Iron Rod').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'iron_rod_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def wig_view(request):
+    qs = Product.objects.filter(name='Wig').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'wig_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def lingerie_view(request):
+    qs = Product.objects.filter(name='Lingerie').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'lingerie_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def body_cream_view(request):
+    qs = Product.objects.filter(name='Body Cream').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'body_cream_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def grain_view(request):
+    qs = Product.objects.filter(name='Grain').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'grain_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def tuber_view(request):
+    qs = Product.objects.filter(name='Tuber').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'tuber_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def grocery_view(request):
+    qs = Product.objects.filter(name='Grocery').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'grocery_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def vegetable_view(request):
+    qs = Product.objects.filter(name='Vegetable').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'vegetable_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def frozen_view(request):
+    qs = Product.objects.filter(name='Frozen Food').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'frozen_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def poultry_view(request):
+    qs = Product.objects.filter(name='Poultry').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'poultry_list.html', context)
+    else:
+        return render(request, '404.html')
+
+
+def livestock_view(request):
+    qs = Product.objects.filter(name='Livestock').order_by('id').select_related('merchant',)
+    if qs.exists():
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        qs = paginator.get_page(page_number)
+        context = {
+                   'filter': qs
+                  }
+        return render(request, 'livestock_list.html', context)
     else:
         return render(request, '404.html')

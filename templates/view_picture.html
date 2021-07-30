@@ -23,14 +23,14 @@
                                             <img id="img_02" src="{{order.image.main_image.url }}" alt=""/>
                                         </a>
 
-                                        <a href="#" data-image="{% static 'images/laptop.jpg' %}"
-                                           data-zoom-image="{% static 'images/laptop.jpg' %}">
-                                            <img id="img_03" src="{% static 'images/laptop.jpg' %}" alt=""/>
+                                        <a href="#" data-image="{{order.image.front_image.url }}"
+                                           data-zoom-image="{{order.image.front_image.url }}">
+                                            <img id="img_03" src="{{order.image.front_image.url }}" alt=""/>
                                         </a>
 
-                                        <a href="#" data-image="{{order.image.main_image.url }}"
-                                           data-zoom-image="{{order.image.main_image.url }}">
-                                            <img id="img_04" src="{{order.image.main_image.url }}" alt=""/>
+                                        <a href="#" data-image="{{order.image.rear_image.url }}"
+                                           data-zoom-image="{{order.image.rear_image.url }}">
+                                            <img id="img_04" src="{{order.image.rear_image.url }}" alt=""/>
                                         </a>
                                     </div>
 
@@ -64,6 +64,7 @@
         </div>
       </div>
    </div>
+       </div>
    <!-- End wrapper -->
 
 		 

@@ -19,13 +19,13 @@
                                     <!-- Product Grid Item -->
                                     <div class="product-grid-item mb-30">
                                         <div class="product-img mb-3">
-                                             <a href="{% url 'view_category' pk=mark.pk market_id=market.pk %}">
+                                             <a href="{% url 'view_category' category_name=mark.name market_name=market.name %}">
                                                 <img src='{{mark.image.url}}' class="w-100" alt="">
                                              </a>
                                         </div>
                                         <div class="product-content">
                                             <h6 class="mb-10">{{mark.name}}</h6>
-                                             <a href="{% url 'view_category' pk=mark.pk market_id=market.pk %}">
+                                             <a href="{% url 'view_category' category_name=mark.name market_name=market.name %}">
                                                 <p class="white"></p>
                                              </a>
                                         </div>
@@ -36,6 +36,13 @@
 
 
                             </div>
+                            <div class="text text-center ">
+                                    <a href="#" onClick="goBack()" class="details-btn">
+                                            Back
+                                            <img src="{% static 'assets/img/svg/left-arrow-c2.svg' %}" alt=""
+                                                 class="svg">
+                                        </a>
+                                </div>
                         </div>
                         <!-- End Product Grid -->
                     </div>

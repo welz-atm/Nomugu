@@ -18,3 +18,19 @@
     </div>
 </div>
 {% endif %}
+
+{% if messages %}
+<div>
+    <div class="alert {{ message.tags }} alert-dismissible alert-danger" role="alert">
+        <p>There were some errors in the information you entered.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="warning">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}

@@ -28,9 +28,9 @@
                               <tr>
                                  <td>#01</td>
                                  <td><a href="#">{{ord.product.title}}</a></td>
-                                 <td><input type="number" value="{{ord.quantity}}"></td>
+                                 <td><span>{{ord.quantity}}</span></td>
                                  <td><span>{{ord.product.price}}</span></td>
-                                 <td><span>{{ord.get_cost}}</span> <a href="#"><img src="{% static 'assets/img/svg/table-colse.svg' %}" class="svg" alt=""></a></td>
+                                 <td><span>{{ord.get_cost}}</span> <a href="{% url 'remove_cart' pk=ord.pk %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from cart"><img src="{% static 'assets/img/svg/table-colse.svg' %}" class="svg" alt=""></a><a href="{% url 'update_cart' pk=ord.pk %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Update Cart"><img src="{% static 'assets/img/svg/table-up-arrow-green.svg' %}" class="svg ml-2" alt=""></a></td>
                               </tr>
 							{% endfor %}
                            </tbody>
@@ -60,7 +60,7 @@
                                        </p>
 
                                        <p class="form-row col-md-6">
-                                          <label for="surname">Sur Name</label>
+                                          <label for="surname">Surname</label>
                                           <input class="theme-input-style" id="surname1" type="text" placeholder="{{order.last_name}}" name="last_name" disabled>
                                        </p>
                                        <p class="form-row col-md-6">
@@ -184,7 +184,7 @@
                                     <td>Shipping Cost</td>
                                     <td>
                                        <span class="Price-amount amount">
-                                          <span class="Price-currencySymbol">1000</span></span>
+                                          <span class="Price-currencySymbol">{{order.shipping_cost}}</span></span>
                                     </td>
                                     {% else %}
                                     <td>Excludes Shipping</td>
@@ -199,7 +199,7 @@
                                     <td>Total</td>
                                     <td>
                                        <strong>
-                                          <span class="Price-amount amount"><span class="Price-currencySymbol">₦</span>{{order.final_price}}</span>
+                                          <span class="Price-amount amount"><span class="Price-currencySymbol">₦</span>{{order.total_price}}</span>
                                        </strong>
                                     </td>
                                  </tr>
@@ -209,7 +209,8 @@
                            {% if order.detail_created %}
                            <div class="proceed-to-checkout mt-4 text-center">
                               <a href="{% url 'create_account' %}" class="btn btn-w">Buy for me</a>
-                              <a href="{% url 'final_cart' %}" class="btn btn-w">Proceed to Checkout</a>
+                              <a href="#" class="btn btn-w">Continue Shopping</a>
+                              <a href="{% url 'final_cart' %}" class="btn btn-w mt-2">Proceed to Checkout</a>
                            </div>
                            {% else %}
                            <div class="proceed-to-checkout mt-4 text-center">
